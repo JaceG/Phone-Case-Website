@@ -18,8 +18,10 @@ export type RenderSet = {
   flat: string | null
   /** Vertical-axis spin, scrubbed on scroll. */
   turntable: string[]
-  /** Two-axis precession loop, played as the idle motion in the hero. */
+  /** Smooth tilted-axis loop, played as the idle motion in the hero. */
   tumble: string[]
+  /** Loop phase of each tumble frame when frames are unevenly spaced; null = uniform. */
+  tumblePhases: number[] | null
 }
 
 export type CatalogDesign = {
@@ -71,6 +73,7 @@ type RawRenders = {
   flat?: unknown
   turntable?: { frame?: unknown }[] | null
   tumble?: { frame?: unknown }[] | null
+  tumblePhases?: unknown
 }
 
 const frameUrls = (frames: { frame?: unknown }[] | null | undefined): string[] =>
@@ -82,6 +85,10 @@ const toRenderSet = (r: RawRenders | null | undefined): RenderSet => ({
   flat: urlOf(r?.flat),
   turntable: frameUrls(r?.turntable),
   tumble: frameUrls(r?.tumble),
+  tumblePhases:
+    Array.isArray(r?.tumblePhases) && r.tumblePhases.every((n) => typeof n === 'number')
+      ? (r.tumblePhases as number[])
+      : null,
 })
 
 export const toCatalogDesign = (product: Product): CatalogDesign => {
@@ -107,7 +114,7 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
       ...(set.threeQuarter ? { threeQuarter: set.threeQuarter } : {}),
       ...(set.flat ? { flat: set.flat } : {}),
       ...(set.turntable.length ? { turntable: set.turntable } : {}),
-      ...(set.tumble.length ? { tumble: set.tumble } : {}),
+      ...(set.tumble.length ? { tumble: set.tumble, tumblePhases: set.tumblePhases } : {}),
     }
   }
 
@@ -147,6 +154,7 @@ export const rendersFor = (d: CatalogDesign, model: CatalogPhoneModel | null | u
     flat: override.flat ?? d.renders.flat,
     turntable: override.turntable?.length ? override.turntable : d.renders.turntable,
     tumble: override.tumble?.length ? override.tumble : d.renders.tumble,
+    tumblePhases: override.tumble?.length ? (override.tumblePhases ?? null) : d.renders.tumblePhases,
   }
 }
 

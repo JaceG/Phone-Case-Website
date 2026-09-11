@@ -56,6 +56,7 @@ type Found = {
   stills: Partial<Record<CameraFile, string>>
   turntable: string[]
   tumble: string[]
+  tumblePhases?: number[]
 }
 
 const scanOutputs = async (): Promise<Map<string, Found>> => {
@@ -70,6 +71,12 @@ const scanOutputs = async (): Promise<Map<string, Found>> => {
   }
 
   for (const file of (await fs.readdir(outDir)).sort()) {
+    const sidecar = /^(.+)_tumble\.json$/.exec(file)
+    if (sidecar) {
+      const parsed = JSON.parse(await fs.readFile(path.join(outDir, file), 'utf8')) as { phases?: number[] }
+      if (Array.isArray(parsed.phases)) get(sidecar[1]).tumblePhases = parsed.phases
+      continue
+    }
     if (!file.endsWith('.png')) continue
     const full = path.join(outDir, file)
     const still = /^(.+)_(hero|three_quarter|flat)\.png$/.exec(file)
@@ -123,13 +130,13 @@ const run = async () => {
     const title = product.title ?? slug
 
     const upload = async (file: string, camera: string): Promise<Media> => {
-      let data = await fs.readFile(file)
+      let data: Buffer = await fs.readFile(file)
       let name = path.basename(file)
       let mimetype = 'image/png'
       // Frame loops are preloaded whole on the hero; ship them as lossy WebP
       // with alpha (~8× smaller than the PNG the renderer writes).
       if (camera === 'tumble' || camera === 'turntable') {
-        data = await sharp(data).webp({ quality: 82, alphaQuality: 90, effort: 4 }).toBuffer()
+        data = Buffer.from(await sharp(data).webp({ quality: 82, alphaQuality: 90, effort: 4 }).toBuffer())
         name = name.replace(/\.png$/, '.webp')
         mimetype = 'image/webp'
       }
@@ -170,6 +177,7 @@ const run = async () => {
         newIds.add(media.id)
       }
       renders.tumble = frames
+      renders.tumblePhases = found.tumblePhases ?? null
     }
 
     if (modelId !== undefined) {

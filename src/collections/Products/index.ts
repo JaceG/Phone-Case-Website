@@ -62,6 +62,16 @@ const turntableField = (description: string): Field =>
 const tumbleField = (description: string): Field =>
   frameSequence('tumble', 'Tumble frames', description)
 
+const tumblePhasesField: Field = {
+  name: 'tumblePhases',
+  type: 'json',
+  label: 'Tumble frame phases',
+  admin: {
+    description:
+      'Loop phase (0–1) of each tumble frame, written by the render pipeline. Frames may be unevenly spaced (denser where playback is slow).',
+  },
+}
+
 export const ProductsCollection: CollectionOverride = ({ defaultCollection }) => ({
   ...defaultCollection,
   labels: {
@@ -184,8 +194,9 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                   '36–60 frames in order. Scrubbed on scroll. Leave empty to fall back to the hero.',
                 ),
                 tumbleField(
-                  'Two-axis precession loop (48 frames) played as the idle spin in the hero. Empty = use the turntable.',
+                  'Smooth tilted-axis loop played as the idle motion in the hero. Empty = use the turntable.',
                 ),
+                tumblePhasesField,
               ],
             },
             {
@@ -213,6 +224,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                 },
                 turntableField('Frames for this model. Empty = use the shared turntable.'),
                 tumbleField('Tumble frames for this model. Empty = use the shared tumble.'),
+                tumblePhasesField,
               ],
             },
             {

@@ -30,7 +30,11 @@ def parse_args():
     p.add_argument("--out", required=True, help="output folder")
     p.add_argument("--cameras", nargs="*", default=["hero", "three_quarter", "flat"])
     p.add_argument("--turntable", type=int, default=0, help="frame count; 0 disables")
-    p.add_argument("--tumble", type=int, default=0, help="tumble frame count (two-axis precession loop); 0 disables")
+    p.add_argument("--tumble", type=int, default=0, help="tumble frame count (smooth tilted-axis loop); 0 disables")
+    p.add_argument("--tumble-boost", type=float, default=1.0,
+                   help="playback speed profile: how many times faster the loop turns outside the front window (1 = uniform)")
+    p.add_argument("--tumble-halfwidth", type=float, default=0.14,
+                   help="front window half-width as a fraction of the loop (0.14 ≈ ±50°)")
     p.add_argument("--only", nargs="*", default=None, help="design slugs to render (default: all)")
     p.add_argument("--samples", type=int, default=32, help="Cycles samples for hero shots (denoised)")
     p.add_argument("--cpu", action="store_true", help="force Cycles onto the CPU")
@@ -106,11 +110,44 @@ def render_turntable(scene, slug, out_dir, frames, samples):
     pivot.rotation_euler[2] = 0.0
 
 
-def render_tumble(scene, slug, out_dir, frames, samples):
+def tumble_phases(frames, boost=1.0, halfwidth=0.14):
+    """Loop phases (0..1) for each frame, spaced evenly in *time* under the
+    storefront's speed profile (slow within ±halfwidth of the front, `boost`×
+    faster elsewhere). Uniform angles when boost == 1. Denser frames where the
+    case moves slowly means every display frame gets a new image there."""
+    if boost <= 1.0:
+        return [i / frames for i in range(frames)]
+
+    def speed(p):
+        d = min(p, 1.0 - p)
+        if d >= halfwidth:
+            return boost
+        w = 0.5 * (1.0 + math.cos(math.pi * d / halfwidth))
+        return boost - (boost - 1.0) * w
+
+    n = 20000
+    cumulative = [0.0]
+    for i in range(n):
+        cumulative.append(cumulative[-1] + 1.0 / speed((i + 0.5) / n) / n)
+    total = cumulative[-1]
+    phases, j = [], 0
+    for i in range(frames):
+        target = total * i / frames
+        while cumulative[j + 1] < target:
+            j += 1
+        frac = (target - cumulative[j]) / (cumulative[j + 1] - cumulative[j])
+        phases.append((j + frac) / n)
+    return phases
+
+
+def render_tumble(scene, slug, out_dir, frames, samples, boost=1.0, halfwidth=0.14):
     """One smooth motion: constant-speed rotation about a single fixed axis
     that is tilted toward the camera (the way the Meta logo turns, or a coin
     rolling slowly). No secondary wobble. The case is leaned slightly off the
-    spin axis so front, edge and back come round in one even sweep."""
+    spin axis so front, edge and back come round in one even sweep.
+    Frames are spaced per `tumble_phases`; the phases are written to a
+    sidecar JSON so playback can map angle → nearest frame."""
+    import json
     from mathutils import Quaternion, Vector
 
     pivot = bpy.data.objects["turntable_pivot"]
@@ -125,19 +162,21 @@ def render_tumble(scene, slug, out_dir, frames, samples):
     axis = Vector((0.0, -math.sin(tilt), math.cos(tilt))).normalized()
     lean_q = Quaternion((1.0, 0.0, 0.0), lean)
 
+    phases = tumble_phases(frames, boost, halfwidth)
     prev_mode = pivot.rotation_mode
     pivot.rotation_mode = "QUATERNION"
     base_scale = tuple(pivot.scale)
     pivot.scale = tuple(c * 0.9 for c in base_scale)
-    for i in range(frames):
-        t = (i / frames) * math.tau
-        pivot.rotation_quaternion = Quaternion(axis, t) @ lean_q
+    for i, phase in enumerate(phases):
+        pivot.rotation_quaternion = Quaternion(axis, phase * math.tau) @ lean_q
         scene.render.filepath = os.path.join(out_dir, f"{slug}_tumble_{i:03d}.png")
         bpy.ops.render.render(write_still=True)
     pivot.rotation_quaternion = Quaternion((1.0, 0.0, 0.0, 0.0))
     pivot.rotation_mode = prev_mode
     pivot.rotation_euler = (0.0, 0.0, 0.0)
     pivot.scale = base_scale
+    with open(os.path.join(out_dir, f"{slug}_tumble.json"), "w") as fh:
+        json.dump({"phases": phases, "boost": boost, "halfwidth": halfwidth}, fh)
 
 
 def main():
@@ -167,7 +206,8 @@ def main():
         if args.turntable > 0:
             render_turntable(scene, slug, args.out, args.turntable, args.samples)
         if args.tumble > 0:
-            render_tumble(scene, slug, args.out, args.tumble, args.samples)
+            render_tumble(scene, slug, args.out, args.tumble, args.samples,
+                          args.tumble_boost, args.tumble_halfwidth)
         print(f"rendered {slug}")
 
 

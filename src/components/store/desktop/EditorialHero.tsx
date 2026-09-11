@@ -7,7 +7,7 @@ import { AddToCartButton } from '../AddToCartButton'
 import { CrossfadeImage } from '../CrossfadeImage'
 import { ModelSlider } from '../ModelSlider'
 import type { ExperienceProps } from '../ProductExperience'
-import { SpinningRender } from '../SpinningRender'
+import { SpinningRender, frontLingers } from '../SpinningRender'
 import {
   FAMILIES,
   FAMILY_LABEL,
@@ -39,6 +39,12 @@ import {
 
 const STAGE_W = 1440
 const STAGE_H = 810
+
+// The front of the case is what sells; edges and back are a formality.
+// Linger only while the front faces the viewer (±50°), turn 38× faster
+// everywhere else — one continuous motion, just uneven. Loop length set so
+// the front passes at what used to be the fast speed (Jace, 2026-09-11).
+const idleSpeed = frontLingers(37.6, 0.14)
 
 const useStageScale = () => {
   const [scale, setScale] = useState(1)
@@ -182,11 +188,13 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
           {/* The case turns slowly in place (pre-rendered turntable); hover to hold it. */}
           <SpinningRender
             frames={idleFrames}
+            framePhases={idleFrames === sequences.tumble ? sequences.tumblePhases : null}
             still={image}
             alt={`${design.title} phone case${selectedModel ? ` for ${selectedModel.name}` : ''}`}
             className="h-[760px] w-[704px]"
             imgClassName="h-[760px] w-[704px] drop-shadow-[30px_50px_60px_rgba(20,22,30,0.45)]"
-            fps={idleFrames.length >= 90 ? 16 : idleFrames.length >= 40 ? 12 : 8}
+            loopSeconds={3.55}
+            speedProfile={idleSpeed}
           />
         </motion.figure>
 

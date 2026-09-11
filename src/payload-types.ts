@@ -367,13 +367,25 @@ export interface Product {
         }[]
       | null;
     /**
-     * Two-axis precession loop (48 frames) played as the idle spin in the hero. Empty = use the turntable.
+     * Smooth tilted-axis loop played as the idle motion in the hero. Empty = use the turntable.
      */
     tumble?:
       | {
           frame: number | Media;
           id?: string | null;
         }[]
+      | null;
+    /**
+     * Loop phase (0–1) of each tumble frame, written by the render pipeline. Frames may be unevenly spaced (denser where playback is slow).
+     */
+    tumblePhases?:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
       | null;
   };
   /**
@@ -402,6 +414,18 @@ export interface Product {
               frame: number | Media;
               id?: string | null;
             }[]
+          | null;
+        /**
+         * Loop phase (0–1) of each tumble frame, written by the render pipeline. Frames may be unevenly spaced (denser where playback is slow).
+         */
+        tumblePhases?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
           | null;
         id?: string | null;
       }[]
@@ -1969,6 +1993,7 @@ export interface ProductsSelect<T extends boolean = true> {
               frame?: T;
               id?: T;
             };
+        tumblePhases?: T;
       };
   modelRenders?:
     | T
@@ -1989,6 +2014,7 @@ export interface ProductsSelect<T extends boolean = true> {
               frame?: T;
               id?: T;
             };
+        tumblePhases?: T;
         id?: T;
       };
   gallery?:

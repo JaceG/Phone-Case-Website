@@ -483,10 +483,28 @@ frame has real layers and was read via the Figma MCP. Rebuilt from it:
   renders exactly that: quaternion `Q(axis tilted 26° toward camera, t) ·
   lean 12°`, no sinusoidal terms, 640 px frames, ~6 s loop at 16 fps →
   `renders.tumble` / `modelRenders[].tumble` via `pnpm renders:import`,
-  which transcodes frame loops to lossy WebP with alpha (~15 KB/frame,
-  1.4 MB per 96-frame loop; PNG would be 20 MB). Hero plays `tumble`,
-  falls back to `turntable`, then the hero still. Full batch: stills + 24
-  turntable + 96 tumble per design, ~70 s for three designs.
+  which transcodes frame loops to lossy WebP with alpha (~15 KB/frame).
+  The tumble is 288 frames (4.3 MB per design) spaced **by the playback
+  speed profile, not by angle** (`--tumble-boost 37.6 --tumble-halfwidth
+  0.14`): frames are dense where the case moves slowly (the front) and
+  sparse through the fast edges/back, so every display frame gets a new
+  image without doubling the frame count. `render.py` writes
+  `<slug>_tumble.json` with each frame's loop phase; the import stores it
+  as `renders.tumblePhases`; `SpinningRender` maps phase → nearest frame.
+  Small playback tweaks don't need a re-render; a big change to the
+  profile shape does (frames would be dense in the wrong place). Full batch: stills +
+  24 turntable + 288 tumble per design, ~3.5 min for three designs. Hero
+  plays `tumble`, falls back to `turntable`, then the hero still.
+- **v1.0 is tagged** (`git tag v1.0`, commit "first draft through build
+  order + editorial hero"): the constant-speed tumble Jace approved. Revert
+  point: `git checkout v1.0 -- src/components/store/SpinningRender.tsx
+  src/components/store/desktop/EditorialHero.tsx`. After it, playback is
+  angle-based with a speed profile `frontLingers(boost, halfWidth)`: slow
+  only within ±halfWidth of dead-front (raised-cosine window), `boost`×
+  faster everywhere else, loop normalised to `loopSeconds`. Tuned with
+  Jace on 2026-09-11 to `frontLingers(37.6, 0.14)` and `loopSeconds` 3.55:
+  front window 2.5 s, edges+back ≈1.05 s. When changing one speed, keep
+  the other fixed by re-solving `loopSeconds` (integral of 1/profile).
 - Gotcha when previewing: the browser pane's Mobile viewport preset also
   sets an Android user agent, and the tree is chosen server-side, so after
   switching back to desktop the page must be reloaded (or use
