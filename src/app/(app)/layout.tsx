@@ -1,16 +1,25 @@
 import type { ReactNode } from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import { ensureStartsWith } from '@/utilities/ensureStartsWith'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { Ibarra_Real_Nova, Michroma, Outfit } from 'next/font/google'
 import React from 'react'
 import './globals.css'
+
+// Editorial storefront type (from the Daily Hero 35 reference): Adieu is
+// commercial, so Michroma stands in for the wide geometric display face.
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' })
+const ibarra = Ibarra_Real_Nova({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-ibarra',
+  display: 'swap',
+})
+const michroma = Michroma({ weight: '400', subsets: ['latin'], variable: '--font-michroma', display: 'swap' })
 
 /* const { SITE_NAME, TWITTER_CREATOR, TWITTER_SITE } = process.env
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
@@ -42,7 +51,15 @@ const twitterSite = TWITTER_SITE ? ensureStartsWith(TWITTER_SITE, 'https://') : 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
-      className={[GeistSans.variable, GeistMono.variable].filter(Boolean).join(' ')}
+      className={[
+        GeistSans.variable,
+        GeistMono.variable,
+        outfit.variable,
+        ibarra.variable,
+        michroma.variable,
+      ]
+        .filter(Boolean)
+        .join(' ')}
       lang="en"
       suppressHydrationWarning
     >
@@ -55,10 +72,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <Providers>
           <AdminBar />
           <LivePreviewListener />
-
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          {children}
         </Providers>
       </body>
     </html>

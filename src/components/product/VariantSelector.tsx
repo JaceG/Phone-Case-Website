@@ -57,7 +57,9 @@ export function VariantSelector({ product }: { product: Product }) {
 
               const currentOptions = Array.from(optionSearchParams.values())
 
-              let isAvailableForSale = true
+              // Print on demand: an option is purchasable iff a variant exists for it.
+              // A phone model with no variant is "coming soon".
+              let isAvailableForSale = false
 
               // Find a matching variant
               if (variants) {
@@ -78,12 +80,7 @@ export function VariantSelector({ product }: { product: Product }) {
                 if (matchingVariant) {
                   // If we found a matching variant, set the variant ID in the search params.
                   optionSearchParams.set('variant', String(matchingVariant.id))
-
-                  if (matchingVariant.inventory && matchingVariant.inventory > 0) {
-                    isAvailableForSale = true
-                  } else {
-                    isAvailableForSale = false
-                  }
+                  isAvailableForSale = true
                 }
               }
 
@@ -108,7 +105,7 @@ export function VariantSelector({ product }: { product: Product }) {
                       scroll: false,
                     })
                   }}
-                  title={`${option.label} ${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
+                  title={`${option.label}${!isAvailableForSale ? ' (Coming soon)' : ''}`}
                 >
                   {option.label}
                 </Button>

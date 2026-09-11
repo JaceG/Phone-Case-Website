@@ -1,0 +1,238 @@
+/* Editorial storefront tokens and primitives.
+   Reference: Figma "Daily Hero 35 — Arkkhe", rebuilt for the phone case.
+   Light silver ground, ink text, copper accent. Fixed look regardless of the
+   template's light/dark toggle. */
+
+.store-root {
+  --store-bg: #bdc0c9;
+  --store-bg-2: #d3d6dc;
+  --store-card: #e8eff0;
+  --store-fg: #2a2a2a;
+  --store-muted: rgba(42, 42, 42, 0.58);
+  --store-line: rgba(42, 42, 42, 0.16);
+  --store-line-light: rgba(255, 255, 255, 0.45);
+  --store-accent: #c08f6d;
+  --store-ink: #2a2a2a;
+
+  /* Type. Defined here (not only in Tailwind's @theme) because this sheet is
+     loaded outside Tailwind's pipeline and unused @theme vars are pruned. */
+  --font-display: var(--font-michroma), 'Arial Black', sans-serif;
+  --font-body: var(--font-outfit), var(--font-geist-sans), sans-serif;
+  --font-serif: var(--font-ibarra), 'Times New Roman', serif;
+
+  background: var(--store-bg);
+  color: var(--store-fg);
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  color-scheme: light;
+}
+
+.store-root .font-serif {
+  font-family: var(--font-serif);
+}
+.store-root .font-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+}
+.store-root .font-body {
+  font-family: var(--font-body);
+}
+
+.store-root ::selection {
+  background: var(--store-accent);
+  color: #fff;
+}
+
+/* The silver studio ground: soft directional light, two shadow falls, hairline columns. */
+.store-ground {
+  background:
+    radial-gradient(60% 90% at 12% -10%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 60%),
+    radial-gradient(30% 45% at 100% -10%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%),
+    radial-gradient(35% 40% at 42% 92%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(115deg, #c9ccd3 0%, #b9bcc5 45%, #a9adb7 100%);
+}
+.store-ground::before {
+  /* the two big soft shadows crossing the surface */
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(112deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 42%, rgba(30, 32, 40, 0.16) 52%, rgba(0, 0, 0, 0) 66%),
+    linear-gradient(112deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 68%, rgba(30, 32, 40, 0.14) 80%, rgba(0, 0, 0, 0) 96%);
+}
+.store-ground::after {
+  /* hairline column grid */
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, var(--store-line-light) 1px, transparent 1px);
+  background-size: 20% 100%;
+  background-position: 0 0;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.35));
+}
+
+.store-header {
+  background: transparent;
+}
+
+.store-nav-link {
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--store-fg);
+  padding-bottom: 6px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.store-nav-link[data-active='true'] {
+  border-bottom-color: var(--store-accent);
+}
+.store-nav-link:hover {
+  border-bottom-color: var(--store-fg);
+}
+
+.store-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--store-line);
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  color: var(--store-fg);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+.store-pill:hover {
+  border-color: var(--store-fg);
+}
+.store-pill[data-active='true'] {
+  background: var(--store-ink);
+  color: #fff;
+  border-color: var(--store-ink);
+}
+.store-pill:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* The "Know more" block: dark gradient, square, thin light border. */
+.store-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 28px;
+  background: linear-gradient(242deg, #464547 14%, #645b54 70%, #2d292a 70.5%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    filter 0.2s ease;
+}
+.store-cta:hover {
+  filter: brightness(1.12);
+}
+.store-cta:active {
+  transform: scale(0.98);
+}
+.store-cta:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Text link with the circle icon ("Watch demo"). */
+.store-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--store-fg);
+}
+
+.store-glass {
+  background: rgba(232, 239, 240, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px) saturate(120%);
+  box-shadow:
+    0 20px 50px rgba(20, 22, 30, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.store-card {
+  background: var(--store-card);
+  box-shadow: 0 18px 40px rgba(20, 22, 30, 0.14);
+}
+
+.store-cart button {
+  color: var(--store-fg);
+}
+
+.store-prose {
+  color: var(--store-fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 34rem;
+}
+.store-prose p + p {
+  margin-top: 1em;
+}
+.store-prose h2,
+.store-prose h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  margin: 1.5em 0 0.5em;
+}
+
+.store-spec {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--store-line);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.store-spec dt {
+  color: var(--store-muted);
+}
+.store-spec dd {
+  text-align: right;
+}
+
+.store-hide-scrollbar {
+  scrollbar-width: none;
+}
+.store-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .store-root * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

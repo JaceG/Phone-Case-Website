@@ -14,9 +14,14 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import sharp from 'sharp'
+
+import { Artwork } from '@/collections/Artwork'
 import { Categories } from '@/collections/Categories'
 import { Media } from '@/collections/Media'
 import { Pages } from '@/collections/Pages'
+import { PhoneModels } from '@/collections/PhoneModels'
+import { ProductionAssets } from '@/collections/ProductionAssets'
 import { Users } from '@/collections/Users'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
@@ -34,10 +39,19 @@ export default buildConfig({
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard'],
+      // Operator work list for in-house printing. Sidebar link + root view.
+      afterNavLinks: ['@/components/admin/PrintQueue/NavLink#PrintQueueNavLink'],
+      views: {
+        printQueue: {
+          Component: '@/components/admin/PrintQueue#PrintQueue',
+          path: '/print-queue',
+          exact: true,
+        },
+      },
     },
     user: Users.slug,
   },
-  collections: [Users, Pages, Categories, Media],
+  collections: [Users, Pages, Categories, Media, PhoneModels, Artwork, ProductionAssets],
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
@@ -86,8 +100,5 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // Sharp is now an optional dependency -
-  // if you want to resize images, crop, set focal point, etc.
-  // make sure to install it and pass it to the config.
-  // sharp,
+  sharp,
 })

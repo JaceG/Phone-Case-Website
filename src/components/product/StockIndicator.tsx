@@ -7,6 +7,10 @@ type Props = {
   product: Product
 }
 
+/**
+ * Print on demand: there is no stock count to show. Once a phone model is
+ * picked we tell the customer the case is made for them.
+ */
 export const StockIndicator: React.FC<Props> = ({ product }) => {
   const searchParams = useSearchParams()
 
@@ -30,23 +34,17 @@ export const StockIndicator: React.FC<Props> = ({ product }) => {
     return undefined
   }, [product.enableVariants, searchParams, variants])
 
-  const stockQuantity = useMemo(() => {
-    if (product.enableVariants) {
-      if (selectedVariant) {
-        return selectedVariant.inventory || 0
-      }
-    }
-    return product.inventory || 0
-  }, [product.enableVariants, selectedVariant, product.inventory])
-
   if (product.enableVariants && !selectedVariant) {
-    return null
+    return (
+      <div className="uppercase font-mono text-sm font-medium text-gray-500">
+        <p>Select your phone</p>
+      </div>
+    )
   }
 
   return (
     <div className="uppercase font-mono text-sm font-medium text-gray-500">
-      {stockQuantity < 10 && stockQuantity > 0 && <p>Only {stockQuantity} left in stock</p>}
-      {(stockQuantity === 0 || !stockQuantity) && <p>Out of stock</p>}
+      <p>Printed to order</p>
     </div>
   )
 }

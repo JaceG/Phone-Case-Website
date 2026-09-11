@@ -25,11 +25,11 @@ export const Providers: React.FC<{
                     slug: true,
                     title: true,
                     gallery: true,
-                    inventory: true,
+                    renders: true,
                   },
                   variants: {
                     title: true,
-                    inventory: true,
+                    options: true,
                   },
                 },
               },

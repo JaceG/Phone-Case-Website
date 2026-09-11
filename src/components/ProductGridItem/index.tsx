@@ -5,13 +5,14 @@ import React from 'react'
 import clsx from 'clsx'
 import { Media } from '@/components/Media'
 import { Price } from '@/components/Price'
+import { getProductThumbnail } from '@/utilities/productImages'
 
 type Props = {
   product: Partial<Product>
 }
 
 export const ProductGridItem: React.FC<Props> = ({ product }) => {
-  const { gallery, priceInUSD, title } = product
+  const { priceInUSD, title } = product
 
   let price = priceInUSD
 
@@ -29,8 +30,7 @@ export const ProductGridItem: React.FC<Props> = ({ product }) => {
     }
   }
 
-  const image =
-    gallery?.[0]?.image && typeof gallery[0]?.image !== 'string' ? gallery[0]?.image : false
+  const image = getProductThumbnail(product) ?? false
 
   return (
     <Link className="relative inline-block h-full w-full group" href={`/products/${product.slug}`}>

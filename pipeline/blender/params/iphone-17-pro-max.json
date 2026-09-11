@@ -1,0 +1,33 @@
+{
+  "slug": "iphone-17-pro-max",
+  "label": "iPhone 17 Pro Max silicone MagSafe blank (6.9\")",
+  "height_mm": 165,
+  "width_mm": 81,
+  "depth_mm": 13,
+  "wall_mm": 1.8,
+  "corner_radius_mm": 10,
+  "camera_island": {
+    "x_mm": 4,
+    "y_mm": 4,
+    "w_mm": 38,
+    "h_mm": 38,
+    "height_mm": 2.5,
+    "corner_radius_mm": 8
+  },
+  "cutout_inset_mm": 3,
+  "cutout_radius_mm": 6,
+  "bevel_mm": 0.6,
+  "corner_segments": 16,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "height_mm, width_mm, depth_mm are the supplier listing envelope (165 × 81 × 13 mm), confirmed 2026-09-08. depth_mm is the outer envelope of the case side wall, NOT wall thickness.",
+    "placeholder": [
+      "wall_mm: guessed 1.8 mm silicone wall; measure with calipers.",
+      "corner_radius_mm: guessed; measure.",
+      "camera_island: placeholder square top-left of the back (x/y are the offset of its top-left corner from the back's top-left corner, as seen from outside). The real 17 Pro Max plateau spans most of the width; take it from the blank.",
+      "cutout_inset_mm / cutout_radius_mm: the rectangular lens cutout is the island inset by cutout_inset_mm with cutout_radius_mm corners; placeholder.",
+      "bevel_mm: cosmetic edge rounding only."
+    ],
+    "template": "Print template pixel size = template_px_per_mm × ((width_mm + 2·depth_mm) × (height_mm + 2·depth_mm)) = 1070 × 1910. See pipeline/README.md."
+  }
+}

@@ -5,6 +5,10 @@ import { adminOnly } from '@/access/adminOnly'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: {
+    singular: 'Collection',
+    plural: 'Collections',
+  },
   access: {
     create: adminOnly,
     delete: adminOnly,
@@ -13,7 +17,8 @@ export const Categories: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    group: 'Content',
+    group: 'Catalog',
+    description: 'Thematic groupings of designs, e.g. "Night Series".',
   },
   fields: [
     {

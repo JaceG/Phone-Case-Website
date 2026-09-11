@@ -41,3 +41,19 @@ next-env.d.ts
 
 public/media
 
+
+# private uploads (artwork masters, dielines, blend files) — served via Payload only
+/uploads
+
+# borrowed images used while prototyping; never deployed, not even to staging
+/placeholder/*
+!/placeholder/.gitkeep
+
+# render pipeline inputs/outputs
+/pipeline/designs/*
+!/pipeline/designs/.gitkeep
+/pipeline/out/*
+!/pipeline/out/.gitkeep
+
+# Blender autosave backups
+*.blend1

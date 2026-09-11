@@ -76,6 +76,9 @@ export interface Config {
     pages: Page;
     categories: Category;
     media: Media;
+    phoneModels: PhoneModel;
+    artwork: Artwork;
+    productionAssets: ProductionAsset;
     forms: Form;
     'form-submissions': FormSubmission;
     addresses: Address;
@@ -109,6 +112,9 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    phoneModels: PhoneModelsSelect<false> | PhoneModelsSelect<true>;
+    artwork: ArtworkSelect<false> | ArtworkSelect<true>;
+    productionAssets: ProductionAssetsSelect<false> | ProductionAssetsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
@@ -125,7 +131,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {
@@ -185,21 +191,21 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   name?: string | null;
   roles?: ('admin' | 'customer')[] | null;
   orders?: {
-    docs?: (string | Order)[];
+    docs?: (number | Order)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
   cart?: {
-    docs?: (string | Cart)[];
+    docs?: (number | Cart)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
   addresses?: {
-    docs?: (string | Address)[];
+    docs?: (number | Address)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -223,15 +229,17 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Every order is a print job. Work the queue from Print queue in the nav; update Print status here as the job moves.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "orders".
  */
 export interface Order {
-  id: string;
+  id: number;
   items?:
     | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
+        product?: (number | null) | Product;
+        variant?: (number | null) | Variant;
         quantity: number;
         id?: string | null;
       }[]
@@ -249,23 +257,68 @@ export interface Order {
     country?: string | null;
     phone?: string | null;
   };
-  customer?: (string | null) | User;
+  customer?: (number | null) | User;
   customerEmail?: string | null;
-  transactions?: (string | Transaction)[] | null;
+  transactions?: (number | Transaction)[] | null;
   status?: OrderStatus;
   amount?: number | null;
   currency?: 'USD' | null;
+  /**
+   * Generated from the order items when the order is created. What to print, on which blank, and the print master to print from.
+   */
+  printJobs?:
+    | {
+        designTitle: string;
+        designSlug?: string | null;
+        phoneModel?: string | null;
+        quantity: number;
+        /**
+         * The print master.
+         */
+        artwork?: (number | null) | Artwork;
+        variant?: (number | null) | Variant;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The physical job. Print status drives the print queue; the rest is for the label.
+   */
+  fulfillment?: {
+    /**
+     * Printed and Shipped stamp their dates automatically.
+     */
+    printStatus?: ('queued' | 'printing' | 'printed' | 'qc' | 'packed' | 'shipped' | 'cancelled') | null;
+    printedAt?: string | null;
+    shippedAt?: string | null;
+    carrier?: string | null;
+    trackingNumber?: string | null;
+    trackingUrl?: string | null;
+    /**
+     * Operator notes: reprints, defects, anything the label needs.
+     */
+    notes?: string | null;
+  };
   accessToken?: string | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * One product = one design. Upload the artwork, set a price, publish. Variants for every active phone model are created for you.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
 export interface Product {
-  id: string;
+  id: number;
   title: string;
+  /**
+   * The print master. This single file drives every render and the print job. Never shown to customers directly.
+   */
+  artwork?: (number | null) | Artwork;
+  /**
+   * One line under the title on the product page.
+   */
+  tagline?: string | null;
   description?: {
     root: {
       type: string;
@@ -281,34 +334,117 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Dominant colours of the design as hex. Used by the front end to tint the page around the render.
+   */
+  palette?:
+    | {
+        hex: string;
+        id?: string | null;
+      }[]
+    | null;
+  renderStatus?: ('pending' | 'rendering' | 'ready' | 'failed') | null;
+  renders?: {
+    /**
+     * Cycles. Dramatic light, the landing shot.
+     */
+    hero?: (number | null) | Media;
+    /**
+     * Cycles. Shows the wrap around the edge.
+     */
+    threeQuarter?: (number | null) | Media;
+    /**
+     * EEVEE. Catalog grid thumbnail.
+     */
+    flat?: (number | null) | Media;
+    /**
+     * 36–60 frames in order. Scrubbed on scroll. Leave empty to fall back to the hero.
+     */
+    turntable?:
+      | {
+          frame: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Two-axis precession loop (48 frames) played as the idle spin in the hero. Empty = use the turntable.
+     */
+    tumble?:
+      | {
+          frame: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Optional. Renders of this design on a specific phone model (camera bump, cutouts differ). Any slot left empty falls back to the shared renders above. Filled by `pnpm renders:import` with RENDERS_MODEL set.
+   */
+  modelRenders?:
+    | {
+        phoneModel: number | PhoneModel;
+        hero?: (number | null) | Media;
+        threeQuarter?: (number | null) | Media;
+        flat?: (number | null) | Media;
+        /**
+         * Frames for this model. Empty = use the shared turntable.
+         */
+        turntable?:
+          | {
+              frame: number | Media;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Tumble frames for this model. Empty = use the shared tumble.
+         */
+        tumble?:
+          | {
+              frame: number | Media;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Lifestyle shots, or per-phone-model renders (camera cutouts differ). Optional.
+   */
   gallery?:
     | {
-        image: string | Media;
-        variantOption?: (string | null) | VariantOption;
+        image: number | Media;
+        /**
+         * Set when this image is specific to one phone model.
+         */
+        variantOption?: (number | null) | VariantOption;
         id?: string | null;
       }[]
     | null;
   layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
-  inventory?: number | null;
+  /**
+   * Leave on. A variant per active phone model is created automatically when you publish.
+   */
   enableVariants?: boolean | null;
-  variantTypes?: (string | VariantType)[] | null;
+  variantTypes?: (number | VariantType)[] | null;
   variants?: {
-    docs?: (string | Variant)[];
+    docs?: (number | Variant)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
-  relatedProducts?: (string | Product)[] | null;
+  relatedProducts?: (number | Product)[] | null;
   meta?: {
     title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
-  categories?: (string | Category)[] | null;
+  /**
+   * Thematic groupings. Drives "other designs in this collection".
+   */
+  collections?: (number | Category)[] | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -320,11 +456,42 @@ export interface Product {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Print masters. Full-bleed, in the print template coordinate space. Admin-only, never public.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artwork".
+ */
+export interface Artwork {
+  id: number;
+  /**
+   * Unlicensed IP puts payment processing at risk. Every file needs a clear basis for use.
+   */
+  license: 'original' | 'commissioned' | 'licensed' | 'revenueShare';
+  designer?: string | null;
+  colorProfile?: ('sRGB' | 'adobeRGB' | 'cmyk') | null;
+  dpi?: number | null;
+  /**
+   * Contract reference, licence terms, revenue-share percentage, expiry.
+   */
+  licenseNotes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   caption?: {
     root: {
@@ -354,13 +521,78 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Blanks you can print on. Setting a model to Active creates a purchasable variant for every published design.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "phoneModels".
+ */
+export interface PhoneModel {
+  id: number;
+  /**
+   * Customer-facing name, e.g. "iPhone 17 Pro".
+   */
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  brand: 'apple' | 'samsung' | 'google' | 'other';
+  screenInches?: number | null;
+  releaseYear?: number | null;
+  /**
+   * Active: sellable now. Coming soon: visible but not purchasable. Retired: hidden.
+   */
+  status: 'active' | 'comingSoon' | 'retired';
+  /**
+   * Lower numbers appear first in the model picker.
+   */
+  sortOrder?: number | null;
+  /**
+   * Managed automatically. Commerce-side mirror of this phone model.
+   */
+  variantOption?: (number | null) | VariantOption;
+  heightMm?: number | null;
+  widthMm?: number | null;
+  depthMm?: number | null;
+  cornerRadiusMm?: number | null;
+  wallThicknessMm?: number | null;
+  cameraIslandHeightMm?: number | null;
+  /**
+   * Where the numbers came from, sample source, caveats.
+   */
+  geometryNotes?: string | null;
+  /**
+   * Blocks the Blender UV unwrap. The UV map and this template must share one coordinate space.
+   */
+  printTemplate?: (number | null) | ProductionAsset;
+  /**
+   * Exported case shell for optional React Three Fiber use on desktop.
+   */
+  shellModel?: (number | null) | ProductionAsset;
+  blendFile?: (number | null) | ProductionAsset;
+  blankSupplier?: {
+    name?: string | null;
+    sku?: string | null;
+    url?: string | null;
+    /**
+     * e.g. liquid silicone, rigid PC, TPU
+     */
+    material?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Mirror of Phone Models. Edit phone models instead.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "variantOptions".
  */
 export interface VariantOption {
-  id: string;
+  id: number;
   _variantOptions_options_order?: string | null;
-  variantType: string | VariantType;
+  variantType: number | VariantType;
   label: string;
   /**
    * should be defaulted or dynamic based on label
@@ -371,21 +603,45 @@ export interface VariantOption {
   deletedAt?: string | null;
 }
 /**
+ * There is exactly one: Phone Model. Managed by the Phone Models collection.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "variantTypes".
  */
 export interface VariantType {
-  id: string;
+  id: number;
   label: string;
   name: string;
   options?: {
-    docs?: (string | VariantOption)[];
+    docs?: (number | VariantOption)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
+}
+/**
+ * Dielines, Blender files, shells, test textures. Admin-only, never public.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productionAssets".
+ */
+export interface ProductionAsset {
+  id: number;
+  kind: 'dieline' | 'blend' | 'shell' | 'uvChecker' | 'other';
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -414,7 +670,7 @@ export interface CallToActionBlock {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
@@ -435,7 +691,7 @@ export interface CallToActionBlock {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   publishedOn?: string | null;
   hero: {
@@ -462,7 +718,7 @@ export interface Page {
             newTab?: boolean | null;
             reference?: {
               relationTo: 'pages';
-              value: string | Page;
+              value: number | Page;
             } | null;
             url?: string | null;
             label: string;
@@ -474,7 +730,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    media?: (number | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -491,7 +747,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   /**
@@ -532,7 +788,7 @@ export interface ContentBlock {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
@@ -553,7 +809,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
+  media: number | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -580,12 +836,12 @@ export interface ArchiveBlock {
   } | null;
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'products' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       }[]
     | null;
   id?: string | null;
@@ -593,11 +849,13 @@ export interface ArchiveBlock {
   blockType: 'archive';
 }
 /**
+ * Thematic groupings of designs, e.g. "Night Series".
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
 export interface Category {
-  id: string;
+  id: number;
   title: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -614,12 +872,12 @@ export interface Category {
 export interface CarouselBlock {
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'products' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       }[]
     | null;
   /**
@@ -628,7 +886,7 @@ export interface CarouselBlock {
   populatedDocs?:
     | {
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       }[]
     | null;
   /**
@@ -644,7 +902,7 @@ export interface CarouselBlock {
  * via the `definition` "ThreeItemGridBlock".
  */
 export interface ThreeItemGridBlock {
-  products?: (string | Product)[] | null;
+  products?: (number | Product)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'threeItemGrid';
@@ -679,7 +937,7 @@ export interface BannerBlock {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
-  form: string | Form;
+  form: number | Form;
   enableIntro?: boolean | null;
   introContent?: {
     root: {
@@ -705,7 +963,7 @@ export interface FormBlock {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   title: string;
   fields?:
     | (
@@ -817,9 +1075,6 @@ export interface Form {
       )[]
     | null;
   submitButtonLabel?: string | null;
-  /**
-   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
-   */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
     root: {
@@ -839,9 +1094,6 @@ export interface Form {
   redirect?: {
     url: string;
   };
-  /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
-   */
   emails?:
     | {
         emailTo?: string | null;
@@ -850,9 +1102,6 @@ export interface Form {
         replyTo?: string | null;
         emailFrom?: string | null;
         subject: string;
-        /**
-         * Enter the message that should be sent in this email.
-         */
         message?: {
           root: {
             type: string;
@@ -875,18 +1124,19 @@ export interface Form {
   createdAt: string;
 }
 /**
+ * Design × phone model. Generated automatically; edit only to override a price.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "variants".
  */
 export interface Variant {
-  id: string;
+  id: number;
   /**
    * Used for administrative purposes, not shown to customers. This is populated by default.
    */
   title?: string | null;
-  product: string | Product;
-  options: (string | VariantOption)[];
-  inventory?: number | null;
+  product: number | Product;
+  options: (number | VariantOption)[];
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
   updatedAt: string;
@@ -899,11 +1149,11 @@ export interface Variant {
  * via the `definition` "transactions".
  */
 export interface Transaction {
-  id: string;
+  id: number;
   items?:
     | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
+        product?: (number | null) | Product;
+        variant?: (number | null) | Variant;
         quantity: number;
         id?: string | null;
       }[]
@@ -927,10 +1177,10 @@ export interface Transaction {
     phone?: string | null;
   };
   status: 'pending' | 'succeeded' | 'failed' | 'cancelled' | 'expired' | 'refunded';
-  customer?: (string | null) | User;
+  customer?: (number | null) | User;
   customerEmail?: string | null;
-  order?: (string | null) | Order;
-  cart?: (string | null) | Cart;
+  order?: (number | null) | Order;
+  cart?: (number | null) | Cart;
   amount?: number | null;
   currency?: 'USD' | null;
   updatedAt: string;
@@ -941,17 +1191,17 @@ export interface Transaction {
  * via the `definition` "carts".
  */
 export interface Cart {
-  id: string;
+  id: number;
   items?:
     | {
-        product?: (string | null) | Product;
-        variant?: (string | null) | Variant;
+        product?: (number | null) | Product;
+        variant?: (number | null) | Variant;
         quantity: number;
         id?: string | null;
       }[]
     | null;
   secret?: string | null;
-  customer?: (string | null) | User;
+  customer?: (number | null) | User;
   purchasedAt?: string | null;
   status?: ('active' | 'purchased' | 'abandoned') | null;
   subtotal?: number | null;
@@ -964,8 +1214,8 @@ export interface Cart {
  * via the `definition` "addresses".
  */
 export interface Address {
-  id: string;
-  customer?: (string | null) | User;
+  id: number;
+  customer?: (number | null) | User;
   title?: string | null;
   firstName?: string | null;
   lastName?: string | null;
@@ -1025,8 +1275,8 @@ export interface Address {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
@@ -1042,7 +1292,7 @@ export interface FormSubmission {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -1059,68 +1309,80 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'categories';
-        value: string | Category;
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'phoneModels';
+        value: number | PhoneModel;
+      } | null)
+    | ({
+        relationTo: 'artwork';
+        value: number | Artwork;
+      } | null)
+    | ({
+        relationTo: 'productionAssets';
+        value: number | ProductionAsset;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'addresses';
-        value: string | Address;
+        value: number | Address;
       } | null)
     | ({
         relationTo: 'variants';
-        value: string | Variant;
+        value: number | Variant;
       } | null)
     | ({
         relationTo: 'variantTypes';
-        value: string | VariantType;
+        value: number | VariantType;
       } | null)
     | ({
         relationTo: 'variantOptions';
-        value: string | VariantOption;
+        value: number | VariantOption;
       } | null)
     | ({
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'carts';
-        value: string | Cart;
+        value: number | Cart;
       } | null)
     | ({
         relationTo: 'orders';
-        value: string | Order;
+        value: number | Order;
       } | null)
     | ({
         relationTo: 'transactions';
-        value: string | Transaction;
+        value: number | Transaction;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -1130,10 +1392,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -1153,7 +1415,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1390,6 +1652,82 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "phoneModels_select".
+ */
+export interface PhoneModelsSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  brand?: T;
+  screenInches?: T;
+  releaseYear?: T;
+  status?: T;
+  sortOrder?: T;
+  variantOption?: T;
+  heightMm?: T;
+  widthMm?: T;
+  depthMm?: T;
+  cornerRadiusMm?: T;
+  wallThicknessMm?: T;
+  cameraIslandHeightMm?: T;
+  geometryNotes?: T;
+  printTemplate?: T;
+  shellModel?: T;
+  blendFile?: T;
+  blankSupplier?:
+    | T
+    | {
+        name?: T;
+        sku?: T;
+        url?: T;
+        material?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artwork_select".
+ */
+export interface ArtworkSelect<T extends boolean = true> {
+  license?: T;
+  designer?: T;
+  colorProfile?: T;
+  dpi?: T;
+  licenseNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productionAssets_select".
+ */
+export interface ProductionAssetsSelect<T extends boolean = true> {
+  kind?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
@@ -1565,7 +1903,6 @@ export interface VariantsSelect<T extends boolean = true> {
   title?: T;
   product?: T;
   options?: T;
-  inventory?: T;
   priceInUSDEnabled?: T;
   priceInUSD?: T;
   updatedAt?: T;
@@ -1604,7 +1941,56 @@ export interface VariantOptionsSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  artwork?: T;
+  tagline?: T;
   description?: T;
+  palette?:
+    | T
+    | {
+        hex?: T;
+        id?: T;
+      };
+  renderStatus?: T;
+  renders?:
+    | T
+    | {
+        hero?: T;
+        threeQuarter?: T;
+        flat?: T;
+        turntable?:
+          | T
+          | {
+              frame?: T;
+              id?: T;
+            };
+        tumble?:
+          | T
+          | {
+              frame?: T;
+              id?: T;
+            };
+      };
+  modelRenders?:
+    | T
+    | {
+        phoneModel?: T;
+        hero?: T;
+        threeQuarter?: T;
+        flat?: T;
+        turntable?:
+          | T
+          | {
+              frame?: T;
+              id?: T;
+            };
+        tumble?:
+          | T
+          | {
+              frame?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   gallery?:
     | T
     | {
@@ -1619,7 +2005,6 @@ export interface ProductsSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
       };
-  inventory?: T;
   enableVariants?: T;
   variantTypes?: T;
   variants?: T;
@@ -1633,7 +2018,7 @@ export interface ProductsSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
-  categories?: T;
+  collections?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -1697,6 +2082,28 @@ export interface OrdersSelect<T extends boolean = true> {
   status?: T;
   amount?: T;
   currency?: T;
+  printJobs?:
+    | T
+    | {
+        designTitle?: T;
+        designSlug?: T;
+        phoneModel?: T;
+        quantity?: T;
+        artwork?: T;
+        variant?: T;
+        id?: T;
+      };
+  fulfillment?:
+    | T
+    | {
+        printStatus?: T;
+        printedAt?: T;
+        shippedAt?: T;
+        carrier?: T;
+        trackingNumber?: T;
+        trackingUrl?: T;
+        notes?: T;
+      };
   accessToken?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1791,7 +2198,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "header".
  */
 export interface Header {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1799,7 +2206,7 @@ export interface Header {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
@@ -1815,7 +2222,7 @@ export interface Header {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1823,7 +2230,7 @@ export interface Footer {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;

@@ -28,6 +28,8 @@ const nextConfig: NextConfig = {
 
         return {
           hostname: url.hostname,
+          // Without the port, http://localhost:3000/... is rejected by the image optimizer in dev
+          ...(url.port ? { port: url.port } : {}),
           protocol: url.protocol.replace(':', '') as 'http' | 'https',
         }
       }),

@@ -9,29 +9,8 @@ import React, { useMemo } from 'react'
 export function EditItemQuantityButton({ type, item }: { item: CartItem; type: 'minus' | 'plus' }) {
   const { decrementItem, incrementItem, isLoading } = useCart()
 
-  const disabled = useMemo(() => {
-    if (!item.id) return true
-
-    const target =
-      item.variant && typeof item.variant === 'object'
-        ? item.variant
-        : item.product && typeof item.product === 'object'
-          ? item.product
-          : null
-
-    if (
-      target &&
-      typeof target === 'object' &&
-      target.inventory !== undefined &&
-      target.inventory !== null
-    ) {
-      if (type === 'plus' && item.quantity !== undefined && item.quantity !== null) {
-        return item.quantity >= target.inventory
-      }
-    }
-
-    return false
-  }, [item, type])
+  // Print on demand: no stock ceiling on quantity.
+  const disabled = useMemo(() => !item.id, [item.id])
 
   return (
     <form>

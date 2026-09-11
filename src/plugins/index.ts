@@ -10,14 +10,18 @@ import { stripeAdapter } from '@payloadcms/plugin-ecommerce/payments/stripe'
 import { Page, Product } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { ProductsCollection } from '@/collections/Products'
+import { VariantsCollection } from '@/collections/Variants'
+import { OrdersCollection } from '@/collections/Orders'
 import { adminOrPublishedStatus } from '@/access/adminOrPublishedStatus'
 import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
 import { customerOnlyFieldAccess } from '@/access/customerOnlyFieldAccess'
 import { isAdmin } from '@/access/isAdmin'
 import { isDocumentOwner } from '@/access/isDocumentOwner'
 
+const siteName = process.env.SITE_NAME || 'Phone Case Store'
+
 const generateTitle: GenerateTitle<Product | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Ecommerce Template` : 'Payload Ecommerce Template'
+  return doc?.title ? `${doc.title} | ${siteName}` : siteName
 }
 
 const generateURL: GenerateURL<Product | Page> = ({ doc }) => {
@@ -87,33 +91,13 @@ export const plugins: Plugin[] = [
     customers: {
       slug: 'users',
     },
+    // Print on demand: blanks are stocked, designs are printed per order.
+    // There is no per-SKU stock to reconcile, so the plugin's inventory
+    // tracking is switched off entirely.
+    inventory: false,
     orders: {
-      ordersCollectionOverride: ({ defaultCollection }) => ({
-        ...defaultCollection,
-        fields: [
-          ...defaultCollection.fields,
-          {
-            name: 'accessToken',
-            type: 'text',
-            unique: true,
-            index: true,
-            admin: {
-              position: 'sidebar',
-              readOnly: true,
-            },
-            hooks: {
-              beforeValidate: [
-                ({ value, operation }) => {
-                  if (operation === 'create' || !value) {
-                    return crypto.randomUUID()
-                  }
-                  return value
-                },
-              ],
-            },
-          },
-        ],
-      }),
+      // Adds the print-queue fulfillment flow and read-only print jobs.
+      ordersCollectionOverride: OrdersCollection,
     },
     payments: {
       paymentMethods: [
@@ -126,6 +110,23 @@ export const plugins: Plugin[] = [
     },
     products: {
       productsCollectionOverride: ProductsCollection,
+      variants: {
+        variantsCollectionOverride: VariantsCollection,
+        variantTypesCollectionOverride: ({ defaultCollection }) => ({
+          ...defaultCollection,
+          admin: {
+            ...defaultCollection.admin,
+            description: 'There is exactly one: Phone Model. Managed by the Phone Models collection.',
+          },
+        }),
+        variantOptionsCollectionOverride: ({ defaultCollection }) => ({
+          ...defaultCollection,
+          admin: {
+            ...defaultCollection.admin,
+            description: 'Mirror of Phone Models. Edit phone models instead.',
+          },
+        }),
+      },
     },
   }),
 ]
