@@ -438,3 +438,99 @@ rebuild → rerender → `pnpm renders:import`), then Stripe test keys for
 step 2. Also: pick the 6.1-inch blank's phone (open decision #3), replace
 the generated checker designs with real licensed artwork, and decide the
 brand name (`SITE_NAME` / `NEXT_PUBLIC_SITE_NAME`).
+
+---
+
+## Imported Claude continuation (2026-09-11)
+
+This section was imported from the local Claude Code transcript after the
+initial first-draft milestone. Treat it as the current direction for the
+prototype.
+
+### Editorial desktop reference and interaction direction
+
+- The reference file is
+  `https://www.figma.com/design/E1xCViV2T1hHpok5iycz2Q/Daily-Hero-35----Arkkhe--Copy-?m=auto&t=wZptTxzCyTfBvRoG-6`.
+  It was a flattened showcase image rather than an editable Figma design,
+  so its composition was rebuilt as code rather than modified in Figma.
+- The previous cinematic page was rejected as a superficial tweak. The
+  desktop hero was rebuilt around the reference's fixed **1440 × 810**
+  composition: light silver ground; headline at upper left/top; product
+  large on the right; dark rectangular CTA; staggered right-edge tiles
+  for iPhone / Android / all designs; bottom-left phone-model slider card.
+  Do not drift back to the prior centred dark product-page composition.
+- The product prototype now exposes device-family switching (iPhone /
+  Android), model selection, and render crossfades. Android is catalogued
+  for interaction testing but deliberately reuses the iPhone shell render
+  until real model-specific geometry is made. This is a function-first
+  prototype decision.
+
+### Hero motion: approved current behaviour
+
+- The hero must never wobble, shimmy, or rotate like a top. It uses one
+  fixed tilted axis at constant angular geometry — a smooth coin/Meta-logo
+  style rotation.
+- Playback is intentionally non-uniform: it lingers only when the front
+  faces the viewer, speeds up as soon as the edge comes around, and passes
+  the back quickly. The approved timing is roughly **2.5 seconds** for the
+  front window and **1.05 seconds** for edges/back. The front window is
+  approximately ±50° around dead-front.
+- The sequence has **288 frames**. Frames are distributed by time rather
+  than angle (203 in the slow front region, 85 in the fast remainder), with
+  a per-frame phase sidecar consumed by `SpinningRender.tsx`. This avoided
+  visible stepping without inflating to 576 frames. Preserve this mechanism
+  if retuning timing.
+- The pre-speed-profile state is committed and tagged **`v1.0`**. The
+  approved hero motion work is committed as **`fa70b51`**.
+
+### Shell revised from the supplied blank reference photos
+
+- The generic single rectangular camera cutout was replaced with three
+  raised-lip lens holes in a triangle, plus separate flash, microphone, and
+  depth-sensor holes. The MagSafe ring and alignment line are shallow
+  grooves in the back; artwork continues across them.
+- Hole definitions are data in
+  `pipeline/blender/params/iphone-17-pro-max.json`, so each future model
+  supplies a list of centres/diameters instead of needing a new mesh script.
+- The current shell redesign is **uncommitted**. Its dimensions, hole
+  placement, raised lips, camera plateau and MagSafe groove are traced by
+  eye from reference photos and remain placeholders pending a physical
+  blank and caliper measurements. A faint island-top UV artifact around
+  the lenses is known and documented in `pipeline/README.md`.
+
+## Blender refinement (2026-09-12)
+
+Jace authorized another Blender pass using the Alibaba blank listing and local
+reference photos. `build_shell.py` now delegates geometry to `shell_geometry.py`:
+explicit rolled back/rim/interior profiles, a broad 72 × 43 mm camera surround
+with a recessed deck, thin separate lens lips, six clear camera-area openings,
+shallow MagSafe grooves, four side controls, and bottom charging/speaker holes.
+The old boolean-union camera-deck streaks were fixed by separate lens-lip
+meshes and reprojection after cuts/bevels. Material and lighting now use matte
+lavender inner silicone, subtle surface grain, broad lights, and AgX highlights.
+The shared 1070 × 1910 artwork rectangle remains; curved-surface flattening
+and film stretch remain approximations. All detail dimensions are visual
+estimates; only the outer 165 × 81 × 13 mm comes from the supplied listing.
+
+Final render batch is `pipeline/out/refined/`: three stills, 24 turntable and
+288 tumble frames per design. The approved axis, speed functions, 3.55-second
+playback and phase sidecars are unchanged. The editorial page composition and
+Android shell reuse are preserved. Plain lavender review images are in
+`pipeline/out/review/lavender/`, including `detail` and `interior` cameras.
+
+`validate_shell.py` checks closed outward-facing mesh parts, clear camera
+openings, the shell envelope and shared back/deck UV coordinates. Prior
+uncommitted source/model/sample renders are saved in
+`pipeline/out/review/baseline/`. Import with `RENDERS_KEEP_PREVIOUS=1` to retain
+old media and write rollback relationships under the render output directory's
+`previous-renders/<timestamp>/`. See `pipeline/README.md` for commands.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

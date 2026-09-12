@@ -57,3 +57,6 @@ public/media
 
 # Blender autosave backups
 *.blend1
+
+# Python modules loaded by Blender
+__pycache__/

@@ -389,6 +389,19 @@ which fills `renders.*` and sets `renderStatus = 'ready'`. Everything the
 renders show is a UV checker; there is still no real artwork, and the
 storefront still uses the template UI.
 
+**Shell redesign, per-lens holes (2026-09-11):** Jace's blanks (reference
+photos in `Phone Website Stuff/Phone Case Image Samples`, now under
+`~/Documents`) have a raised camera plateau with a separate hole per lens,
+flash, mic and depth sensor, raised lips around the lenses, and a moulded
+MagSafe ring + alignment line. Holes are custom per model. `build_shell.py`
+now cuts `holes[]` from the params JSON (cylinders through island + back),
+unions `lens_rim` cylinders onto the island, and grooves the MagSafe ring
+and line into the back with the artwork continuing across. Layout is traced
+from the photos (three lenses in a triangle, flash/mic/sensor in a column)
+and is placeholder until measured. The old single rectangular cutout
+(`cutout_inset_mm`/`cutout_radius_mm`) is gone. Known blemish: UV streaks
+on the island top from the rim union.
+
 **Template fixes applied (keep):** `generatePreviewPath` pointed at a
 non-existent `(frontend)` route group; the `Media` image component built
 absolute `http://localhost:3000` URLs which Next 16's image optimizer rejects
@@ -525,3 +538,27 @@ rebuild → rerender → `pnpm renders:import`), then Stripe test keys for
 step 2. Also: pick the 6.1-inch blank's phone (open decision #3), replace
 the generated checker designs with real licensed artwork, and decide the
 brand name (`SITE_NAME` / `NEXT_PUBLIC_SITE_NAME`).
+
+## Blender refinement (Codex, 2026-09-12)
+
+Jace authorized a visual refinement from the Alibaba blank listing and supplied
+photos. Current geometry lives in `pipeline/blender/shell_geometry.py`, called
+by `build_shell.py`: rolled outer edges and open rim, broad recessed camera
+deck, thin lens lips, camera/flash/mic/sensor openings, MagSafe grooves, side
+buttons, and charging/speaker openings. Separate lens lips and reprojected UVs
+remove the previous camera-deck streaking. Materials use matte lavender inner
+silicone, subtle grain, broad studio lights and AgX. Dimensions beyond the
+listing envelope remain visual estimates. The shared artwork rectangle is
+preserved, but curved-surface film compensation is still approximate.
+
+`pipeline/out/refined/` contains the complete new three-design batch. The
+approved tilted-axis motion, 288 time-distributed frames, phase sidecars and
+3.55-second playback are unchanged; storefront composition is unchanged.
+`pipeline/out/review/lavender/` has plain-colour proofs, including detail and
+interior views. `validate_shell.py` checks topology, openings, envelope and UVs.
+
+The previous uncommitted model and source were copied to
+`pipeline/out/review/baseline/` before editing. `RENDERS_KEEP_PREVIOUS=1` on the
+importer retains old media and saves product render relationships under
+`<out>/previous-renders/<timestamp>/`. Commands and caveats are documented in
+`pipeline/README.md`. Stripe remains parked; this is still a review draft.

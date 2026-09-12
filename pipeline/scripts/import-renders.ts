@@ -4,6 +4,7 @@
  *   pnpm renders:import                 # = pnpm payload run pipeline/scripts/import-renders.ts
  *   pnpm renders:import meridian        # only these slugs (positional; `payload run` drops --flags)
  *   RENDERS_OUT=other/dir pnpm renders:import
+ *   RENDERS_KEEP_PREVIOUS=1 pnpm renders:import  # snapshot relationships and retain old media
  *   RENDERS_MODEL=galaxy-s25-ultra pnpm renders:import   # write into modelRenders[phoneModel] instead of the shared renders
  *   pnpm tsx pipeline/scripts/import-renders.ts --only meridian --out pipeline/out   # equivalent
  *
@@ -49,6 +50,8 @@ const only = [...(argList('--only') ?? []), ...positional]
 const onlySet = only.length ? new Set(only) : null
 
 const modelSlug = argValue('--model') ?? process.env.RENDERS_MODEL
+const keepPrevious = process.env.RENDERS_KEEP_PREVIOUS === '1'
+const snapshotDir = path.join(outDir, 'previous-renders', new Date().toISOString().replaceAll(':', '-'))
 const altFor = (title: string, camera: string) =>
   modelSlug ? `${title} — ${camera} render (${modelSlug})` : `${title} — ${camera} render`
 
@@ -128,6 +131,19 @@ const run = async () => {
       continue
     }
     const title = product.title ?? slug
+
+    // Keep a reversible local review iteration: save the exact relationships
+    // before uploading anything, and skip deleting their media below.
+    if (keepPrevious) {
+      await fs.mkdir(snapshotDir, { recursive: true })
+      await fs.writeFile(path.join(snapshotDir, `${slug}.json`), JSON.stringify({
+        id: product.id,
+        slug,
+        renders: product.renders,
+        modelRenders: product.modelRenders,
+        renderStatus: product.renderStatus,
+      }, null, 2) + '\n')
+    }
 
     const upload = async (file: string, camera: string): Promise<Media> => {
       let data: Buffer = await fs.readFile(file)
@@ -211,12 +227,12 @@ const run = async () => {
       pagination: false,
     })
     const staleIds = stale.docs.map((d) => d.id).filter((id) => !newIds.has(id))
-    if (staleIds.length) {
+    if (staleIds.length && !keepPrevious) {
       await payload.delete({ collection: 'media', where: { id: { in: staleIds } }, depth: 0 })
     }
 
     payload.logger.info(
-      `${slug}: ${Object.keys(found.stills).join(', ') || 'no stills'}; ${found.turntable.length} turntable + ${found.tumble.length} tumble frames; removed ${staleIds.length} stale media`,
+      `${slug}: ${Object.keys(found.stills).join(', ') || 'no stills'}; ${found.turntable.length} turntable + ${found.tumble.length} tumble frames; ${keepPrevious ? 'retained' : 'removed'} ${staleIds.length} previous media`,
     )
     imported++
   }

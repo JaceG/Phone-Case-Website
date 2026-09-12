@@ -36,7 +36,6 @@ import math
 import os
 import sys
 
-import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
@@ -62,26 +61,6 @@ def parse_args():
 # ----------------------------------------------------------------------- geometry
 
 
-def rounded_rect_outline(w, h, r, seg):
-    """CCW (viewed from +Z) list of (point, outward_normal) 2D Vectors around a
-    w×h rectangle centred on the origin with corner radius r. Straight edges
-    are single segments between arc endpoints."""
-    r = max(0.01, min(r, w / 2 - 0.01, h / 2 - 0.01))
-    corners = [
-        (w / 2 - r, -h / 2 + r, -90.0),  # bottom-right
-        (w / 2 - r, h / 2 - r, 0.0),  # top-right
-        (-w / 2 + r, h / 2 - r, 90.0),  # top-left
-        (-w / 2 + r, -h / 2 + r, 180.0),  # bottom-left
-    ]
-    out = []
-    for cx, cy, a0 in corners:
-        for i in range(seg + 1):
-            a = math.radians(a0 + 90.0 * i / seg)
-            n = Vector((math.cos(a), math.sin(a)))
-            out.append((Vector((cx, cy)) + n * r, n))
-    return out
-
-
 class Template:
     """Build-frame mm  ->  UV in the print-template rectangle."""
 
@@ -98,69 +77,6 @@ class Template:
         )
 
 
-def build_outer_surface(P, T):
-    """Open outer surface of the case: back face + four wrapped side walls, with
-    dieline UVs. Returns a bpy mesh in the build frame (mm)."""
-    outline = rounded_rect_outline(P["width_mm"], P["height_mm"], P["corner_radius_mm"], P["corner_segments"])
-    depth = P["depth_mm"]
-
-    bm = bmesh.new()
-    uv_layer = bm.loops.layers.uv.new("UVMap")
-
-    fold = [bm.verts.new((p.x, p.y, 0.0)) for p, _ in outline]
-    rim = [bm.verts.new((p.x, p.y, -depth)) for p, _ in outline]
-    bm.verts.ensure_lookup_table()
-
-    n = len(outline)
-    back = bm.faces.new(fold)  # CCW -> normal +Z
-    back.material_index = 0
-    for loop in back.loops:
-        i = fold.index(loop.vert)
-        loop[uv_layer].uv = T.uv(outline[i][0])
-
-    for i in range(n):
-        j = (i + 1) % n
-        f = bm.faces.new((fold[i], rim[i], rim[j], fold[j]))  # outward normal
-        f.material_index = 0
-        for loop in f.loops:
-            k = i if loop.vert in (fold[i], rim[i]) else j
-            t = depth if loop.vert in (rim[i], rim[j]) else 0.0
-            loop[uv_layer].uv = T.uv(outline[k][0], outline[k][1], t)
-
-    me = bpy.data.meshes.new("case_shell")
-    bm.to_mesh(me)
-    bm.free()
-    return me
-
-
-def build_rounded_box(name, w, h, r, seg, z0, z1, center, T, material_index=0, project_uv=True):
-    """Closed rounded box (used for the camera island and the cutout cutter).
-    UVs are a planar projection of the build-frame XY through the template, so
-    the artwork continues across the island top; the island's vertical faces
-    smear the surrounding pixels, which is roughly what the film does over a
-    step."""
-    outline = rounded_rect_outline(w, h, r, seg)
-    bm = bmesh.new()
-    uv_layer = bm.loops.layers.uv.new("UVMap")
-    cx, cy = center
-    top = [bm.verts.new((p.x + cx, p.y + cy, z1)) for p, _ in outline]
-    bot = [bm.verts.new((p.x + cx, p.y + cy, z0)) for p, _ in outline]
-    faces = [bm.faces.new(top), bm.faces.new(list(reversed(bot)))]
-    n = len(outline)
-    for i in range(n):
-        j = (i + 1) % n
-        faces.append(bm.faces.new((bot[i], bot[j], top[j], top[i])))
-    for f in faces:
-        f.material_index = material_index
-        for loop in f.loops:
-            v = loop.vert.co
-            loop[uv_layer].uv = T.uv(Vector((v.x, v.y))) if project_uv else (0.0, 0.0)
-    me = bpy.data.meshes.new(name)
-    bm.to_mesh(me)
-    bm.free()
-    return me
-
-
 def build_to_scene_matrix(depth):
     """mm build frame -> metres scene frame: rotate so the back faces -Y and the
     phone top is +Z, then shift so the case is centred on the Z axis."""
@@ -170,38 +86,6 @@ def build_to_scene_matrix(depth):
 
 
 # ---------------------------------------------------------------------- helpers
-
-
-def apply_modifier(obj, mod):
-    bpy.ops.object.select_all(action="DESELECT")
-    obj.select_set(True)
-    bpy.context.view_layer.objects.active = obj
-    bpy.ops.object.modifier_apply(modifier=mod.name)
-
-
-def shade_smooth(obj, angle_deg=35.0):
-    bpy.ops.object.select_all(action="DESELECT")
-    obj.select_set(True)
-    bpy.context.view_layer.objects.active = obj
-    for op in ("shade_smooth_by_angle", "shade_auto_smooth"):
-        if hasattr(bpy.ops.object, op):
-            try:
-                getattr(bpy.ops.object, op)(angle=math.radians(angle_deg))
-                return
-            except Exception:
-                pass
-    bpy.ops.object.shade_smooth()
-
-
-def add_bevel(obj, width_m, segments=3):
-    mod = obj.modifiers.new("bevel", "BEVEL")
-    mod.width = width_m
-    mod.segments = segments
-    mod.limit_method = "ANGLE"
-    mod.angle_limit = math.radians(40.0)
-    mod.miter_outer = "MITER_ARC"
-    mod.harden_normals = True
-    apply_modifier(obj, mod)
 
 
 def look_at(obj, target):
@@ -254,7 +138,7 @@ def hex_to_linear(hex_str):
 # -------------------------------------------------------------------- materials
 
 
-def make_materials(texture_path):
+def make_materials(texture_path, silicone_color='#b4a6d1'):
     img = bpy.data.images.load(texture_path, check_existing=False)
     img.name = "case_artwork"
     try:
@@ -277,17 +161,18 @@ def make_materials(texture_path):
     tex.extension = "EXTEND"
     coord = nt.nodes.new("ShaderNodeTexCoord")
     noise = nt.nodes.new("ShaderNodeTexNoise")
-    noise.inputs["Scale"].default_value = 900.0
-    noise.inputs["Detail"].default_value = 6.0
+    noise.inputs["Scale"].default_value = 4200.0
+    noise.inputs["Detail"].default_value = 2.0
     noise.inputs["Roughness"].default_value = 0.6
     bump = nt.nodes.new("ShaderNodeBump")
-    bump.inputs["Strength"].default_value = 0.06
-    bump.inputs["Distance"].default_value = 0.0004
+    bump.inputs["Strength"].default_value = 0.12
+    bump.inputs["Distance"].default_value = 0.000012
 
-    bsdf.inputs["Roughness"].default_value = 0.55
+    bsdf.inputs["Roughness"].default_value = 0.57
+    bsdf.inputs["IOR"].default_value = 1.43
     for key in ("Specular IOR Level", "Specular"):
         if key in bsdf.inputs:
-            bsdf.inputs[key].default_value = 0.45
+            bsdf.inputs[key].default_value = 0.28
             break
 
     links = nt.links
@@ -305,12 +190,14 @@ def make_materials(texture_path):
     noise.location = (-200, -300)
     bump.location = (50, -300)
 
-    # Inner surfaces, rim/lip and cutout walls: plain matte dark silicone.
+    # Inner surfaces, rim/lip and cutout walls: plain matte silicone.
     inner = bpy.data.materials.new("case_inner")
     inner.use_nodes = True
     ib = inner.node_tree.nodes.get("Principled BSDF")
-    ib.inputs["Base Color"].default_value = (0.02, 0.02, 0.022, 1.0)
-    ib.inputs["Roughness"].default_value = 0.75
+    ib.inputs["Base Color"].default_value = (*hex_to_linear(silicone_color), 1.0)
+    ib.inputs["Roughness"].default_value = 0.65
+    ib.inputs["IOR"].default_value = 1.43
+    ib.inputs["Specular IOR Level"].default_value = 0.28
 
     return img, print_mat, inner
 
@@ -349,7 +236,7 @@ def setup_scene(P, T):
         if hasattr(ev, attr):
             setattr(ev, attr, val)
 
-    for vt in ("Standard", "AgX"):
+    for vt in ("AgX", "Standard"):
         try:
             scene.view_settings.view_transform = vt
             break
@@ -357,12 +244,12 @@ def setup_scene(P, T):
             continue
     scene.view_settings.look = "None"
 
-    # World: near-black studio background.
+    # Neutral studio ambience; render.py uses a transparent backdrop.
     world = bpy.data.worlds.new("studio")
     world.use_nodes = True
     bg = world.node_tree.nodes.get("Background")
-    bg.inputs["Color"].default_value = (*hex_to_linear("#0a0a0c"), 1.0)
-    bg.inputs["Strength"].default_value = 1.0
+    bg.inputs["Color"].default_value = (0.65, 0.68, 0.75, 1.0)
+    bg.inputs["Strength"].default_value = 0.25
     scene.world = world
 
     scene["case_params"] = json.dumps(P)
@@ -373,14 +260,20 @@ def setup_scene(P, T):
 
 def setup_cameras_and_lights():
     origin = (0.0, 0.0, 0.0)
-    add_camera("hero", (-0.17, -0.36, 0.21), (0.0, 0.0, 0.0), lens=75.0, res=(1024, 1280))
-    add_camera("three_quarter", (0.30, -0.28, 0.07), (0.0, 0.0, 0.01), lens=75.0, res=(1024, 1280))
+    add_camera("hero", (-0.15, -0.46, 0.14), origin, lens=85.0, res=(1200, 1500))
+    add_camera("three_quarter", (0.27, -0.41, 0.12), origin, lens=85.0, res=(1200, 1500))
     add_camera("flat", (0.0, -0.5, 0.0), origin, ortho_scale=0.21, res=(1024, 2048))
     add_camera("turntable", (0.0, -0.5, 0.05), origin, lens=80.0, res=(768, 768))
+    add_camera("detail", (-.12, -.25, .19), (0, -.009, .055), lens=100, res=(1400, 1100))
+    add_camera("interior", (.22, .4, .15), origin, lens=80, res=(1200, 1500))
 
-    add_area_light("key", (-0.45, -0.55, 0.55), origin, energy=40.0, size=0.7, color=(1.0, 0.97, 0.93))
-    add_area_light("fill", (0.6, -0.5, 0.1), origin, energy=12.0, size=1.0, color=(0.9, 0.95, 1.0))
-    add_area_light("rim", (0.25, 0.45, 0.45), origin, energy=45.0, size=0.25, color=(1.0, 1.0, 1.0))
+    add_area_light("key", (-0.28, -0.35, 0.32), origin, energy=7.0, size=0.30,
+                   color=(1.0, .97, .94), shape='RECTANGLE', size_y=.5)
+    add_area_light("fill", (0.3, -0.25, 0.04), origin, energy=3.0, size=0.24,
+                   color=(.94, .96, 1.0), shape='RECTANGLE', size_y=.45)
+    add_area_light("rim", (0.12, 0.23, 0.25), origin, energy=6.0, size=0.18,
+                   shape='RECTANGLE', size_y=.4)
+    add_area_light("interior_fill", (-0.1, .4, -.03), origin, energy=2.5, size=.35)
 
 
 # ------------------------------------------------------------------------- main
@@ -399,7 +292,7 @@ def main():
 
     T = Template(P["width_mm"], P["height_mm"], P["depth_mm"])
     scene = setup_scene(P, T)
-    img, print_mat, inner_mat = make_materials(texture)
+    img, print_mat, inner_mat = make_materials(texture, P.get('silicone_color', '#b4a6d1'))
     to_scene = build_to_scene_matrix(P["depth_mm"])
 
     # --- pivot
@@ -408,74 +301,13 @@ def main():
     pivot.empty_display_size = 0.05
     scene.collection.objects.link(pivot)
 
-    # --- shell: outer printable surface, then solidify inward for the wall
-    shell_me = build_outer_surface(P, T)
-    shell_me.transform(to_scene)
-    shell = bpy.data.objects.new("case_shell", shell_me)
-    scene.collection.objects.link(shell)
-    shell.data.materials.append(print_mat)
-    shell.data.materials.append(inner_mat)
-
-    sol = shell.modifiers.new("wall", "SOLIDIFY")
-    sol.thickness = P["wall_mm"] * MM
-    sol.offset = -1.0  # grow inward (against the outward normals)
-    sol.use_even_offset = True
-    sol.use_rim = True
-    sol.material_offset = 1
-    sol.material_offset_rim = 1
-    apply_modifier(shell, sol)
-
-    # --- camera island (build frame: top-left of the back as seen from outside)
-    ci = P["camera_island"]
-    W, H = P["width_mm"], P["height_mm"]
-    isl_cx = -W / 2 + ci["x_mm"] + ci["w_mm"] / 2
-    isl_cy = H / 2 - ci["y_mm"] - ci["h_mm"] / 2
-    island_me = build_rounded_box(
-        "camera_island",
-        ci["w_mm"], ci["h_mm"], ci["corner_radius_mm"], P["corner_segments"],
-        z0=-0.4, z1=ci["height_mm"], center=(isl_cx, isl_cy), T=T,
-    )
-    island_me.transform(to_scene)
-    island = bpy.data.objects.new("camera_island", island_me)
-    scene.collection.objects.link(island)
-    island.data.materials.append(print_mat)
-    island.data.materials.append(inner_mat)
-
-    # --- lens cutout: rounded rectangle through island and back
-    inset = P["cutout_inset_mm"]
-    cut_me = build_rounded_box(
-        "lens_cutter",
-        ci["w_mm"] - 2 * inset, ci["h_mm"] - 2 * inset, P["cutout_radius_mm"], P["corner_segments"],
-        z0=-(P["wall_mm"] + 1.0), z1=ci["height_mm"] + 1.0, center=(isl_cx, isl_cy), T=T,
-        material_index=0, project_uv=False,
-    )
-    cut_me.transform(to_scene)
-    cutter = bpy.data.objects.new("lens_cutter", cut_me)
-    scene.collection.objects.link(cutter)
-    cutter.data.materials.append(inner_mat)
-
-    for target in (shell, island):
-        b = target.modifiers.new("lens_cutout", "BOOLEAN")
-        b.operation = "DIFFERENCE"
-        b.object = cutter
-        for solver in ("EXACT", "MANIFOLD", "FLOAT"):
-            try:
-                b.solver = solver
-                break
-            except TypeError:
-                continue
-        b.material_mode = "TRANSFER"
-        apply_modifier(target, b)
-
-    bpy.data.objects.remove(cutter, do_unlink=True)
-    bpy.data.meshes.remove(cut_me, do_unlink=True)
-
-    # --- finish: bevel + smooth shading, parent to pivot
-    add_bevel(shell, P["bevel_mm"] * MM, segments=3)
-    add_bevel(island, min(P["bevel_mm"], 0.5) * MM, segments=2)
-    shade_smooth(shell)
-    shade_smooth(island)
-    for ob in (shell, island):
+    # Profiled moulded shell; all cutting/UV repair happens in millimetres.
+    sys.path.insert(0, here)
+    from shell_geometry import build_parts
+    parts = build_parts(P, T, print_mat, inner_mat)
+    shell, island = parts[:2]
+    for ob in parts:
+        ob.data.transform(to_scene)
         ob.parent = pivot
 
     setup_cameras_and_lights()

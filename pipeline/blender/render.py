@@ -19,7 +19,7 @@ import sys
 
 import bpy
 
-CYCLES_CAMERAS = {"hero", "three_quarter"}
+CYCLES_CAMERAS = {"hero", "three_quarter", "detail", "interior"}
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".webp"}
 
 
@@ -38,6 +38,7 @@ def parse_args():
     p.add_argument("--only", nargs="*", default=None, help="design slugs to render (default: all)")
     p.add_argument("--samples", type=int, default=32, help="Cycles samples for hero shots (denoised)")
     p.add_argument("--cpu", action="store_true", help="force Cycles onto the CPU")
+    p.add_argument("--surface-color", help="plain silicone proof as sRGB hex; omitted keeps artwork")
     return p.parse_args(argv)
 
 
@@ -188,6 +189,19 @@ def main():
     scene.render.image_settings.file_format = "PNG"
     scene.render.image_settings.color_mode = "RGBA"
     tex = bpy.data.images["case_artwork"]
+    if args.surface_color:
+        # Review the physical finish independently of the diagnostic artwork.
+        h = args.surface_color.lstrip('#')
+        if len(h) != 6:
+            raise ValueError('--surface-color needs a six-digit sRGB hex')
+        rgb = [int(h[i:i+2], 16)/255 for i in (0, 2, 4)]
+        linear = [v/12.92 if v <= .04045 else ((v+.055)/1.055)**2.4 for v in rgb]
+        for name in ('case_print', 'case_inner'):
+            nt = bpy.data.materials[name].node_tree
+            bsdf = next(n for n in nt.nodes if n.type == 'BSDF_PRINCIPLED')
+            for link in list(bsdf.inputs['Base Color'].links):
+                nt.links.remove(link)
+            bsdf.inputs['Base Color'].default_value = (*linear, 1)
     os.makedirs(args.out, exist_ok=True)
     enable_gpu(scene, args.cpu)
 
