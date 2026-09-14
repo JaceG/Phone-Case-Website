@@ -184,9 +184,9 @@ function DesignCollection(props: ExperienceProps) {
           </h2>
         </div>
         <p>
-          Different designs. Same phone.
+          Keep a few. Gift a few.
           <br />
-          Build a three-case rotation for $50.
+          Mix designs and phones. Three cases, $50.
         </p>
       </div>
       <div className="collection-cards">
@@ -236,6 +236,10 @@ const questions = [
   [
     'How does three for $50 work?',
     'Choose any three cases and the $50 set price applies automatically in your bag. Mix designs, repeat a favourite, or choose different phones for a gift. Every complete set of three receives the offer. Shipping and tax are separate.',
+  ],
+  [
+    'What if I want more than three?',
+    'Build another set. Three cases are $50, six are $100, nine are $150, and so on. Cases outside a complete set use their individual prices until you finish the next three. Your bag shows your current subtotal and the price of the next complete set.',
   ],
   [
     'Can I order just one case?',

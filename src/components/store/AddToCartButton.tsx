@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 
 import type { CatalogDesign, CatalogPhoneModel } from './catalog'
 import { variantFor } from './catalog'
+import { useStoreUI } from './StoreUI'
 
 type Props = {
   design: CatalogDesign
@@ -24,12 +25,22 @@ export const AddToCartButton: React.FC<Props> = ({
   label: actionLabel,
   reviewAfterAdd,
 }) => {
-  const { addItem, isLoading } = useCart()
+  const { addItem, isLoading, cart } = useCart()
+  const { nextSetFrom, setNextSetFrom } = useStoreUI()
+  const count = cart?.items?.reduce((sum, item) => sum + item.quantity, 0) ?? 0
+  const startAnotherSet = !reviewAfterAdd && count > 0 && count % 3 === 0 && nextSetFrom !== count
   const [addedDesign, setAddedDesign] = useState<number | null>(null)
   const added = addedDesign === design.id
   const variant = variantFor(design, model)
 
   const onClick = useCallback(async () => {
+    if (startAnotherSet) {
+      setNextSetFrom(count)
+      document
+        .getElementById('build-your-three')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
     if (!variant) {
       if (onNeedsModel) onNeedsModel()
       else {
@@ -50,21 +61,34 @@ export const AddToCartButton: React.FC<Props> = ({
     } catch {
       toast.error('Could not add to cart')
     }
-  }, [addItem, design.id, design.title, model?.name, onNeedsModel, variant, reviewAfterAdd])
+  }, [
+    addItem,
+    design.id,
+    design.title,
+    model?.name,
+    onNeedsModel,
+    variant,
+    reviewAfterAdd,
+    startAnotherSet,
+    setNextSetFrom,
+    count,
+  ])
 
-  const label = !model
-    ? 'Choose your phone'
-    : !variant
-      ? 'Coming soon'
-      : added
-        ? 'Added ✓'
-        : (actionLabel ?? 'Add this design')
+  const label = startAnotherSet
+    ? 'Build another set · $50'
+    : !model
+      ? 'Choose your phone'
+      : !variant
+        ? 'Coming soon'
+        : added
+          ? 'Added ✓'
+          : (actionLabel ?? 'Add this design')
 
   return (
     <button
       type="button"
       onClick={onClick}
-      disabled={isLoading || (Boolean(model) && !variant)}
+      disabled={isLoading || (!startAnotherSet && Boolean(model) && !variant)}
       className={className ?? 'store-cta'}
       aria-label={label}
     >

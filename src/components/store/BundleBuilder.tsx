@@ -7,6 +7,9 @@ import { toast } from 'sonner'
 import type { ExperienceProps } from './ProductExperience'
 import { AddToCartButton } from './AddToCartButton'
 import { formatPrice, thumbImageFor, variantFor } from './catalog'
+import { useStoreUI } from './StoreUI'
+import { SetOfferNotice } from './SetOfferNotice'
+import { AddCaseForPhone } from '@/components/Cart/AddCaseForPhone'
 
 export const openShoppingBag = () => window.dispatchEvent(new Event('store:open-cart'))
 export const choosePhone = () => {
@@ -18,10 +21,12 @@ export const choosePhone = () => {
 
 function useSelection() {
   const { cart, decrementItem, isLoading } = useCart()
+  const { nextSetFrom, setNextSetFrom } = useStoreUI()
   const items = cart?.items ?? []
   const count = items.reduce((sum, item) => sum + item.quantity, 0)
   // Only expand the current three slots, even when a line has a large quantity.
-  const start = count ? Math.floor((count - 1) / 3) * 3 : 0
+  const newSet = count > 0 && count % 3 === 0 && nextSetFrom === count
+  const start = newSet ? count : count ? Math.floor((count - 1) / 3) * 3 : 0
   const slots: typeof items = []
   let cursor = 0
   for (const item of items) {
@@ -34,6 +39,11 @@ function useSelection() {
     cart,
     count,
     slots,
+    setNumber: start / 3 + 1,
+    ready: count > 0 && count % 3 === 0 && !newSet,
+    newSet,
+    startNextSet: () => setNextSetFrom(count),
+    cancelNextSet: () => setNextSetFrom(null),
     isLoading,
     removeOne: async (id: string) => {
       try {
@@ -47,8 +57,18 @@ function useSelection() {
 
 export function BundleBuilder(props: ExperienceProps) {
   const { catalog, design, selectedModel, phoneModels, selectModel, switchDesign } = props
-  const { count, slots, removeOne, isLoading, cart } = useSelection()
-  const filled = count > 0 && count % 3 === 0
+  const {
+    count,
+    slots,
+    removeOne,
+    isLoading,
+    cart,
+    setNumber,
+    ready,
+    newSet,
+    startNextSet,
+    cancelNextSet,
+  } = useSelection()
   const selectedPrice = variantFor(design, selectedModel)?.price ?? design.price
   return (
     <section className="bundle-builder" id="build-your-three" aria-labelledby="bundle-heading">
@@ -60,20 +80,39 @@ export function BundleBuilder(props: ExperienceProps) {
           <em>Three moods.</em>
         </h2>
         <p>
-          Pick your everyday, your going-out, and your just-because. Mix any three designs for{' '}
+          Pick your everyday, your going-out, and your just-because. Mix any three cases for{' '}
           <strong>$50.</strong>
         </p>
+        <p className="bundle-sharing-note">
+          All yours. Or a few to share. Mix phone models in the same set.
+        </p>
+        <div className="bundle-set-ladder" aria-label="Set pricing">
+          {[1, 2, 3].map((sets) => (
+            <span key={sets}>
+              <strong>{sets * 3} cases</strong>${sets * 50}
+            </span>
+          ))}
+        </div>
         <p className="bundle-single-note">
           Prefer one? Every design is also available individually.
         </p>
       </div>
       <div className="bundle-controls">
         <div className="bundle-heading-row">
-          <span>Your selection</span>
+          <span>Set {setNumber} · $50</span>
           <strong aria-live="polite">
-            {filled ? 'Your three are ready' : `${slots.length} of 3 selected`}
+            {ready ? 'Your set is complete' : `${slots.length} of 3 selected`}
           </strong>
         </div>
+        <SetOfferNotice quantity={count} subtotal={cart?.subtotal ?? 0} />
+        {newSet && (
+          <div className="bundle-new-set-note">
+            <span>Your {count} cases are still in your bag. This set adds $50 when complete.</span>
+            <button type="button" onClick={cancelNextSet}>
+              Back to my completed set
+            </button>
+          </div>
+        )}
         <div className="bundle-slots">
           {[0, 1, 2].map((index) => {
             const item = slots[index]
@@ -128,7 +167,7 @@ export function BundleBuilder(props: ExperienceProps) {
           })}
         </div>
         <label className="bundle-phone" htmlFor="case-phone">
-          <span>For your phone</span>
+          <span>Phone for the next case</span>
           <select
             id="case-phone"
             value={selectedModel?.id ?? ''}
@@ -146,32 +185,78 @@ export function BundleBuilder(props: ExperienceProps) {
               ))}
           </select>
         </label>
+        <p className="bundle-phone-help">
+          Choosing for someone else? Change the phone here. Cases already in your bag keep their
+          models.
+        </p>
         <div
           className="bundle-design-picker"
           id="design-picker"
           role="group"
           aria-label="Choose a design"
         >
-          {catalog.map((d) => (
-            <button
-              type="button"
-              aria-pressed={d.id === design.id}
-              key={d.id}
-              onClick={() => switchDesign(d.slug)}
-            >
-              <span style={{ background: d.palette[0] ?? '#aaa' }} />
-              {d.title}
-              {d.id === design.id && <Check size={13} />}
-            </button>
-          ))}
+          {catalog.map((d) => {
+            const inBag =
+              cart?.items?.reduce(
+                (total, item) =>
+                  total +
+                  ((typeof item.product === 'object' ? item.product?.id : item.product) === d.id
+                    ? item.quantity
+                    : 0),
+                0,
+              ) ?? 0
+            return (
+              <button
+                type="button"
+                aria-pressed={d.id === design.id}
+                key={d.id}
+                onClick={() => switchDesign(d.slug)}
+              >
+                <span style={{ background: d.palette[0] ?? '#aaa' }} />
+                {d.title}
+                {inBag > 0 && <small>{inBag} in bag</small>}
+                {d.id === design.id && <Check size={13} />}
+              </button>
+            )
+          })}
         </div>
-        <div className="bundle-actions">
-          <AddToCartButton
-            design={design}
-            model={selectedModel}
-            label={`Add ${design.title}`}
-            onNeedsModel={choosePhone}
+        {cart?.items?.some(
+          (item) =>
+            (typeof item.product === 'object' ? item.product?.id : item.product) === design.id,
+        ) && (
+          <AddCaseForPhone
+            key={design.id}
+            productId={design.id}
+            title={design.title}
+            options={phoneModels.flatMap((model) => {
+              if (model.status !== 'active') return []
+              const variant = variantFor(design, model)
+              return variant
+                ? [
+                    {
+                      variantId: variant.id,
+                      phoneModelId: model.id,
+                      name: model.name,
+                      price: variant.price,
+                    },
+                  ]
+                : []
+            })}
           />
+        )}
+        <div className="bundle-actions">
+          {ready ? (
+            <button type="button" className="store-cta" disabled={isLoading} onClick={startNextSet}>
+              Build another set · $50 <Plus size={16} />
+            </button>
+          ) : (
+            <AddToCartButton
+              design={design}
+              model={selectedModel}
+              label={`Add ${design.title}`}
+              onNeedsModel={choosePhone}
+            />
+          )}
           {count > 0 && (
             <button type="button" className="store-cta bundle-review" onClick={openShoppingBag}>
               Review bag <ArrowRight size={17} />
@@ -180,17 +265,17 @@ export function BundleBuilder(props: ExperienceProps) {
         </div>
         <div className="bundle-price-note" aria-live="polite">
           <span>
-            {filled
+            {ready || newSet
               ? `${count} cases · ${formatPrice(cart?.subtotal ?? 0)} subtotal`
               : count === 0
                 ? 'Any 3 cases · $50 total'
-                : `Add ${3 - slots.length} more to complete this $50 set`}
+                : `${count} ${count === 1 ? 'case' : 'cases'} in bag · ${formatPrice(cart?.subtotal ?? 0)} current subtotal`}
           </span>
           <AddToCartButton
             design={design}
             model={selectedModel}
             className="bundle-single"
-            label={`Just this one · ${formatPrice(selectedPrice)}`}
+            label={`${count ? 'Add one individually' : 'Just this one'} · ${formatPrice(selectedPrice)}`}
             reviewAfterAdd
             onNeedsModel={choosePhone}
           />
@@ -209,7 +294,7 @@ export function SelectionBar({
   selectedModel,
   onNeedsModel,
 }: ExperienceProps & { onNeedsModel?: () => void }) {
-  const { count, slots } = useSelection()
+  const { count, slots, ready, setNumber, startNextSet } = useSelection()
   const [pastHero, setPastHero] = useState(false)
   useEffect(() => {
     const update = () => setPastHero(window.scrollY > window.innerHeight * 0.65)
@@ -236,9 +321,13 @@ export function SelectionBar({
           ))}
         </span>
         <span>
-          <strong>3 cases for $50</strong>
+          <strong>
+            {ready
+              ? `${count / 3} ${count === 3 ? 'set' : 'sets'} complete`
+              : `Set ${setNumber} · $50`}
+          </strong>
           <small aria-live="polite">
-            {count > 0 && count % 3 === 0
+            {ready
               ? `${count} selected · ready to review`
               : `${slots.length}/3 selected · mix your designs`}
           </small>
@@ -248,12 +337,27 @@ export function SelectionBar({
         <strong>{design.title}</strong>
         <span>{selectedModel?.name ?? 'Choose your phone'}</span>
       </div>
-      <AddToCartButton
-        design={design}
-        model={selectedModel}
-        label="Add this design"
-        onNeedsModel={onNeedsModel ?? choosePhone}
-      />
+      {ready ? (
+        <button
+          type="button"
+          className="store-cta"
+          onClick={() => {
+            startNextSet()
+            document
+              .getElementById('build-your-three')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }}
+        >
+          Another set · $50
+        </button>
+      ) : (
+        <AddToCartButton
+          design={design}
+          model={selectedModel}
+          label="Add this design"
+          onNeedsModel={onNeedsModel ?? choosePhone}
+        />
+      )}
       {count > 0 && (
         <button type="button" className="selection-bag" onClick={openShoppingBag}>
           Bag ({count}) <ArrowRight size={17} />

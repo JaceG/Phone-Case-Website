@@ -604,3 +604,30 @@ Implementation lives on `codex/three-case-storefront`.
   silicone/MagSafe specifications or shipping times. The FAQ identifies current
   renders as sample-case previews. Physical blank, print method, coverage,
   artwork approval and model-specific geometry remain review-stage decisions.
+
+### Complete-set buying direction (2026-09-14)
+
+Jace clarified that the offer is intended to make $50 the natural purchase step.
+Keep repeating complete sets: three for $50, six for $100, nine for $150, onward.
+Do not unlock a $16.67 individual add-on price after the first set. Singles and
+incomplete additional sets keep their individual prices. The resulting price
+jumps at each completed set are intentional. Existing single prices remain
+$39 / $39 / $42; no new single-price ladder was approved.
+
+The storefront now numbers the current set and opens three empty slots when a
+shopper chooses "Build another set · $50". Starting a set does not add anything
+or change the cart total. Cart edits clear that temporary empty-set state.
+Builder, bag and order review share current/next-set messaging; individual
+purchase remains available. Gift/mixed-phone guidance and per-design in-bag
+counts support choosing full sets. `tests/int/setBuilder.int.spec.ts` covers
+starting/cancelling a set without a charge, advancing/removing items across set
+boundaries, and the displayed price differences.
+
+Matching designs are grouped in the bag and order review, with a separate
+editable quantity/removal row per phone variant. This is presentation only:
+the original line IDs and product/variant relationships still reach pricing
+and fulfillment. An "Add for another phone" chooser is available under each
+cart design and beneath an already-selected design in the builder. It keeps
+the design fixed, previews the resulting bag subtotal, and adds the chosen
+variant without changing any existing phone selection. Cart choices load
+published variants for active phone models through `/api/case-model-options`.
