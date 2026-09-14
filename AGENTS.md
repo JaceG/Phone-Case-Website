@@ -61,6 +61,37 @@ Each product page is a focused, cinematic CTA page for that one design.
 The catalog is **not** dumped onto the product page — it's reachable via a
 menu/overlay.
 
+**Commerce direction confirmed by Jace, 2026-09-14:** this is an ecommerce
+store, and every phone-case design gets its own landing-page-style product
+page, like the current editorial page. The homepage can feature a design;
+the full treatment must also work at each `/products/[slug]` URL. Use a
+shared page system with design-specific artwork, story, palette and images
+so adding designs does not require hand-building another page.
+
+**Primary merchandising offer: three cases for $50.** Most designs will be
+priced alike. The experience should encourage building a three-case order
+while retaining the ability to buy individually. The current seeded $39
+single-case price is a placeholder, not a newly confirmed pricing decision.
+Exact individual pricing and any offer exceptions remain open.
+
+Direction for the next review-stage design pass:
+
+- Keep the light editorial hero, approved rotation and persistent purchase
+  controls, and develop the complete product-page story below them.
+- Make browsing designs part of assembling an order. The proposed bundle
+  interaction uses three visible case slots, progress such as "1 of 3
+  selected", and a clear "$50 for 3" offer. Browsing another design must
+  retain the selected phone and cases already added; viewing a design does
+  not automatically add it to the order.
+- Give each design its own hero/story/detail imagery while sharing case
+  information, ordering explanation and FAQs where applicable.
+- Present one coherent offer across the product page, sticky purchase bar
+  and cart. Retain each selected design and phone variant for fulfillment.
+- Use the cinematic kit selectively for editorial imagery, product details,
+  useful scroll reveals and copy. The next milestone includes three strong
+  presentation designs, complete supporting sections and a separate mobile
+  treatment. Keep Stripe parked during this draft.
+
 Resolution for the landing-page-vs-catalog tension:
 **persistent sticky buy bar.** The CTA never leaves the viewport, so the
 rest of the page is free to browse without costing conversion.

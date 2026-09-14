@@ -232,3 +232,81 @@ interior renders, numbered-checker stills, and the actual moving storefront.
 Reference: [supplier blank listing](https://www.alibaba.com/product-detail/Dust-Repellent-Smooth-Color-Liquid-Silicone_1601927395824.html)
 and Jace's local photos. Geometry is an interpretation of those photos, not
 supplier CAD. Only the supplied outer envelope is grounded in listing dimensions.
+
+## Local artwork trial
+
+The shell refinement is committed as `6e73f9c`. To view the subsequent artwork
+test in the existing storefront, open `/?device=desktop&artworkPreview=1` while
+running the development server. The normal URL still uses the saved catalog.
+
+Trial files live in the ignored `placeholder/artwork-preview/` directory:
+`source/`, `designs/`, `renders/`, `params.json`, `placement.json`, and a
+`manifest.json` with `title`, `prefix`, `description`, and `palette` fields.
+The renderer's standard file names apply. Convert the 24 turntable and 288
+tumble frames to WebP, retaining the tumble JSON phase sidecar. The preview
+uses those files directly and does not change Payload products or media.
+Both the query override and asset endpoint are disabled outside development.
+
+The Gohan trial uses the supplied 1080 × 1344 image, scaled evenly to 1535 ×
+1910 then cropped to the 1070 × 1910 template (256 px from the left). The
+composition is shifted down 220 px; a 90 px fade blends its top into the dark
+background. This moves the face below the camera surround. The original
+image is unchanged. `first-crop/` retains the earlier crop for comparison.
+The trial blank uses `#17171b` silicone; the committed master remains lavender.
+
+## Interactive Case Studio (local draft)
+
+Open `http://localhost:3000/case-studio` while the development server is running.
+Upload JPG/PNG/WebP artwork, drag it on the flat template, or use the width,
+position and rotation sliders. Arrow keys move one template pixel; Shift moves
+ten. `Portrait fit` places the full image in the lower 70% of the case back;
+`Fill case` covers the selected print area's bounding rectangle. Background and plain silicone colors are
+independent. Artwork is drawn at its original aspect ratio over a solid background,
+with no gradient or fade over the source image. Older saved projects retain their
+placement and colors but ignore the removed top-edge fade.
+
+**Print area** switches between Wraparound (back, rolled shoulders, sidewalls and
+camera deck) and Back only (back face and camera surround, with solid outer sides). Switching
+keeps the image's size, position and rotation unchanged; clipped artwork is
+restored when switching back. The mode is saved with the project; older projects
+default to Wraparound. The Back only mask uses the model's 2 mm shoulder inset
+and individual lens/flash/sensor openings, not a measured production insert template.
+
+The flat panel's **Artwork zoom** buttons and slider directly resize the image
+on the device, with its aspect ratio locked and center retained. 100% means the
+image is as wide as the modeled case back. Scroll or pinch over the flat layout
+to resize the artwork; `+`/`-` do the same when the layout is focused. Drag or
+arrow keys change placement. The template itself stays fitted in the panel.
+The former view-only zoom/pan controls have been removed to avoid ambiguity.
+
+The live Three.js preview uses the actual Blender mesh and UV coordinates.
+Orbit with a drag, zoom with the wheel/pinch, or select Artwork / Angle / Inside.
+The shared canvas stays 1070 × 1910, matching Blender's UV space. Wraparound
+exports that full rectangle. Back only exports the 770 × 1610 flat-face bounds,
+with transparent rounded corners and individual lens/flash/sensor cutouts. Both exclude the guide
+overlay. Artwork zoom is reflected in the exported print. The live texture composites unprinted areas over the
+chosen Case & rim color, so the outer sidewalls remain solid in
+Back only. Interior and cut walls retain their plain material. Lighting is a
+quick neutral preview, not a color proof. Filenames include the print mode.
+
+Export layout, Save 3D view, and Save project write local files into ignored
+`placeholder/case-studio/exports/` and also attempt a browser download. The
+Saved files section always retains accessible local copies, including in the
+embedded browser. Reopen project restores the source and all placement/finish
+settings; Open project accepts a downloaded `.case-studio.json` file. Uploads
+stay in browser memory until explicitly saved. No Payload catalog records are
+created. The page, example image, and all saved-file endpoints return 404 outside
+development. The optional Gohan example comes from the existing ignored source.
+
+The committed web asset contains original shell geometry only, no artwork.
+After rebuilding `master.blend`, regenerate it with:
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b pipeline/blender/master.blend \
+  --python-exit-code 1 -P pipeline/blender/export_web.py
+```
+
+This exports `public/models/iphone-17-pro-max.glb`. The editor derives its flat
+guides and template dimensions from the same model params JSON. It currently
+supports this single shell. Curved-surface flattening remains approximate until
+the physical blank and actual print process are tested.
