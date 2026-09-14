@@ -10,6 +10,7 @@ import React, { useEffect } from 'react'
  */
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     // Touch devices get native momentum; Lenis only smooths wheel/trackpad.
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true, syncTouch: false })
     let frame = 0

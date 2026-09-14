@@ -12,30 +12,53 @@ type Props = {
   model: CatalogPhoneModel | null
   className?: string
   onNeedsModel?: () => void
+  label?: string
+  reviewAfterAdd?: boolean
 }
 
-export const AddToCartButton: React.FC<Props> = ({ design, model, className, onNeedsModel }) => {
+export const AddToCartButton: React.FC<Props> = ({
+  design,
+  model,
+  className,
+  onNeedsModel,
+  label: actionLabel,
+  reviewAfterAdd,
+}) => {
   const { addItem, isLoading } = useCart()
-  const [added, setAdded] = useState(false)
+  const [addedDesign, setAddedDesign] = useState<number | null>(null)
+  const added = addedDesign === design.id
   const variant = variantFor(design, model)
 
   const onClick = useCallback(async () => {
     if (!variant) {
-      onNeedsModel?.()
+      if (onNeedsModel) onNeedsModel()
+      else {
+        document
+          .getElementById('build-your-three')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        document.getElementById('case-phone')?.focus({ preventScroll: true })
+      }
       return
     }
     try {
       await addItem({ product: design.id, variant: variant.id })
-      setAdded(true)
+      setAddedDesign(design.id)
       if (typeof navigator !== 'undefined' && 'vibrate' in navigator) navigator.vibrate?.(10)
       toast.success(`${design.title} for ${model?.name} added`)
-      setTimeout(() => setAdded(false), 1800)
+      if (reviewAfterAdd) window.dispatchEvent(new Event('store:open-cart'))
+      setTimeout(() => setAddedDesign(null), 1800)
     } catch {
       toast.error('Could not add to cart')
     }
-  }, [addItem, design.id, design.title, model?.name, onNeedsModel, variant])
+  }, [addItem, design.id, design.title, model?.name, onNeedsModel, variant, reviewAfterAdd])
 
-  const label = !model ? 'Choose your phone' : !variant ? 'Coming soon' : added ? 'Added' : 'Add to cart'
+  const label = !model
+    ? 'Choose your phone'
+    : !variant
+      ? 'Coming soon'
+      : added
+        ? 'Added ✓'
+        : (actionLabel ?? 'Add this design')
 
   return (
     <button

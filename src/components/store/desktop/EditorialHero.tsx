@@ -49,7 +49,8 @@ const idleSpeed = frontLingers(37.6, 0.14)
 const useStageScale = () => {
   const [scale, setScale] = useState(1)
   useEffect(() => {
-    const update = () => setScale(Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H))
+    const update = () =>
+      setScale(Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H))
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)
@@ -58,7 +59,16 @@ const useStageScale = () => {
 }
 
 export const EditorialHero: React.FC<ExperienceProps> = (props) => {
-  const { design, phoneModels, family, selectFamily, selectedModel, openCatalog } = props
+  const {
+    design,
+    catalog,
+    switchDesign,
+    phoneModels,
+    family,
+    selectFamily,
+    selectedModel,
+    openCatalog,
+  } = props
   const scale = useStageScale()
 
   const mx = useMotionValue(0)
@@ -92,7 +102,10 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
   const excerpt = useMemo(() => storyText(design, 150), [design])
 
   const familyModels = phoneModels.filter((m) => familyOf(m) === family)
-  const modelIndex = Math.max(0, familyModels.findIndex((m) => m.id === selectedModel?.id))
+  const modelIndex = Math.max(
+    0,
+    familyModels.findIndex((m) => m.id === selectedModel?.id),
+  )
 
   const tiles = FAMILIES.map((f: DeviceFamily) => {
     const models = phoneModels.filter((m) => familyOf(m) === f)
@@ -105,7 +118,13 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
       onClick: () => selectFamily(f),
     }
   })
-  tiles.push({ key: 'all', label: 'All designs', image: thumbImage(design), active: false, onClick: openCatalog })
+  tiles.push({
+    key: 'all',
+    label: 'All designs',
+    image: thumbImage(design),
+    active: false,
+    onClick: openCatalog,
+  })
 
   const scrollToTurntable = () =>
     document.getElementById('turntable')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -142,7 +161,10 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
         </motion.h1>
 
         {/* Second row: collection word · tagline · family */}
-        <motion.div className="absolute left-[16px] top-[252px] flex items-start gap-[26px]" {...enter(0.15)}>
+        <motion.div
+          className="absolute left-[16px] top-[252px] flex items-start gap-[26px]"
+          {...enter(0.15)}
+        >
           <p className="font-display whitespace-nowrap text-[65px] leading-none tracking-[7px] text-[var(--store-fg)]">
             {secondLine}
           </p>
@@ -163,19 +185,57 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
         {/* Rule + excerpt */}
         <motion.div className="absolute left-[21px] top-[373px] flex gap-[28px]" {...enter(0.3)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/store/icons/rule.svg" alt="" width={4} height={24} className="h-6 w-1" draggable={false} />
-          <p className="font-body w-[160px] text-[14px] leading-[1.3] text-[var(--store-fg)]">{excerpt}</p>
+          <img
+            src="/store/icons/rule.svg"
+            alt=""
+            width={4}
+            height={24}
+            className="h-6 w-1"
+            draggable={false}
+          />
+          <p className="font-body w-[160px] text-[14px] leading-[1.3] text-[var(--store-fg)]">
+            {excerpt}
+          </p>
         </motion.div>
 
         {/* Block CTA + text link */}
-        <motion.div className="absolute left-[301px] top-[409px] flex items-center gap-[50px]" {...enter(0.35)}>
+        <motion.div
+          className="absolute left-[301px] top-[409px] flex items-center gap-[50px]"
+          {...enter(0.35)}
+        >
           <AddToCartButton design={design} model={selectedModel} className="store-cta" />
           <button type="button" onClick={scrollToTurntable} className="store-link">
-            Turn it over
+            See the details
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/store/icons/play.svg" alt="" width={26} height={26} className="h-[26px] w-[26px]" draggable={false} />
+            <img
+              src="/store/icons/play.svg"
+              alt=""
+              width={26}
+              height={26}
+              className="h-[26px] w-[26px]"
+              draggable={false}
+            />
           </button>
         </motion.div>
+
+        <div className="hero-offer absolute left-[301px] top-[488px] z-20">
+          <a href="#build-your-three">
+            Build your three · $50 <span>Mix any designs ↗</span>
+          </a>
+          <div role="group" aria-label="Preview another design">
+            {catalog.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                title={item.title}
+                aria-label={`Preview ${item.title}`}
+                aria-pressed={item.id === design.id}
+                onClick={() => switchDesign(item.slug)}
+                style={{ backgroundColor: item.palette[0] ?? '#aaa' }}
+              />
+            ))}
+          </div>
+        </div>
 
         {/* Product: the reference's 704px frame, right edge at 56px */}
         <motion.figure
@@ -199,7 +259,10 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
         </motion.figure>
 
         {/* Right-edge stack: iPhone / Android / all designs (Figma: left 1200, top 425, 240×385) */}
-        <motion.div className="absolute left-[1200px] top-[425px] h-[385px] w-[240px]" {...enter(0.45)}>
+        <motion.div
+          className="absolute left-[1200px] top-[425px] h-[385px] w-[240px]"
+          {...enter(0.45)}
+        >
           {tiles.map((t, i) => {
             const pos = [
               { left: 120, top: 0 },
@@ -217,7 +280,9 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
                 style={{
                   left: pos.left,
                   top: pos.top,
-                  outline: t.active ? '2px solid var(--store-accent)' : '1px solid rgba(255,255,255,0.5)',
+                  outline: t.active
+                    ? '2px solid var(--store-accent)'
+                    : '1px solid rgba(255,255,255,0.5)',
                   outlineOffset: -1,
                 }}
               >
@@ -239,7 +304,10 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
         </motion.div>
 
         {/* Bottom-left card: model picker (Figma: left 187, top 577, 501×233) */}
-        <motion.div className="absolute left-[187px] top-[577px] flex h-[233px] w-[501px]" {...enter(0.5)}>
+        <motion.div
+          className="absolute left-[187px] top-[577px] flex h-[233px] w-[501px]"
+          {...enter(0.5)}
+        >
           <div className="relative -ml-[57px] flex w-[57px] flex-col items-center justify-end pb-3">
             <span className="font-display -rotate-90 whitespace-nowrap text-[12px] opacity-40">
               {String(familyModels.length).padStart(2, '0')}

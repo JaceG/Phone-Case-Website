@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 
 import { Cart } from '@/components/Cart'
@@ -13,20 +14,33 @@ import { useStoreUI } from './StoreUI'
  */
 export const StoreHeader: React.FC = () => {
   const { catalogOpen, setCatalogOpen } = useStoreUI()
+  const pathname = usePathname()
+  const router = useRouter()
+  const isProduct = pathname === '/' || pathname.startsWith('/products/')
+  const sectionLink = (hash: string) => (isProduct ? hash : `/${hash}`)
+  const browse = () => {
+    if (isProduct) setCatalogOpen(!catalogOpen)
+    else router.push('/#collection')
+  }
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Case'
 
   const links: { label: string; onClick?: () => void; href?: string; active?: boolean }[] = [
-    { label: 'Collection', onClick: () => setCatalogOpen(true), active: true },
-    { label: 'Designs', onClick: () => setCatalogOpen(true) },
-    { label: 'Process', href: '#details' },
-    { label: 'About us', href: '/contact' },
+    { label: 'Designs', onClick: browse },
+    { label: 'How it works', href: sectionLink('#how-it-works') },
+    { label: 'Questions', href: sectionLink('#questions') },
   ]
 
   return (
     <header className="store-header fixed inset-x-0 top-0 z-50 flex items-center px-5 py-4 md:px-8">
       <Link href="/" className="flex items-center gap-2" aria-label={siteName}>
         {/* eight-point mark */}
-        <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden className="text-[var(--store-fg)]">
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 26 26"
+          aria-hidden
+          className="text-[var(--store-fg)]"
+        >
           <path
             d="M13 1l2.2 7.1L22 5l-3.1 6.8L26 13l-7.1 1.2L22 21l-6.8-3.1L13 25l-1.2-7.1L5 21l3.1-6.8L1 13l7.1-1.2L5 5l6.8 3.1z"
             fill="currentColor"
@@ -43,7 +57,12 @@ export const StoreHeader: React.FC = () => {
                 {l.label}
               </Link>
             ) : (
-              <button type="button" onClick={l.onClick} className="store-nav-link" data-active={l.active}>
+              <button
+                type="button"
+                onClick={l.onClick}
+                className="store-nav-link"
+                data-active={l.active}
+              >
                 {l.label}
               </button>
             )}
@@ -52,9 +71,12 @@ export const StoreHeader: React.FC = () => {
       </nav>
 
       <div className="ml-auto flex items-center gap-6">
+        <a className="header-offer" href={sectionLink('#build-your-three')}>
+          3 cases for $50 <span>↗</span>
+        </a>
         <button
           type="button"
-          onClick={() => setCatalogOpen(!catalogOpen)}
+          onClick={browse}
           aria-expanded={catalogOpen}
           aria-label={catalogOpen ? 'Close designs' : 'Browse designs'}
           className="flex h-6 w-6 items-center justify-center"

@@ -52,6 +52,16 @@ export const ProductExperience: React.FC<Props> = ({
   const lastInFamily = useRef<Partial<Record<DeviceFamily, number>>>({})
   const { catalogOpen, setCatalogOpen } = useStoreUI()
 
+  useEffect(() => setSlug(initialDesign.slug), [initialDesign.slug])
+  useEffect(() => {
+    const restore = () => {
+      const pathSlug = window.location.pathname.split('/products/')[1]?.split('/')[0]
+      setSlug(catalog.find((d) => d.slug === pathSlug)?.slug ?? initialDesign.slug)
+    }
+    window.addEventListener('popstate', restore)
+    return () => window.removeEventListener('popstate', restore)
+  }, [catalog, initialDesign.slug])
+
   const design = useMemo(
     () => catalog.find((d) => d.slug === slug) ?? initialDesign,
     [catalog, initialDesign, slug],
@@ -61,6 +71,10 @@ export const ProductExperience: React.FC<Props> = ({
     [modelId, phoneModels],
   )
   const family: DeviceFamily = selectedModel ? familyOf(selectedModel) : familyState
+
+  useEffect(() => {
+    document.title = `${design.title} | ${process.env.NEXT_PUBLIC_SITE_NAME || 'Phone Case Store'}`
+  }, [design.title])
 
   // Remember the phone across visits: it is the one thing that never changes for a customer.
   useEffect(() => {
@@ -110,7 +124,12 @@ export const ProductExperience: React.FC<Props> = ({
       const target = catalog.find((d) => d.slug === next)
       if (!target) return
       setSlug(next)
-      window.history.replaceState(window.history.state, '', `/products/${next}`)
+      const query = new URLSearchParams(window.location.search)
+      window.history.pushState(
+        window.history.state,
+        '',
+        `/products/${next}${query.size ? `?${query}` : ''}`,
+      )
       document.title = `${target.title} | ${process.env.NEXT_PUBLIC_SITE_NAME || 'Phone Case Store'}`
       if ('vibrate' in navigator) navigator.vibrate?.(6)
     },

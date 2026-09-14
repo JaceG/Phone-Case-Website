@@ -565,3 +565,42 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Ecommerce landing-page draft (2026-09-14)
+
+The prior Case Studio work was committed as `276d07c` before starting this pass.
+Implementation lives on `codex/three-case-storefront`.
+
+- `/` and `/products/[slug]` share the complete landing-page system: approved
+  light editorial desktop hero and spin, visible design switcher, three-case
+  builder, flat artwork → case → close-up reveal, story/palette, ordering steps,
+  collection, FAQ and closing CTA. Mobile uses its own swipe hero, phone sheet,
+  tap-through imagery, horizontal collection and bottom purchase bar.
+- The three original AI-assisted presentation designs replace the seeded UV
+  checkers for visual review: Meridian / Form, Static Bloom / Flora, Low Tide /
+  Tide. Sources and prompts are tracked in `pipeline/artwork/`; commands and the
+  two gallery-slot convention are documented there. Renders and private uploads
+  remain generated/local. The approved 288-frame phase mapping is unchanged.
+- `src/lib/commerce/bundlePricing.ts` defines the draft USD offer. Each full set
+  of three is capped at $50; leftovers retain individual prices. Higher-priced
+  units go into the set first. Duplicates, mixed models and multiple sets work.
+  The offer never increases a cheaper set's normal price. All current catalog
+  products are cases and participate; exception eligibility is still undecided.
+- `src/collections/Carts.ts` appends pricing after the plugin's default hook,
+  preserving guest access/secrets. It resolves authoritative prices through
+  the local API with `req`, checks variant ownership and whole quantities, and
+  persists the discounted subtotal. Partial updates reprice original items;
+  caller-supplied subtotals are ignored. Product/variant line identities remain
+  intact for fulfillment. `pnpm verify:offer` creates and removes its own local
+  test cart; the pure price tests are in `tests/int/bundlePricing.int.spec.ts`.
+- The builder uses Payload's actual persistent cart. Browsing never adds a case.
+  Phone selection is remembered; each added item keeps its own phone. Design
+  switching writes a shareable URL and supports browser back/forward.
+- `/checkout` now uses cinematic chrome and an order-review screen with correct
+  subtotal and savings. `NEXT_PUBLIC_CHECKOUT_ENABLED` defaults off. Stripe,
+  delivery/tax rules and actual payment remain parked. Existing single prices
+  ($39 / $39 / $42) were preserved as draft values, not newly approved pricing.
+- Public copy no longer promises unverified UV DTF, full-wrap availability,
+  silicone/MagSafe specifications or shipping times. The FAQ identifies current
+  renders as sample-case previews. Physical blank, print method, coverage,
+  artwork approval and model-specific geometry remain review-stage decisions.

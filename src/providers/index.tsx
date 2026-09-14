@@ -26,10 +26,12 @@ export const Providers: React.FC<{
                     title: true,
                     gallery: true,
                     renders: true,
+                    priceInUSD: true,
                   },
                   variants: {
                     title: true,
                     options: true,
+                    priceInUSD: true,
                   },
                 },
               },

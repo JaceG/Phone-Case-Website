@@ -12,6 +12,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { ProductsCollection } from '@/collections/Products'
 import { VariantsCollection } from '@/collections/Variants'
 import { OrdersCollection } from '@/collections/Orders'
+import { CartsCollection } from '@/collections/Carts'
 import { adminOrPublishedStatus } from '@/access/adminOrPublishedStatus'
 import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
 import { customerOnlyFieldAccess } from '@/access/customerOnlyFieldAccess'
@@ -95,6 +96,7 @@ export const plugins: Plugin[] = [
     // There is no per-SKU stock to reconcile, so the plugin's inventory
     // tracking is switched off entirely.
     inventory: false,
+    carts: { cartsCollectionOverride: CartsCollection },
     orders: {
       // Adds the print-queue fulfillment flow and read-only print jobs.
       ordersCollectionOverride: OrdersCollection,
@@ -116,7 +118,8 @@ export const plugins: Plugin[] = [
           ...defaultCollection,
           admin: {
             ...defaultCollection.admin,
-            description: 'There is exactly one: Phone Model. Managed by the Phone Models collection.',
+            description:
+              'There is exactly one: Phone Model. Managed by the Phone Models collection.',
           },
         }),
         variantOptionsCollectionOverride: ({ defaultCollection }) => ({

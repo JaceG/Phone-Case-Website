@@ -25,12 +25,13 @@ import { AddressItem } from '@/components/addresses/AddressItem'
 import { FormItem } from '@/components/forms/FormItem'
 import { toast } from 'sonner'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { CheckoutPreview } from './CheckoutPreview'
 
 type GalleryItem = NonNullable<Product['gallery']>[number]
 type VariantOptionRef = NonNullable<Variant['options']>[number]
 
 const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
-const stripe = loadStripe(apiKey)
+const stripe = process.env.NEXT_PUBLIC_CHECKOUT_ENABLED === 'true' ? loadStripe(apiKey) : null
 
 export const CheckoutPage: React.FC = () => {
   const { user } = useAuth()
@@ -108,7 +109,7 @@ export const CheckoutPage: React.FC = () => {
     [billingAddress, billingAddressSameAsShipping, shippingAddress],
   )
 
-  if (!stripe) return null
+  if (!stripe) return <CheckoutPreview />
 
   if (cartIsEmpty && isProcessingPayment) {
     return (

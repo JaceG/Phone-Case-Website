@@ -10,182 +10,166 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { useCart } from '@payloadcms/plugin-ecommerce/client/react'
-import { ShoppingCart } from 'lucide-react'
-import Image from 'next/image'
+import { ShoppingBag, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import type { Product, Variant } from '@/payload-types'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useMemo, useState } from 'react'
-
+import { useEffect, useState } from 'react'
 import { DeleteItemButton } from './DeleteItemButton'
 import { EditItemQuantityButton } from './EditItemQuantityButton'
 import { OpenCartButton } from './OpenCart'
-import { Button } from '@/components/ui/button'
-import { Product, Variant } from '@/payload-types'
-
-type GalleryItem = NonNullable<Product['gallery']>[number]
-type VariantOptionRef = NonNullable<Variant['options']>[number]
+import { getProductThumbnail } from '@/utilities/productImages'
+import { cartPricing } from '@/lib/commerce/bundlePricing'
 
 export function CartModal() {
-  const { cart } = useCart()
+  const { cart, isLoading } = useCart()
   const [isOpen, setIsOpen] = useState(false)
-
   const pathname = usePathname()
-
+  useEffect(() => setIsOpen(false), [pathname])
   useEffect(() => {
-    // Close the cart modal when the pathname changes.
-    setIsOpen(false)
-  }, [pathname])
-
-  const totalQuantity = useMemo(() => {
-    if (!cart || !cart.items || !cart.items.length) return undefined
-    return cart.items.reduce((quantity, item) => (item.quantity || 0) + quantity, 0)
-  }, [cart])
-
+    const open = () => setIsOpen(true)
+    window.addEventListener('store:open-cart', open)
+    return () => window.removeEventListener('store:open-cart', open)
+  }, [])
+  const items = cart?.items ?? []
+  const quantity = items.reduce((sum, item) => sum + (item.quantity || 0), 0)
+  const pricing = (cart?.currency ?? 'USD') === 'USD' ? cartPricing(items) : null
   return (
     <Sheet onOpenChange={setIsOpen} open={isOpen}>
       <SheetTrigger asChild>
-        <OpenCartButton quantity={totalQuantity} />
+        <OpenCartButton quantity={quantity || undefined} />
       </SheetTrigger>
-
-      <SheetContent className="flex flex-col">
-        <SheetHeader>
-          <SheetTitle>My Cart</SheetTitle>
-
-          <SheetDescription>Manage your cart here, add items to view the total.</SheetDescription>
+      <SheetContent
+        className="flex w-full flex-col bg-[#f2f1eb] text-[#2a2d25] sm:max-w-lg"
+        data-lenis-prevent
+      >
+        <SheetHeader className="border-b border-[#c9cec0] pb-6 text-left">
+          <SheetTitle className="text-3xl font-normal text-[#2a2d25]">Your selection</SheetTitle>
+          <SheetDescription className="text-[#656b5e]">
+            A little rotation. A lot of personality.
+          </SheetDescription>
         </SheetHeader>
-
-        {!cart || cart?.items?.length === 0 ? (
-          <div className="text-center flex flex-col items-center gap-2">
-            <ShoppingCart className="h-16" />
-            <p className="text-center text-2xl font-bold">Your cart is empty.</p>
+        {quantity === 0 ? (
+          <div className="flex flex-1 flex-col items-center justify-center gap-5 text-center">
+            <ShoppingBag size={42} strokeWidth={1} />
+            <h3 className="text-2xl">Your next three start here.</h3>
+            <p className="max-w-xs text-sm text-[#626b56]">
+              Mix your favourite designs. Any three cases for $50.
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="border border-[#73805e] px-6 py-3"
+            >
+              Explore the designs
+            </button>
           </div>
         ) : (
-          <div className="grow flex px-4">
-            <div className="flex flex-col justify-between w-full">
-              <ul className="grow overflow-auto py-4">
-                {cart?.items?.map((item, i) => {
-                  const product = item.product
-                  const variant = item.variant
-
-                  if (typeof product !== 'object' || !item || !product || !product.slug)
-                    return <React.Fragment key={i} />
-
-                  const metaImage =
-                    product.meta?.image && typeof product.meta?.image === 'object'
-                      ? product.meta.image
-                      : undefined
-
-                  const firstGalleryImage =
-                    typeof product.gallery?.[0]?.image === 'object'
-                      ? product.gallery?.[0]?.image
-                      : undefined
-
-                  let image = firstGalleryImage || metaImage
-                  let price = product.priceInUSD
-
-                  const isVariant = Boolean(variant) && typeof variant === 'object'
-
-                  if (isVariant) {
-                    price = variant?.priceInUSD
-
-                    const imageVariant = product.gallery?.find((item: GalleryItem) => {
-                      if (!item.variantOption) return false
-                      const variantOptionID =
-                        typeof item.variantOption === 'object'
-                          ? item.variantOption.id
-                          : item.variantOption
-
-                      const hasMatch = variant?.options?.some((option: VariantOptionRef) => {
-                        if (typeof option === 'object') return option.id === variantOptionID
-                        else return option === variantOptionID
-                      })
-
-                      return hasMatch
-                    })
-
-                    if (imageVariant && typeof imageVariant.image === 'object') {
-                      image = imageVariant.image
-                    }
-                  }
-
-                  return (
-                    <li className="flex w-full flex-col" key={i}>
-                      <div className="relative flex w-full flex-row justify-between px-1 py-4">
-                        <div className="absolute z-40 -mt-2 ml-[55px]">
-                          <DeleteItemButton item={item} />
-                        </div>
-                        <Link
-                          className="z-30 flex flex-row space-x-4"
-                          href={`/products/${(item.product as Product)?.slug}`}
-                        >
-                          <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                            {image?.url && (
-                              <Image
-                                alt={image?.alt || product?.title || ''}
-                                className="h-full w-full object-cover"
-                                height={94}
-                                src={image.url}
-                                width={94}
-                              />
-                            )}
-                          </div>
-
-                          <div className="flex flex-1 flex-col text-base">
-                            <span className="leading-tight">{product?.title}</span>
-                            {isVariant && variant ? (
-                              <p className="text-sm text-neutral-500 dark:text-neutral-400 capitalize">
-                                {variant.options
-                                  ?.map((option: VariantOptionRef) => {
-                                    if (typeof option === 'object') return option.label
-                                    return null
-                                  })
-                                  .join(', ')}
-                              </p>
-                            ) : null}
-                          </div>
-                        </Link>
-                        <div className="flex h-16 flex-col justify-between">
-                          {typeof price === 'number' && (
-                            <Price
-                              amount={price}
-                              className="flex justify-end space-y-2 text-right text-sm"
-                            />
-                          )}
-                          <div className="ml-auto flex h-9 flex-row items-center rounded-lg border">
-                            <EditItemQuantityButton item={item} type="minus" />
-                            <p className="w-6 text-center">
-                              <span className="w-full text-sm">{item.quantity}</span>
-                            </p>
-                            <EditItemQuantityButton item={item} type="plus" />
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-
-              <div className="px-4">
-                <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  {typeof cart?.subtotal === 'number' && (
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
-                      <p>Total</p>
-                      <Price
-                        amount={cart?.subtotal}
-                        className="text-right text-base text-black dark:text-white"
-                      />
-                    </div>
-                  )}
-
-                  <Button asChild>
-                    <Link className="w-full" href="/checkout">
-                      Proceed to Checkout
-                    </Link>
-                  </Button>
-                </div>
-              </div>
+          <>
+            <div
+              className="border border-[#bac998] bg-[#e3eaca] px-4 py-4 text-sm"
+              aria-live="polite"
+            >
+              <strong className="font-medium">
+                {quantity % 3 === 0
+                  ? `${quantity / 3} ${quantity === 3 ? 'set' : 'sets'} complete · ${quantity} cases`
+                  : `${3 - (quantity % 3)} more ${3 - (quantity % 3) === 1 ? 'case' : 'cases'} to complete ${quantity > 3 ? 'your next' : 'your'} $50 set`}
+              </strong>
+              <p className="mt-1 text-xs text-[#5a6849]">
+                Every complete set of three gets the offer automatically.
+              </p>
             </div>
-          </div>
+            <ul className="min-h-0 flex-1 overflow-y-auto divide-y divide-[#cbd0c2]">
+              {items.map((item) => {
+                const product =
+                  item.product && typeof item.product === 'object'
+                    ? (item.product as Product)
+                    : null
+                const variant =
+                  item.variant && typeof item.variant === 'object'
+                    ? (item.variant as Variant)
+                    : null
+                if (!product) return null
+                const image = getProductThumbnail(product)
+                const unitPrice = variant?.priceInUSD ?? product.priceInUSD
+                return (
+                  <li key={item.id} className="flex gap-4 py-5">
+                    <Link
+                      href={`/products/${product.slug}`}
+                      className="flex h-28 w-20 shrink-0 items-center justify-center bg-[#dfe3d9]"
+                    >
+                      {image?.url && (
+                        <img
+                          src={image.url}
+                          alt={product.title}
+                          className="h-full w-full object-contain p-2"
+                        />
+                      )}
+                    </Link>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-4">
+                        <Link href={`/products/${product.slug}`} className="text-base">
+                          {product.title}
+                        </Link>
+                        <DeleteItemButton item={item} />
+                      </div>
+                      <p className="mt-1 text-xs text-[#68705e]">
+                        {variant?.options
+                          ?.map((option) => (typeof option === 'object' ? option.label : ''))
+                          .filter(Boolean)
+                          .join(', ')}
+                      </p>
+                      <div className="mt-4 flex items-center justify-between gap-2">
+                        <div className="flex h-9 items-center border border-[#b4bdab]">
+                          <EditItemQuantityButton item={item} type="minus" />
+                          <span className="w-6 text-center text-xs">{item.quantity}</span>
+                          <EditItemQuantityButton item={item} type="plus" />
+                        </div>
+                        {typeof unitPrice === 'number' && (
+                          <span className="text-right text-xs">
+                            <Price as="span" amount={unitPrice * item.quantity} />
+                            <small className="block text-[#73796b]">before offer</small>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+            <div className="border-t border-[#bfc8b4] pt-4">
+              {pricing && pricing.discount > 0 && (
+                <div className="mb-3 flex justify-between text-sm text-[#566840]">
+                  <span>Three-case savings</span>
+                  <span>
+                    −<Price amount={pricing.discount} as="span" />
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between text-xl">
+                <span>Subtotal</span>
+                <Price amount={cart?.subtotal ?? 0} />
+              </div>
+              <p className="mt-2 text-xs text-[#717966]">Shipping and tax are separate.</p>
+              <Link
+                aria-disabled={isLoading}
+                onClick={(event) => {
+                  if (isLoading) event.preventDefault()
+                }}
+                href="/checkout"
+                className="mt-5 flex w-full items-center justify-between bg-[#303c2b] px-5 py-4 text-sm text-white"
+              >
+                Review your order <ArrowRight size={18} />
+              </Link>
+              <button
+                type="button"
+                className="mt-4 w-full text-center text-xs underline underline-offset-4"
+                onClick={() => setIsOpen(false)}
+              >
+                Keep exploring designs
+              </button>
+            </div>
+          </>
         )}
       </SheetContent>
     </Sheet>

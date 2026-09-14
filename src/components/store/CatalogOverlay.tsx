@@ -1,8 +1,7 @@
 'use client'
 
-import { AnimatePresence, motion } from 'motion/react'
-import React, { useEffect, useMemo } from 'react'
-
+import * as Dialog from '@radix-ui/react-dialog'
+import { ArrowRight, X } from 'lucide-react'
 import type { CatalogDesign } from './catalog'
 import { formatPrice, thumbImage } from './catalog'
 
@@ -14,104 +13,67 @@ type Props = {
   onSelect: (slug: string) => void
 }
 
-/**
- * The catalog lives behind a button, not on the product page. Grouped by
- * collection; picking a design swaps it into the page underneath.
- */
-export const CatalogOverlay: React.FC<Props> = ({ open, onClose, catalog, activeSlug, onSelect }) => {
-  const groups = useMemo(() => {
-    const map = new Map<string, { title: string; designs: CatalogDesign[] }>()
-    for (const d of catalog) {
-      const key = d.collections[0]?.title ?? 'All designs'
-      if (!map.has(key)) map.set(key, { title: key, designs: [] })
-      map.get(key)!.designs.push(d)
-    }
-    return Array.from(map.values())
-  }, [catalog])
-
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
-    window.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
-    }
-  }, [open, onClose])
-
+export function CatalogOverlay({ open, onClose, catalog, activeSlug, onSelect }: Props) {
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          key="catalog"
-          className="fixed inset-0 z-40 overflow-y-auto bg-[var(--store-bg-2)]/95 backdrop-blur-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+    <Dialog.Root
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) onClose()
+      }}
+    >
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[#cdd1ca]/90 backdrop-blur-xl" />
+        <Dialog.Content
+          className="store-root fixed inset-0 z-[61] overflow-y-auto px-6 pb-14 pt-20 md:px-[7vw]"
+          data-lenis-prevent
         >
-          <div className="mx-auto max-w-[1400px] px-5 pb-32 pt-24 md:px-10 md:pt-28">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--store-muted)]">
-              {catalog.length} designs · one case · your phone
-            </p>
-
-            {groups.map((group, gi) => (
-              <section key={group.title} className="mt-10 md:mt-14">
-                <h2 className="font-display text-[1.6rem] leading-none tracking-[0.1em] md:text-[2.4rem]">{group.title}</h2>
-                <ul className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-                  {group.designs.map((d, i) => {
-                    const img = thumbImage(d)
-                    const active = d.slug === activeSlug
-                    return (
-                      <motion.li
-                        key={d.id}
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.05 * (gi * 4 + i), duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => onSelect(d.slug)}
-                          className="group block w-full text-left"
-                          aria-current={active ? 'true' : undefined}
-                        >
-                          <div
-                            className="relative aspect-[3/4] overflow-hidden border shadow-[0_14px_30px_rgba(20,22,30,0.14)] transition-colors"
-                            style={{
-                              borderColor: active ? 'var(--store-accent)' : 'rgba(255,255,255,0.5)',
-                              background: `radial-gradient(60% 60% at 50% 40%, ${d.palette[0] ?? '#111'}22 0%, var(--store-card) 100%)`,
-                            }}
-                          >
-                            {img && (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                src={img}
-                                alt={d.title}
-                                className="absolute inset-0 h-full w-full object-contain p-6 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-                                loading="lazy"
-                              />
-                            )}
-                          </div>
-                          <div className="mt-3 flex items-baseline justify-between">
-                            <span className="font-display text-[0.95rem] tracking-[0.1em]">{d.title}</span>
-                            <span className="font-mono text-xs text-[var(--store-muted)]">
-                              {formatPrice(d.price)}
-                            </span>
-                          </div>
-                          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--store-muted)]">
-                            {d.tagline}
-                          </p>
-                        </button>
-                      </motion.li>
-                    )
-                  })}
-                </ul>
-              </section>
+          <Dialog.Close
+            className="fixed right-6 top-5 z-10 flex items-center gap-3 border border-[#89967e] bg-[#e6e9df] px-4 py-3 text-sm"
+            aria-label="Close designs"
+          >
+            Close <X size={18} />
+          </Dialog.Close>
+          <span className="editorial-kicker">The first collection</span>
+          <Dialog.Title className="mt-5 text-4xl font-normal md:text-6xl">
+            Find your next favourite.
+          </Dialog.Title>
+          <Dialog.Description className="mt-5 max-w-lg text-sm leading-relaxed">
+            Explore every design. Choose any three for $50, or buy one at its individual price. Your
+            phone and bag stay with you as you browse.
+          </Dialog.Description>
+          <div className="mt-10 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {catalog.map((design) => (
+              <button
+                type="button"
+                key={design.id}
+                className="text-left"
+                aria-current={activeSlug === design.slug ? 'true' : undefined}
+                onClick={() => onSelect(design.slug)}
+              >
+                <div className="relative h-[350px] border border-[#a6afa0] bg-[#e4e8de]">
+                  {thumbImage(design) && (
+                    <img
+                      className="h-full w-full object-contain p-6"
+                      src={thumbImage(design)!}
+                      alt={`${design.title} case`}
+                      loading="lazy"
+                    />
+                  )}
+                  <span className="absolute bottom-3 left-4 text-xs">
+                    {design.collections[0]?.title}
+                  </span>
+                  <ArrowRight className="absolute bottom-3 right-4" size={20} />
+                </div>
+                <div className="mt-4 flex items-baseline justify-between gap-3">
+                  <h3 className="text-xl">{design.title}</h3>
+                  <span className="text-xs">{formatPrice(design.price)} individually</span>
+                </div>
+                <p className="mt-1 text-sm text-[#58634e]">{design.tagline}</p>
+              </button>
             ))}
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }

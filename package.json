@@ -1,7 +1,7 @@
 {
   "name": "phone-case-website",
   "version": "1.0.0",
-  "description": "Custom phone case store — Payload + Next.js",
+  "description": "Custom phone case store \u2014 Payload + Next.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -20,7 +20,10 @@
     "stripe-webhooks": "stripe listen --forward-to localhost:3000/api/payments/stripe/webhooks",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "presentation:prepare": "tsx pipeline/scripts/prepare-presentation.ts",
+    "presentation:import": "payload run pipeline/scripts/import-presentation.ts",
+    "verify:offer": "payload run pipeline/scripts/verify-cart-offer.ts"
   },
   "dependencies": {
     "@payloadcms/admin-bar": "3.88.0",
