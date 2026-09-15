@@ -1,0 +1,138 @@
+{
+  "slug": "iphone-17",
+  "label": "iPhone 17 \u2014 visual case study",
+  "height_mm": 152.81,
+  "width_mm": 74.65,
+  "depth_mm": 13.8,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 12,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": false,
+    "x_mm": 0,
+    "y_mm": 0,
+    "w_mm": 1,
+    "h_mm": 1,
+    "height_mm": 0,
+    "deck_height_mm": 0,
+    "corner_radius_mm": 1
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 15.22,
+      "y_mm": 15.22,
+      "d_mm": 16.3
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 15.22,
+      "y_mm": 32.94,
+      "d_mm": 16.3
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 32.01,
+      "y_mm": 24.08,
+      "d_mm": 6.7
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 25.05,
+      "y_mm": 24.08,
+      "d_mm": 1.5
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.72,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "action",
+      "side": "right",
+      "from_top_mm": 35.68,
+      "length_mm": 6.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 49.83,
+      "length_mm": 10
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 64.03,
+      "length_mm": 10
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 56.93,
+      "length_mm": 16
+    },
+    {
+      "name": "camera_control",
+      "side": "left",
+      "from_top_mm": 108.6,
+      "length_mm": 20,
+      "kind": "opening",
+      "height_mm": 5.0
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 4.4,
+  "bottom_openings": [
+    [0, 12, 4.8],
+    [-24, 1.8, 2.1],
+    [-20.5, 1.8, 2.1],
+    [-17, 1.8, 2.1],
+    [17, 1.8, 2.1],
+    [20.5, 1.8, 2.1],
+    [24, 1.8, 2.1]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 71.45,
+      "height": 149.61
+    },
+    "camera_coordinate_basis": "Official Apple rear-view drawings plus 1.6 mm case border; opening diameters and blank shape are visual estimates.",
+    "references": [
+      {
+        "title": "iPhone 17 official phone dimensions",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-17.pdf",
+        "kind": "phone",
+        "notes": "Phone dimensions, not supplier case dimensions. Apple camera centres follow dimensional drawings; case clearances remain estimates."
+      },
+      {
+        "title": "iPhone 17 finished-case shape",
+        "url": "https://www.otofly.co/products/iphone-17-silicone-case-1",
+        "kind": "finishedCase",
+        "notes": "Shape reference only; printable blank compatibility has not been verified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  }
+}

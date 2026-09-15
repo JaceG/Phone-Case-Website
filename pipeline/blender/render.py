@@ -19,7 +19,7 @@ import sys
 
 import bpy
 
-CYCLES_CAMERAS = {"hero", "three_quarter", "detail", "interior"}
+CYCLES_CAMERAS = {"hero", "three_quarter", "detail", "interior", "side", "bottom"}
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".webp"}
 
 

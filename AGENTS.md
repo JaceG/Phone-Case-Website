@@ -84,7 +84,7 @@ activate live payments as part of the immediate milestone.
 | Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | Presentation catalog; most phone choices reuse one provisional shell |
 | Cart | Persistent cart, repeating set offer, server subtotal validation, grouped designs, add-for-another-phone and order review | Payment/order/refund reconciliation is unfinished |
 | Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | One provisional iPhone shell; per-model switching and geometry migration remain pending |
-| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Bulk package imports work; Blender execution remains operator-driven and additional geometry still needs model-specific research |
+| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Eight additional model studies built; six reference-backed fine-hole previews and two Pixel concepts awaiting matching blanks. Editor/storefront integration remains pending |
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
@@ -102,7 +102,9 @@ reseed an existing working catalog casually.
 - Build a reusable model per exact phone/blank variant. Different designs reuse
   the geometry. Use supplier references and eventually physical measurements.
 - Research purchasable iPhone and major flagship Android blanks, then complete
-  models in batches. Jace can compare and review any model in any order; do not wait
+  models in batches. Codex owns selecting, researching, queueing, modeling, rendering,
+  checking and importing; Jace only reviews finished results. Never require him
+  to create a batch or export a worklist. Jace can review in any order; do not wait
   for one approval before preparing the next. Each model still needs its own decision.
   Use model-specific shape references, including finished printed cases when useful;
   a shared supplier photo is not evidence for every phone variant.

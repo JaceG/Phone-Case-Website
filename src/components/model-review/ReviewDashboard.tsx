@@ -261,21 +261,27 @@ export default function ReviewDashboard({
         <div>
           <span className="mr-eyebrow">MODEL LIBRARY / REVIEW DESK</span>
           <h1>Case model review</h1>
-          <p>Prepare together. Review in your own order.</p>
+          <p>I prepare the models. You review the results, in any order.</p>
         </div>
         <div className="mr-actions">
           <button onClick={() => void refresh()} disabled={busy}>
             Refresh
           </button>
-          <button
-            className="mr-primary"
-            onClick={() => {
-              setQueue(true)
-              setError('')
-            }}
-          >
-            ＋ Prepare a batch
-          </button>
+          <details className="mr-preparation-tools">
+            <summary>Preparation tools</summary>
+            <p className="mr-hint">For preparing models. You can review without using these.</p>
+            <button
+              onClick={() => {
+                setQueue(true)
+                setError('')
+              }}
+            >
+              Add preparation group
+            </button>
+            <button onClick={exportWorklist} disabled={!selected.length}>
+              Export selected worklist
+            </button>
+          </details>
         </div>
       </header>
       <div className="mr-stats">
@@ -319,7 +325,7 @@ export default function ReviewDashboard({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Phone, blank, or batch…"
+            placeholder="Find a phone or case…"
           />
         </label>
         <label>
@@ -345,9 +351,13 @@ export default function ReviewDashboard({
           </select>
         </label>
         <label>
-          Batch
-          <select aria-label="Batch" value={batch} onChange={(e) => setBatch(e.target.value)}>
-            <option value="all">All batches</option>
+          Group
+          <select
+            aria-label="Preparation group"
+            value={batch}
+            onChange={(e) => setBatch(e.target.value)}
+          >
+            <option value="all">All preparation groups</option>
             {batches.map((b) => (
               <option key={b}>{b}</option>
             ))}
@@ -377,9 +387,6 @@ export default function ReviewDashboard({
           <button onClick={() => setSelected([])} disabled={!selected.length}>
             Clear
           </button>
-          <button onClick={exportWorklist} disabled={!selected.length}>
-            Export worklist
-          </button>
           <button
             className="mr-primary"
             onClick={() => setCompare(true)}
@@ -390,9 +397,7 @@ export default function ReviewDashboard({
         </div>
       </div>
       {selected.length > 3 && (
-        <p className="mr-hint">
-          Select two or three models to compare. Any number can be exported as a worklist.
-        </p>
+        <p className="mr-hint">Select two or three models to compare side by side.</p>
       )}
       <section className="mr-grid" aria-label="Case models">
         {visible.map((m) => (
@@ -462,11 +467,13 @@ export default function ReviewDashboard({
       </section>
       {!visible.length && (
         <div className="mr-empty">
-          <h2>{models.length ? 'No models match these filters' : 'Start your first batch'}</h2>
+          <h2>
+            {models.length ? 'No models match these filters' : 'Your models will appear here'}
+          </h2>
           <p>
             {models.length
               ? 'Try another status, brand, or search.'
-              : 'Queue phone models now; their previews can be prepared together.'}
+              : 'I will research, build and check each model before bringing it here for review.'}
           </p>
           <button
             onClick={() => {
@@ -481,8 +488,9 @@ export default function ReviewDashboard({
         </div>
       )}
       <p className="mr-hint">
-        Preview approval, physical sample validation, and sales availability are separate. A batch
-        never approves models automatically.
+        Open any model to review its views and leave feedback. You can skip around freely; reviewing
+        one model never holds up preparation of another. Preview approval is separate from physical
+        sample validation and sales availability.
       </p>
       {active && (
         <Modal title={active.phone} close={closeReview}>

@@ -36,9 +36,18 @@ def main():
         report['openings'][hole['name']] = 'clear' if not blocked else blocked
         assert not blocked, f"{hole['name']} blocked by {blocked}"
 
+    # The new per-model USB/speaker/pen openings must actually traverse the wall.
+    for index, (x, width, height) in enumerate(p.get('bottom_openings', [])):
+        origin = Vector((x*.001, p['depth_mm']*.05*.001, (-p['height_mm']/2-1)*.001))
+        blocked = [obj.name for obj in meshes if obj.ray_cast(origin, Vector((0, 0, 1)), distance=(p['wall_mm']+2)*.001)[0]]
+        report['openings'][f'bottom_{index}'] = 'clear' if not blocked else blocked
+        assert not blocked, f'bottom opening {index} blocked by {blocked}'
+
     # Numeric UV check catches the previous boolean interpolation streaks.
     for name in ('case_shell', 'camera_island'):
-        obj = bpy.data.objects[name]
+        obj = bpy.data.objects.get(name)
+        if obj is None:
+            continue
         uv = obj.data.uv_layers['UVMap']
         error = 0.0
         checked = 0
@@ -65,7 +74,7 @@ def main():
     assert abs(dimensions[2]-p['height_mm']) < .01, dimensions
     report['shell_envelope_mm'] = dimensions
     print(json.dumps(report, indent=2))
-    print('PASS: closed outward-facing parts, six clear camera openings, envelope and shared UVs')
+    print(f"PASS: closed outward-facing parts, {len(p['holes'])} clear camera openings, envelope and shared UVs")
 
 
 if __name__ == '__main__':

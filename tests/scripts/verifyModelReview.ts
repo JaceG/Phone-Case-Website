@@ -201,7 +201,7 @@ try {
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
   await page.goto(base + '/catalog-studio/models')
-  await page.getByLabel('Batch', { exact: true }).selectOption(batch)
+  await page.getByLabel('Preparation group', { exact: true }).selectOption(batch)
   assert.equal(await page.locator('.mr-card').count(), 3)
   await page.screenshot({ path: path.join(root, 'dashboard.png'), fullPage: true })
   const ready = (await list()).filter((m: any) => created.includes(m.id) && m.stage === 'ready')
@@ -238,7 +238,8 @@ try {
     }),
   )
   await page.getByRole('button', { name: 'Close dialog' }).click()
-  await page.getByRole('button', { name: 'Prepare a batch', exact: false }).click()
+  await page.locator('.mr-preparation-tools summary').click()
+  await page.getByRole('button', { name: 'Add preparation group', exact: true }).click()
   await page.getByLabel('Batch name', { exact: true }).fill(batch)
   await page.getByRole('checkbox', { name: `Queue ${ps[0].name}`, exact: true }).check()
   await page.getByRole('button', { name: 'Queue 1 models', exact: true }).click()

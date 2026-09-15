@@ -266,6 +266,8 @@ def setup_cameras_and_lights():
     add_camera("turntable", (0.0, -0.5, 0.05), origin, lens=80.0, res=(768, 768))
     add_camera("detail", (-.12, -.25, .19), (0, -.009, .055), lens=100, res=(1400, 1100))
     add_camera("interior", (.22, .4, .15), origin, lens=80, res=(1200, 1500))
+    add_camera("side", (-.4, -.035, 0), origin, ortho_scale=.19, res=(900, 1600))
+    add_camera("bottom", (-.03, -.16, -.18), (0, 0, -.065), lens=100, res=(1200, 800))
 
     add_area_light("key", (-0.28, -0.35, 0.32), origin, energy=7.0, size=0.30,
                    color=(1.0, .97, .94), shape='RECTANGLE', size_y=.5)
@@ -305,7 +307,8 @@ def main():
     sys.path.insert(0, here)
     from shell_geometry import build_parts
     parts = build_parts(P, T, print_mat, inner_mat)
-    shell, island = parts[:2]
+    shell = parts[0]
+    island = bpy.data.objects.get("camera_island")
     for ob in parts:
         ob.data.transform(to_scene)
         ob.parent = pivot
@@ -320,7 +323,7 @@ def main():
     print(
         f"wrote {out}\n"
         f"  shell verts={len(shell.data.vertices)} faces={len(shell.data.polygons)}; "
-        f"island faces={len(island.data.polygons)}\n"
+        f"island faces={len(island.data.polygons) if island else 0}\n"
         f"  template {T.tw:g} x {T.th:g} mm = {scene['print_template_px'][0]} x {scene['print_template_px'][1]} px\n"
         f"  case_artwork -> {img.filepath}"
     )

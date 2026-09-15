@@ -1,0 +1,129 @@
+{
+  "slug": "galaxy-s25-ultra",
+  "label": "Galaxy S25 Ultra \u2014 visual case study",
+  "height_mm": 166.0,
+  "width_mm": 80.8,
+  "depth_mm": 12.8,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 6,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": false,
+    "x_mm": 0,
+    "y_mm": 0,
+    "w_mm": 1,
+    "h_mm": 1,
+    "height_mm": 0,
+    "deck_height_mm": 0,
+    "corner_radius_mm": 1
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 15.2,
+      "y_mm": 19.2,
+      "d_mm": 14.8
+    },
+    {
+      "name": "lens_middle",
+      "kind": "lens",
+      "x_mm": 15.2,
+      "y_mm": 40.1,
+      "d_mm": 14.8
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 15.2,
+      "y_mm": 61.0,
+      "d_mm": 14.8
+    },
+    {
+      "name": "autofocus",
+      "kind": "sensor",
+      "x_mm": 33.2,
+      "y_mm": 19.2,
+      "d_mm": 9.0
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 33.2,
+      "y_mm": 33.7,
+      "d_mm": 4.5
+    },
+    {
+      "name": "lens_short_tele",
+      "kind": "lens",
+      "x_mm": 33.2,
+      "y_mm": 47.7,
+      "d_mm": 10.3
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.72,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "volume_rocker",
+      "side": "left",
+      "from_top_mm": 45,
+      "length_mm": 24
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 72,
+      "length_mm": 13
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom opening order follows the model-specific Elago underside photo; widths and offsets remain estimates. USB-C and adjacent microphone share one opening."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 3.2,
+  "bottom_openings": [
+    [0, 16, 5.2],
+    [18, 10, 2.4],
+    [32, 6.7, 5.6]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 77.6,
+      "height": 162.8
+    },
+    "camera_coordinate_basis": "Rear-view photo proportions, scaled against official phone width; not measured camera centres.",
+    "references": [
+      {
+        "title": "Galaxy S25 Ultra official phone dimensions",
+        "url": "https://news.samsung.com/co/la-serie-samsung-galaxy-s25-establece-el-estandar-del-smartphone-con-ia-convirtiendolo-en-un-verdadero-companero-de-ia",
+        "kind": "phone",
+        "notes": "Phone outer dimensions only. Camera positions are estimated visually from the model-specific photos."
+      },
+      {
+        "title": "Galaxy S25 Ultra finished-case shape",
+        "url": "https://www.elago.com/products/silicone-galaxy-s25-ultra-case",
+        "kind": "finishedCase",
+        "notes": "Shape reference only; printable blank compatibility has not been verified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  }
+}

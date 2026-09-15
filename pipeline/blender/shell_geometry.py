@@ -106,7 +106,7 @@ def planar_uv(obj, template):
             uv.data[index].uv = template.uv(Vector((v.x, v.y)))
 
 
-def finish(obj, bevel=0):
+def finish(obj, bevel=0, flat_sides=False):
     if bevel:
         mod = obj.modifiers.new('Soft tool edges', 'BEVEL')
         mod.width, mod.segments = bevel, 4
@@ -114,11 +114,12 @@ def finish(obj, bevel=0):
         apply(obj, mod)
     # Flat deck polygons stay flat. Smooth cylinders and moulded profile bands.
     for f in obj.data.polygons:
-        f.use_smooth = abs(f.normal.z) < .9999
+        f.use_smooth = (max(abs(n) for n in f.normal) if flat_sides else abs(f.normal.z)) < .9999
 
 
 def build_parts(p, template, print_mat, silicone):
     w, h, d, wall = p['width_mm'], p['height_mm'], p['depth_mm'], p['wall_mm']
+    back = p.get('back_mm', wall)
     r, roll = p['corner_radius_mm'], p['back_roll_mm']
     rings = []
     # Outside: flat back -> broad rolled shoulder -> straight wall -> rolled lip.
@@ -131,10 +132,10 @@ def build_parts(p, template, print_mat, silicone):
         rings.append((lip-lip*math.cos(a), -d+lip-lip*math.sin(a)))
     # Inside fillet meets a flat floor, avoiding the sharp solidify corner.
     inner_roll = .65
-    rings.append((wall, -wall-inner_roll))
+    rings.append((wall, -back-inner_roll))
     for i in range(1, 7):
         a = i*math.pi/12
-        rings.append((wall+inner_roll*(1-math.cos(a)), -wall-inner_roll+inner_roll*math.sin(a)))
+        rings.append((wall+inner_roll*(1-math.cos(a)), -back-inner_roll+inner_roll*math.sin(a)))
     # First cap is the outside back; last is the interior floor.
     shell = profile_solid('case_shell', w, h, r, rings, [print_mat, silicone], segments=p['corner_segments'])
     uv = shell.data.uv_layers.new(name='UVMap')
@@ -156,19 +157,23 @@ def build_parts(p, template, print_mat, silicone):
     ci = p['camera_island']
     left, top = -w/2+ci['x_mm'], h/2-ci['y_mm']
     center = (left+ci['w_mm']/2, top-ci['h_mm']/2)
-    deck = ci['deck_height_mm']
+    raised = ci.get('enabled', True)
+    deck = ci['deck_height_mm'] if raised else 0
     height_scale = ci['height_mm'] / 2.8
     surround = [(0, -.25), (0, .3), (.15, 1.4), (.55, 2.15), (1.05, 2.65),
                 (1.7, 2.8), (2.3, 2.65), (2.8, 2.2)]
-    island = profile_solid('camera_island', ci['w_mm'], ci['h_mm'], ci['corner_radius_mm'],
-        [(inset, z*height_scale) for inset, z in surround] + [(3.2, deck)],
-        [print_mat, silicone], center=center, segments=p['corner_segments'])
-    parts.append(island)
+    island = None
+    if raised:
+        island = profile_solid('camera_island', ci['w_mm'], ci['h_mm'], ci['corner_radius_mm'],
+            [(inset, z*height_scale) for inset, z in surround] + [(3.2, deck)],
+            [print_mat, silicone], center=center, segments=p['corner_segments'])
+        parts.append(island)
     for hole in p['holes']:
         x, y, rad = left+hole['x_mm'], top-hole['y_mm'], hole['d_mm']/2
-        cutter = cylinder('cutter_'+hole['name'], x, y, 2*rad, -wall-1, ci['height_mm']+2, silicone, segments=p['hole_segments'])
+        cutter = cylinder('cutter_'+hole['name'], x, y, 2*rad, -back-1, ci['height_mm']+2, silicone, segments=p['hole_segments'])
         cut(shell, cutter)
-        cut(island, cutter)
+        if island:
+            cut(island, cutter)
         dispose(cutter)
         if hole['kind'] == 'lens':
             # Separate annular topology: no union interpolation across the deck.
@@ -179,7 +184,79 @@ def build_parts(p, template, print_mat, silicone):
             parts.append(rim)
 
     # Shallow channel with bevelled shoulders, retaining artwork at its floor.
-    ms = p['magsafe_ring']
+    ms = p.get('magsafe_ring')
+    if ms:
+        add_magsafe_groove(shell, ms, h, template, print_mat)
+
+    # Controls and port layouts are specific to each phone, in rear-view coordinates.
+    for control in p['buttons']:
+        side = control['side']
+        x = (-1 if side == 'left' else 1) * (w/2-.12)
+        y = h/2-control['from_top_mm']
+        opening = control.get('kind') == 'opening'
+        height = control.get('height_mm', 3.3)
+        cap = profile_solid(control['name'], control['length_mm'], height, min(height/2-.01, 1.5),
+                            [(0, -wall-1), (0, 2)] if opening else
+                            [(0, -.25), (0, .2), (.18, .5), (.35, .65)], [silicone], segments=16)
+        rot = Matrix(((0, 0, -1 if side == 'left' else 1, x),
+                      (1, 0, 0, y), (0, 1, 0, control.get('z_mm', -d*.55)), (0, 0, 0, 1)))
+        cap.data.transform(rot)
+        bm = bmesh.new()
+        bm.from_mesh(cap.data)
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        bm.to_mesh(cap.data)
+        bm.free()
+        if opening:
+            cut(shell, cap)
+            dispose(cap)
+        else:
+            parts.append(cap)
+
+    # Preserve the original shell's defaults; new models supply their own port map.
+    bottom = p.get('bottom_openings', [(0, 12, 4.8)] + [(x, 1.8, 2.1) for x in (-24,-20.5,-17,17,20.5,24)])
+    for index, (x, width, height) in enumerate(bottom):
+        cutter = profile_solid('bottom_opening', width, height, min(height,width)/2-.01,
+                              [(0, -wall-1), (0, wall+1)], [silicone], segments=12)
+        transform = Matrix(((1,0,0,x), (0,0,-1,-h/2+wall/2), (0,1,0,-d*.55), (0,0,0,1)))
+        cutter.data.transform(transform)
+        cut(shell, cutter)
+        dispose(cutter)
+
+    finish(shell, p['bevel_mm'], p.get('flat_side_shading', False))
+    # Nearly coincident boolean points can leave micron-scale slivers on a deck.
+    # Opt in per model; reproject the printable UVs after welding these points.
+    tolerance = p.get('cleanup_tolerance_mm', 0)
+    if tolerance:
+        bm = bmesh.new()
+        bm.from_mesh(shell.data)
+        bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=tolerance)
+        bmesh.ops.dissolve_degenerate(bm, edges=list(bm.edges), dist=tolerance)
+        boundary = [edge for edge in bm.edges if edge.is_boundary]
+        # A closed case should have no boundary edges. Only repair a tiny planar
+        # boolean sliver; larger holes must fail validation rather than be hidden.
+        if (0 < len(boundary) <= 3 and sum(e.calc_length() for e in boundary) < .5
+                and all(abs(v.co.z) < tolerance for e in boundary for v in e.verts)):
+            bmesh.ops.holes_fill(bm, edges=boundary, sides=3)
+        bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+        bm.to_mesh(shell.data)
+        bm.free()
+    if island:
+        finish(island, p['bevel_mm'])
+        planar_uv(island, template)
+    shell_uv = shell.data.uv_layers['UVMap']
+    for f in shell.data.polygons:
+        for li in f.loop_indices:
+            v = shell.data.vertices[shell.data.loops[li].vertex_index].co
+            if v.z >= -.5:
+                shell_uv.data[li].uv = template.uv(Vector((v.x, v.y)))
+    for obj in parts[1:]:
+        if obj != island:
+            finish(obj)
+            planar_uv(obj, template)
+    return parts
+
+
+def add_magsafe_groove(shell, ms, h, template, print_mat):
     rad, width, depth = ms['d_mm']/2, ms['width_mm'], ms['depth_mm']
     cy = h/2-ms['cy_from_top_mm']
     groove = annular_profile('magsafe_cutter', 0, cy,
@@ -194,47 +271,3 @@ def build_parts(p, template, print_mat, silicone):
     planar_uv(line, template)
     cut(shell, line)
     dispose(line)
-
-    # Controls sit on the side walls. Plain silicone distinguishes the moulded
-    # buttons from the artwork; the caps have a soft, rolled profile.
-    for control in p['buttons']:
-        side = control['side']
-        x = (-1 if side == 'left' else 1) * (w/2-.12)
-        y = h/2-control['from_top_mm']
-        cap = profile_solid(control['name'], control['length_mm'], 3.3, 1.5,
-                            [(0, -.25), (0, .2), (.18, .5), (.35, .65)], [silicone], segments=16)
-        rot = Matrix(((0, 0, -1 if side == 'left' else 1, x),
-                      (1, 0, 0, y), (0, 1, 0, -d*.55), (0, 0, 0, 1)))
-        cap.data.transform(rot)
-        # The left-side transform mirrors the mesh; restore outward normals.
-        bm = bmesh.new()
-        bm.from_mesh(cap.data)
-        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-        bm.to_mesh(cap.data)
-        bm.free()
-        parts.append(cap)
-
-    # Bottom USB-C opening and speaker perforations, cut all the way through.
-    for index, (x, width, height) in enumerate([(0, 12, 4.8)] + [(x, 1.8, 2.1) for x in (-24,-20.5,-17,17,20.5,24)]):
-        cutter = profile_solid('bottom_opening', width, height, min(height,width)/2-.01,
-                              [(0, -3), (0, 3)], [silicone], segments=12)
-        transform = Matrix(((1,0,0,x), (0,0,-1,-h/2+wall/2), (0,1,0,-d*.55), (0,0,0,1)))
-        cutter.data.transform(transform)
-        cut(shell, cutter)
-        dispose(cutter)
-
-    finish(shell, p['bevel_mm'])
-    finish(island, p['bevel_mm'])
-    # Boolean-created points on the back/plateau are reprojected, mathematically.
-    # Keep pre-existing wall UVs; only flat/rolled back vertices are overwritten.
-    shell_uv = shell.data.uv_layers['UVMap']
-    for f in shell.data.polygons:
-        for li in f.loop_indices:
-            v = shell.data.vertices[shell.data.loops[li].vertex_index].co
-            if v.z >= -.5:
-                shell_uv.data[li].uv = template.uv(Vector((v.x, v.y)))
-    planar_uv(island, template)
-    for obj in parts[2:]:
-        finish(obj)
-        planar_uv(obj, template)
-    return parts

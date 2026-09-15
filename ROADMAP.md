@@ -57,8 +57,12 @@ blank and manufacturing process determine which print modes can be enabled.
   as the first full review cycle.
 - [x] Support batch preparation, search/filter, side-by-side comparison, and independent
   review decisions with feedback/history. Jace may review in any order.
-- [ ] Research and build subsequent model-specific shells in batches; an outstanding
-  review does not block preparation of other models. Approval remains per model.
+- [x] First additional catalog pass: six fine-hole case studies plus two Pixel
+  concepts, with separate geometry, neutral/checker/artwork views and private
+  review packages. Exact printable blanks remain unverified.
+- [ ] Continue the broader blank/model checklist and resolve the Pixel fine-hole
+  sourcing gap. Codex handles preparation; Jace reviews results. An outstanding
+  review does not block another model. Approval remains per model.
 
 The first package is at `/catalog-studio/models`; exact iPhone candidates and Android sourcing gaps are tracked in [docs/case-models.md](docs/case-models.md).
 

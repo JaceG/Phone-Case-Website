@@ -1,0 +1,129 @@
+{
+  "slug": "pixel-9-pro",
+  "label": "Pixel 9 Pro \u2014 visual case study",
+  "height_mm": 156.0,
+  "width_mm": 75.2,
+  "depth_mm": 12,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 12.2,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": true,
+    "x_mm": 3.8,
+    "y_mm": 16,
+    "w_mm": 67.6,
+    "h_mm": 26,
+    "height_mm": 3.6,
+    "deck_height_mm": 2.8,
+    "corner_radius_mm": 12.8
+  },
+  "holes": [
+    {
+      "name": "lens_wide",
+      "kind": "lens",
+      "x_mm": 12.4,
+      "y_mm": 12.6,
+      "d_mm": 10.8
+    },
+    {
+      "name": "lens_main",
+      "kind": "lens",
+      "x_mm": 28.9,
+      "y_mm": 12.6,
+      "d_mm": 12.3
+    },
+    {
+      "name": "lens_tele",
+      "kind": "lens",
+      "x_mm": 44.4,
+      "y_mm": 12.6,
+      "d_mm": 10
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 58.6,
+      "y_mm": 7.4,
+      "d_mm": 5.6
+    },
+    {
+      "name": "temperature",
+      "kind": "sensor",
+      "x_mm": 58.6,
+      "y_mm": 17.0,
+      "d_mm": 6.2
+    },
+    {
+      "name": "rear_mic",
+      "kind": "mic",
+      "x_mm": 18.8,
+      "y_mm": 20.2,
+      "d_mm": 1.3
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.72,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 50,
+      "length_mm": 13
+    },
+    {
+      "name": "volume",
+      "side": "left",
+      "from_top_mm": 77,
+      "length_mm": 24
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Fine-hole camera deck is a proposed adaptation. Located references have a shared camera window; no matching purchasable fine-hole blank has been verified. Do not approve as a supplier-matched preview."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 2,
+  "bottom_openings": [
+    [0, 12, 4.8],
+    [-20, 10, 2.5],
+    [18, 1.5, 1.8]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 72,
+      "height": 152.8
+    },
+    "camera_coordinate_basis": "Rear-view photo proportions, scaled against official phone width; not measured camera centres.",
+    "references": [
+      {
+        "title": "Pixel 9 Pro official phone dimensions",
+        "url": "https://support.google.com/pixelphone/answer/7158570?hl=en",
+        "kind": "phone",
+        "notes": "Phone outer dimensions only. Camera positions are estimated visually from the model-specific photos."
+      },
+      {
+        "title": "Pixel 9 Pro finished-case shape",
+        "url": "https://sklep.bizonmobile.pl/pl/products/silikonowe-etui-bizon-soft-case-do-google-pixel-9-pro-czarne-23683.html",
+        "kind": "finishedCase",
+        "notes": "Shape reference only; printable blank compatibility has not been verified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": false
+  }
+}

@@ -81,15 +81,25 @@ Record them as **Finished case / shape reference**, separate from the blank
 supplier and from catalog artwork. Never infer every variant's geometry from
 one shared photo. Save source URLs and note exactly what each view establishes.
 
-## Batch workflow
+## Preparation and review responsibilities
 
-Use **Prepare a batch** to queue multiple existing phone models. This creates
-research candidates with no pretend geometry or approvals. Search/filter by
-batch, select models, and **Export worklist** for preparation. Modeling/rendering
-remain operator-run; queueing does not start a background Blender service.
+Codex performs the research, queue setup, modeling, render checks and private
+imports. Jace reviews finished results in any order and can compare two or three
+models. No batch creation, worklist export or rendering commands are required
+from Jace. Optional operator controls live under **Preparation tools**.
 
-The operator can update preparation stages and import many completed review
-packages with [the batch guide](model-review-batches.md). Packages can finish in
-any order; reimporting unchanged packages preserves decisions. A changed package
-requires a new review only for that model. Approval does not activate sales or
-mark a physical sample validated.
+The first additional catalog pass has model-specific geometry for iPhone 17 Pro,
+iPhone 17, iPhone Air, iPhone 16 Pro, Galaxy S25 and Galaxy S25 Ultra, based on
+finished fine-hole cases plus official phone dimensions. These are visual studies;
+compatible printable blanks and physical fit are not yet verified. Pixel 9 and
+Pixel 9 Pro also have rendered shape concepts, but the located references use a
+common lens window; their fine-hole adaptation remains unverified and cannot be
+approved as a matching blank.
+
+Source links and dimensions: `pipeline/model-library/catalog.json` and each
+`pipeline/blender/params/<phone>.json`. Eleven rendered views per new model cover
+neutral geometry, camera, inside, side, bottom, checker and artwork; source images
+are included privately. The existing iPhone 17 Pro Max review stays separate.
+
+See [the preparation guide](model-review-batches.md). Storefront and Studio still
+use the existing shell until reviewed model integration is implemented.

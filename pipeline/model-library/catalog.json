@@ -1,0 +1,181 @@
+{
+  "batch": "Catalog case studies \u2014 September 2026",
+  "models": [
+    {
+      "slug": "iphone-17-pro",
+      "name": "iPhone 17 Pro",
+      "geometryFile": "pipeline/blender/params/iphone-17-pro.json",
+      "referenceImage": "placeholder/model-references/iphone-17-pro.jpg",
+      "references": [
+        {
+          "title": "iPhone 17 Pro official phone dimensions",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-17-pro.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions, not supplier case dimensions. Apple camera centres follow dimensional drawings; case clearances remain estimates."
+        },
+        {
+          "title": "iPhone 17 Pro finished-case shape",
+          "url": "https://gorillacasestore.com/products/iphone-17-pro-silicone-magnetic-camera-cover-case",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": false,
+      "notes": "Prepared from this exact phone\u2019s dimensions and model-specific finished-case photos. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "iphone-17",
+      "name": "iPhone 17",
+      "geometryFile": "pipeline/blender/params/iphone-17.json",
+      "referenceImage": "placeholder/model-references/iphone-17.jpg",
+      "references": [
+        {
+          "title": "iPhone 17 official phone dimensions",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-17.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions, not supplier case dimensions. Apple camera centres follow dimensional drawings; case clearances remain estimates."
+        },
+        {
+          "title": "iPhone 17 finished-case shape",
+          "url": "https://www.otofly.co/products/iphone-17-silicone-case-1",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": false,
+      "notes": "Prepared from this exact phone\u2019s dimensions and model-specific finished-case photos. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "iphone-air",
+      "name": "iPhone Air",
+      "geometryFile": "pipeline/blender/params/iphone-air.json",
+      "referenceImage": "placeholder/model-references/iphone-air.jpg",
+      "references": [
+        {
+          "title": "iPhone Air official phone dimensions",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-air.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions, not supplier case dimensions. Apple camera centres follow dimensional drawings; case clearances remain estimates."
+        },
+        {
+          "title": "iPhone Air finished-case shape",
+          "url": "https://www.otofly.co/products/iphone-17-air-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": false,
+      "notes": "Prepared from this exact phone\u2019s dimensions and model-specific finished-case photos. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "iphone-16-pro",
+      "name": "iPhone 16 Pro",
+      "geometryFile": "pipeline/blender/params/iphone-16-pro.json",
+      "referenceImage": "placeholder/model-references/iphone-16-pro-fine-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 16 Pro official phone dimensions",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16-pro.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions, not supplier case dimensions. Apple camera centres follow dimensional drawings; case clearances remain estimates."
+        },
+        {
+          "title": "iPhone 16 Pro finished-case shape",
+          "url": "https://www.otofly.co/products/iphone-16-pro-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": false,
+      "notes": "Prepared from this exact phone\u2019s dimensions and model-specific finished-case photos. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "galaxy-s25",
+      "name": "Galaxy S25",
+      "geometryFile": "pipeline/blender/params/galaxy-s25.json",
+      "referenceImage": "placeholder/model-references/galaxy-s25.jpg",
+      "references": [
+        {
+          "title": "Galaxy S25 official phone dimensions",
+          "url": "https://www.samsung.com/my/smartphones/galaxy-s25/specs/",
+          "kind": "phone",
+          "notes": "Phone outer dimensions only. Camera positions are estimated visually from the model-specific photos."
+        },
+        {
+          "title": "Galaxy S25 finished-case shape",
+          "url": "https://www.elago.com/products/silicone-galaxy-s25-case",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": false,
+      "notes": "Prepared from this exact phone\u2019s dimensions and model-specific finished-case photos. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "galaxy-s25-ultra",
+      "name": "Galaxy S25 Ultra",
+      "geometryFile": "pipeline/blender/params/galaxy-s25-ultra.json",
+      "referenceImage": "placeholder/model-references/galaxy-s25-ultra.jpg",
+      "references": [
+        {
+          "title": "Galaxy S25 Ultra official phone dimensions",
+          "url": "https://news.samsung.com/co/la-serie-samsung-galaxy-s25-establece-el-estandar-del-smartphone-con-ia-convirtiendolo-en-un-verdadero-companero-de-ia",
+          "kind": "phone",
+          "notes": "Phone outer dimensions only. Camera positions are estimated visually from the model-specific photos."
+        },
+        {
+          "title": "Galaxy S25 Ultra finished-case shape",
+          "url": "https://www.elago.com/products/silicone-galaxy-s25-ultra-case",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": false,
+      "notes": "Prepared from this exact phone\u2019s dimensions and model-specific finished-case photos. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "pixel-9",
+      "name": "Pixel 9",
+      "geometryFile": "pipeline/blender/params/pixel-9.json",
+      "referenceImage": "placeholder/model-references/pixel-9-bizon.jpg",
+      "references": [
+        {
+          "title": "Pixel 9 official phone dimensions",
+          "url": "https://support.google.com/pixelphone/answer/7158570?hl=en",
+          "kind": "phone",
+          "notes": "Phone outer dimensions only. Camera positions are estimated visually from the model-specific photos."
+        },
+        {
+          "title": "Pixel 9 finished-case shape",
+          "url": "https://sklep.bizonmobile.pl/pl/products/silikonowe-etui-bizon-soft-case-do-google-pixel-9-czarne-23688.html",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": true,
+      "notes": "Fine-hole CONCEPT ONLY. The linked Pixel reference has a common camera window, not separate lens openings. Matching blank sourcing remains my task. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "pixel-9-pro",
+      "name": "Pixel 9 Pro",
+      "geometryFile": "pipeline/blender/params/pixel-9-pro.json",
+      "referenceImage": "placeholder/model-references/pixel-9-pro-bizon.jpg",
+      "references": [
+        {
+          "title": "Pixel 9 Pro official phone dimensions",
+          "url": "https://support.google.com/pixelphone/answer/7158570?hl=en",
+          "kind": "phone",
+          "notes": "Phone outer dimensions only. Camera positions are estimated visually from the model-specific photos."
+        },
+        {
+          "title": "Pixel 9 Pro finished-case shape",
+          "url": "https://sklep.bizonmobile.pl/pl/products/silikonowe-etui-bizon-soft-case-do-google-pixel-9-pro-czarne-23683.html",
+          "kind": "finishedCase",
+          "notes": "Shape reference only; printable blank compatibility has not been verified."
+        }
+      ],
+      "concept": true,
+      "notes": "Fine-hole CONCEPT ONLY. The linked Pixel reference has a common camera window, not separate lens openings. Matching blank sourcing remains my task. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    }
+  ]
+}

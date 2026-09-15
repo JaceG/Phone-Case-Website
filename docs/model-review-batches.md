@@ -4,22 +4,31 @@ Updated 2026-09-15. Preparation can proceed in batches. Jace can review, compare
 approve, request changes or reject models in any order. There is no sequential
 approval gate between models. Every approval still belongs to one model/version.
 
+## Responsibilities
+
+Codex owns preparation: choose the next catalog phones, research exact model
+references, create the library records, build each shell, validate it, inspect
+renders and import the finished review package. A batch is an internal way to
+organize that work. Jace does not need to name batches, queue phones, export
+worklists or run Blender. Do not hand those tasks back to him.
+
+Preparation of one model continues while another waits for review. Missing
+references remain an operator research task, with a visible explanation; do not
+quietly replace a fine-hole blank with a large camera window.
+
 ## Owner workflow
 
-1. Open `/catalog-studio/models` as an administrator and choose **Prepare a batch**.
-2. Name the batch, choose phones, and optionally mark it high priority. Queueing
-   creates research candidates, not finished geometry, sales variants or a render job.
-   Repeating the same batch name/phone combination does not duplicate it.
-3. Search and filter by status, brand or batch. Select cards and export a worklist
-   for the operator. Each exported row has its ID, phone slug, current version,
-   last-update timestamp, feedback, and references.
-4. Select two or three cards for comparison. Each column can show a different view.
-5. Open any card to inspect all images, source links, preparation notes and review
-   history. Save feedback, request changes, approve the preview or reject the model.
-   Changes/rejection require a note. Saving keeps that model open; there is no
-   forced next model. A `?model=ID` URL opens a specific review directly.
-6. Use **Reopen review** when revisiting a decision. Preview approval never changes
-   physical sample status or storefront availability.
+1. Open `/catalog-studio/models` and choose any finished model, or filter to
+   **Ready for you**. Each model has its own independent review.
+2. Inspect the neutral case, camera detail, interior, numbered checker and artwork
+   views. Source photos and links explain what the model was based on.
+3. Leave feedback, request changes, approve the preview or reject it. Changes and
+   rejection need a note. Saving keeps the model open; there is no forced next item.
+4. Select two or three cards to compare. Switch views independently in each column.
+5. Reopen a previous decision when needed. A `?model=ID` link opens one review.
+
+Optional queue/export controls are collapsed under **Preparation tools**. They
+are operator conveniences, never a prerequisite for reviewing.
 
 Only completed packages with individual camera openings can be approved. Notes
 can be saved on unfinished candidates. A stale review is rejected if someone
@@ -55,8 +64,8 @@ references and preparation notes. Keep owner feedback separate from research not
 
 Save a manifest outside committed assets, for example under `placeholder/`.
 Each entry targets a queued library record. Paths resolve relative to the manifest.
-Copy its `id`, phone `slug` and `updatedAt` from a fresh exported worklist; use that
-last value as `expectedUpdatedAt`. Example structure (replace placeholders):
+Read its `id`, phone `slug` and `updatedAt` directly from Payload as the operator;
+use the last value as `expectedUpdatedAt`. No owner-exported worklist is required. Example structure (replace placeholders):
 
 ```json
 {
@@ -122,3 +131,28 @@ checks filtering, readiness and review invalidation. With the app running,
 `pnpm exec tsx tests/scripts/verifyModelReview.ts` checks private access, queue
 idempotence, import/reimport, simultaneous and stale decisions, per-model history,
 comparison, nonsequential review, mobile layout and cleanup using temporary records.
+
+## Researched catalog library
+
+`pipeline/model-library/catalog.json` records eight additional model studies and
+their model-specific source links. Their parameter files live under
+`pipeline/blender/params/`. Build them locally with:
+
+```bash
+python3 pipeline/blender/build_review_library.py
+# Or rebuild just one:
+python3 pipeline/blender/build_review_library.py iphone-17-pro
+```
+
+The operator script builds and validates each shell, then renders seven neutral
+views and four checker/artwork views. Failures are isolated per model and logged
+under `pipeline/out/model-library/<slug>/`. It never replaces the storefront
+master, the placement editor mesh or existing product renders. Inspect the output
+before importing. Reference images remain private under `placeholder/`.
+
+Apple phone drawings establish phone dimensions and rear camera centres; Samsung
+and Google specifications establish phone envelopes. Case thickness, clearances
+and photo-derived dimensions remain estimates. A finished silicone case does not
+prove availability of a compatible sublimation blank. Pixel fine-hole adaptations
+are concepts only until an exact matching blank is found; keep their coverage
+unverified and their approval disabled.
