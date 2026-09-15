@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import {
   canReview,
   filterModels,
+  phoneFamily,
+  phoneFamilyOptions,
   stageLabels,
   statusLabels,
   type PhoneChoice,
@@ -93,7 +95,7 @@ export default function ReviewDashboard({
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('all')
   const [brand, setBrand] = useState('all')
-  const [batch, setBatch] = useState('all')
+  const [family, setFamily] = useState('all')
   const [sort, setSort] = useState('priority')
   const [selected, setSelected] = useState<number[]>([])
   const [active, setActive] = useState<ReviewModel | null>(null)
@@ -107,8 +109,8 @@ export default function ReviewDashboard({
   const [batchName, setBatchName] = useState('')
   const [priority, setPriority] = useState('normal')
   const [conflict, setConflict] = useState(false)
-  const batches = [...new Set(models.map((m) => m.batch))].sort()
-  const visible = filterModels(models, query, status, brand, batch).sort((a, b) =>
+  const families = phoneFamilyOptions(models, brand)
+  const visible = filterModels(models, query, status, brand, 'all', family).sort((a, b) =>
     sort === 'name'
       ? a.phone.localeCompare(b.phone)
       : sort === 'updated'
@@ -342,7 +344,14 @@ export default function ReviewDashboard({
         </label>
         <label>
           Brand
-          <select aria-label="Brand" value={brand} onChange={(e) => setBrand(e.target.value)}>
+          <select
+            aria-label="Brand"
+            value={brand}
+            onChange={(e) => {
+              setBrand(e.target.value)
+              setFamily('all')
+            }}
+          >
             <option value="all">All brands</option>
             <option value="apple">Apple</option>
             <option value="samsung">Samsung</option>
@@ -351,15 +360,17 @@ export default function ReviewDashboard({
           </select>
         </label>
         <label>
-          Group
+          Phone family
           <select
-            aria-label="Preparation group"
-            value={batch}
-            onChange={(e) => setBatch(e.target.value)}
+            aria-label="Phone family"
+            value={family}
+            onChange={(e) => setFamily(e.target.value)}
           >
-            <option value="all">All preparation groups</option>
-            {batches.map((b) => (
-              <option key={b}>{b}</option>
+            <option value="all">All phone families</option>
+            {families.map(({ label, count }) => (
+              <option key={label} value={label}>
+                {label} ({count})
+              </option>
             ))}
           </select>
         </label>
@@ -445,7 +456,7 @@ export default function ReviewDashboard({
             </button>
             <div className="mr-card-body">
               <div className="mr-card-meta">
-                {m.batch}
+                {phoneFamily(m)}
                 {m.priority === 'high' && <b>High priority</b>}
               </div>
               <h2>{m.phone}</h2>
@@ -480,7 +491,7 @@ export default function ReviewDashboard({
               setQuery('')
               setStatus('all')
               setBrand('all')
-              setBatch('all')
+              setFamily('all')
             }}
           >
             Clear filters
@@ -497,7 +508,7 @@ export default function ReviewDashboard({
           <div className="mr-detail-top">
             <Badge model={active} />
             <span>
-              {active.batch} · {stageLabels[active.stage]} ·{' '}
+              {phoneFamily(active)} · {stageLabels[active.stage]} ·{' '}
               {active.sample === 'validated'
                 ? 'Physical sample validated'
                 : active.sample === 'changes'
@@ -570,6 +581,7 @@ export default function ReviewDashboard({
               )}
               <details>
                 <summary>Preparation notes & dimensions</summary>
+                <p>Preparation batch: {active.batch}</p>
                 <p className="mr-notes">{active.notes || 'No preparation notes yet.'}</p>
                 <small>Geometry version: {active.version.slice(0, 16)}</small>
               </details>

@@ -105,7 +105,11 @@ reference gap remains open.
 
 Open any model card to leave feedback, request changes, approve its preview or
 reject it without leaving the review dashboard. Compare two or three selected
-models side by side; use filters to revisit a batch, brand or review status. Changing its geometry/version clears its prior visual
+models side by side; filter by phone family, brand or review status. Phone families
+combine preparation batches: 16e belongs with iPhone 16, 17e with iPhone 17, and
+SE 2020/2022 share an SE group. Families list newest numbered generations first,
+then Air and SE, with model counts. Original batch provenance stays in preparation
+details and operator exports. Changing its geometry/version clears its prior visual
 and sample approval. The Studio currently uses the single provisional iPhone
 mesh; it does not yet switch among these blank records. A preview approval does
 not activate a phone's commerce variants.
