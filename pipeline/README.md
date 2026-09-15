@@ -325,3 +325,24 @@ This exports `public/models/iphone-17-pro-max.glb`. The editor derives its flat
 guides and template dimensions from the same model params JSON. It currently
 supports this single shell. Curved-surface flattening remains approximate until
 the physical blank and actual print process are tested.
+
+
+## Authenticated Catalog Studio
+
+`/catalog-studio` shares the editor with the local tool but requires an admin
+session, including outside development. Its save API stores the unchanged source,
+placed print master and optional viewport snapshot privately, writes a product
+draft, and creates an append-only `studioRevisions` record. Reopen restores the
+source and placement. Saves from stale revisions are rejected; edits to a published
+product remain draft-only. Draft saves do not automatically run Blender or publish.
+
+The original params and GLB are fingerprinted together. A revision made with a
+different geometry version cannot silently reopen on a changed shell; explicit
+migration/review remains to implement. The editor still supports only this one
+provisional shell. Back-only exports preserve the same 770 × 1610 bounds.
+
+`/catalog-studio/models` shows private review packages. The first can be imported
+with `pnpm exec tsx pipeline/scripts/import-model-review.ts`; it requires the local
+reference/review files listed in that script and preserves existing decisions on
+repeat runs. See [the case checklist](../docs/case-models.md). These records do not
+automatically change storefront phone availability or switch the editor's mesh.

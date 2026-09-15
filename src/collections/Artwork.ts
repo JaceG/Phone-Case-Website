@@ -33,7 +33,7 @@ export const Artwork: CollectionConfig = {
     useAsTitle: 'filename',
     defaultColumns: ['filename', 'license', 'designer', 'updatedAt'],
     description:
-      'Print masters. Full-bleed, in the print template coordinate space. Admin-only, never public.',
+      'Private original artwork and prepared print masters. Catalog Studio preserves originals separately from placed exports.',
   },
   upload: {
     staticDir: path.resolve(dirname, '../../uploads/artwork'),
@@ -47,7 +47,7 @@ export const Artwork: CollectionConfig = {
       required: true,
       admin: {
         description:
-          'Unlicensed IP puts payment processing at risk. Every file needs a clear basis for use.',
+          'Choose the basis for using this artwork and retain the applicable permission reference.',
       },
       options: [
         { label: 'Original (made in-house)', value: 'original' },

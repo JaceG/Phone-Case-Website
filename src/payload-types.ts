@@ -79,6 +79,8 @@ export interface Config {
     phoneModels: PhoneModel;
     artwork: Artwork;
     productionAssets: ProductionAsset;
+    studioRevisions: StudioRevision;
+    caseBlanks: CaseBlank;
     forms: Form;
     'form-submissions': FormSubmission;
     addresses: Address;
@@ -115,6 +117,8 @@ export interface Config {
     phoneModels: PhoneModelsSelect<false> | PhoneModelsSelect<true>;
     artwork: ArtworkSelect<false> | ArtworkSelect<true>;
     productionAssets: ProductionAssetsSelect<false> | ProductionAssetsSelect<true>;
+    studioRevisions: StudioRevisionsSelect<false> | StudioRevisionsSelect<true>;
+    caseBlanks: CaseBlanksSelect<false> | CaseBlanksSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
@@ -480,7 +484,7 @@ export interface Product {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Print masters. Full-bleed, in the print template coordinate space. Admin-only, never public.
+ * Private original artwork and prepared print masters. Catalog Studio preserves originals separately from placed exports.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "artwork".
@@ -488,7 +492,7 @@ export interface Product {
 export interface Artwork {
   id: number;
   /**
-   * Unlicensed IP puts payment processing at risk. Every file needs a clear basis for use.
+   * Choose the basis for using this artwork and retain the applicable permission reference.
    */
   license: 'original' | 'commissioned' | 'licensed' | 'revenueShare';
   designer?: string | null;
@@ -1295,6 +1299,97 @@ export interface Address {
   createdAt: string;
 }
 /**
+ * Saved through Catalog Studio. Each save preserves the original, placement and print layout.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studioRevisions".
+ */
+export interface StudioRevision {
+  id: number;
+  title: string;
+  lineage: string;
+  revision: number;
+  versionKey: string;
+  product: number | Product;
+  original: number | Artwork;
+  originalHash: string;
+  printMaster: number | Artwork;
+  preview?: (number | null) | ProductionAsset;
+  modelSlug: string;
+  geometryVersion: string;
+  geometrySnapshot:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  placement:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  details:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  savedBy: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * One record per exact phone and supplier blank. Review previews separately from physical samples.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "caseBlanks".
+ */
+export interface CaseBlank {
+  id: number;
+  title: string;
+  referenceKey: string;
+  phoneModel: number | PhoneModel;
+  supplierURL?: string | null;
+  supplierVariant?: string | null;
+  availability?: ('unverified' | 'verified' | 'unavailable') | null;
+  availabilityCheckedAt?: string | null;
+  cameraCoverage?: ('fineHoles' | 'open' | 'unknown') | null;
+  previewStatus: 'draft' | 'review' | 'changes' | 'approved' | 'rejected';
+  sampleStatus: 'pending' | 'changes' | 'validated';
+  geometryVersion: string;
+  geometry:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  reviewNotes?: string | null;
+  reviewImages?:
+    | {
+        caption: string;
+        image: number | ProductionAsset;
+        id?: string | null;
+      }[]
+    | null;
+  reviewedBy?: (number | null) | User;
+  reviewedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
@@ -1362,6 +1457,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'productionAssets';
         value: number | ProductionAsset;
+      } | null)
+    | ({
+        relationTo: 'studioRevisions';
+        value: number | StudioRevision;
+      } | null)
+    | ({
+        relationTo: 'caseBlanks';
+        value: number | CaseBlank;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1749,6 +1852,59 @@ export interface ProductionAssetsSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studioRevisions_select".
+ */
+export interface StudioRevisionsSelect<T extends boolean = true> {
+  title?: T;
+  lineage?: T;
+  revision?: T;
+  versionKey?: T;
+  product?: T;
+  original?: T;
+  originalHash?: T;
+  printMaster?: T;
+  preview?: T;
+  modelSlug?: T;
+  geometryVersion?: T;
+  geometrySnapshot?: T;
+  placement?: T;
+  details?: T;
+  savedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "caseBlanks_select".
+ */
+export interface CaseBlanksSelect<T extends boolean = true> {
+  title?: T;
+  referenceKey?: T;
+  phoneModel?: T;
+  supplierURL?: T;
+  supplierVariant?: T;
+  availability?: T;
+  availabilityCheckedAt?: T;
+  cameraCoverage?: T;
+  previewStatus?: T;
+  sampleStatus?: T;
+  geometryVersion?: T;
+  geometry?: T;
+  reviewNotes?: T;
+  reviewImages?:
+    | T
+    | {
+        caption?: T;
+        image?: T;
+        id?: T;
+      };
+  reviewedBy?: T;
+  reviewedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

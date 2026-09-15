@@ -1,7 +1,7 @@
 # Catalog creation and case-model library
 
 Updated 2026-09-15 from Jace's planning feedback. This records agreed direction;
-the work below is planned, not implemented. There is no committed launch date.
+completed work is checked below. Unchecked work remains planned. There is no committed launch date.
 
 ## Project boundary
 
@@ -23,14 +23,15 @@ finished model with Jace before considering its preview approved.
 
 ### 1. Owner catalog studio
 
-- [ ] Bring the existing Case Studio into an authenticated owner workflow.
-- [ ] Preserve the original image and save placement, rotation, scale,
+- [x] Bring the existing Case Studio into an authenticated owner workflow.
+- [x] Preserve the original image and save placement, rotation, scale,
   background, and print mode separately; do not stretch or fade the original.
-- [ ] Add design title, collection, description, price, source and applicable
+- [x] Add design title, collection, description, price, source and applicable
   permission reference to the draft workflow.
 - [ ] Choose supported case models; preview and override placement per model.
-- [ ] Show image-resolution feedback, camera openings and printable boundaries.
-- [ ] Save/reopen drafts, generate assets, inspect the product page, and publish.
+- [x] Show image-resolution feedback, camera openings and printable boundaries.
+- [x] Save/reopen product drafts with private originals, placed print layouts and optional 3D snapshots.
+- [ ] Generate storefront renders, inspect the complete product page, and publish through Studio.
 
 Public customer-upload ordering is outside this milestone; the studio is for
 Jace's catalog creation first.
@@ -57,11 +58,13 @@ blank and manufacturing process determine which print modes can be enabled.
 - [ ] Work through subsequent models one at a time, incorporating Jace's review
   before treating each model as approved or completing the next model cycle.
 
+The first package is at `/catalog-studio/models`; exact iPhone candidates and Android sourcing gaps are tracked in [docs/case-models.md](docs/case-models.md).
+
 One checklist row per exact phone model AND blank variant:
 
 | Phone model | Supplier / exact listing variant | Reference captured / availability checked | Camera geometry | Material / print method evidence | Dimensions / confidence | Model + UV | Review | Physical sample |
 |---|---|---|---|---|---|---|---|---|
-| iPhone 17 Pro Max, existing provisional shell | To verify | To verify | Fine-hole concept; compare with selected blank | Pending | Listing envelope; detail estimates | Existing draft; reassess | Pending this cycle | Pending |
+| iPhone 17 Pro Max, provisional shell | Walker / exact iPhone17 Pro Max option | Checked 2026-09-15 | Covered surround with individual holes | Silicone + PC listed; back printing stated, side wrap unverified | Listing envelope; detail estimates | Existing shell validated digitally | Review package ready; Jace decision pending | Pending |
 
 Add rows only with explicit evidence or mark them as unverified candidates.
 Record the exact variant, availability-check date, shipping availability and
@@ -93,8 +96,8 @@ an iPhone shell for an Android model once it is presented as model-specific.
 
 - [ ] Separate design, blank/model, per-model placement, generated images and
   real photography; keep stable product identities and URLs.
-- [ ] Version the geometry, print template, artwork and placement used by each
-  generation so changes identify affected assets.
+- [x] Preserve originals, placement and the current geometry/template fingerprint in each Studio save.
+- [ ] Extend revision tracking to background render jobs and replacement assets.
 - [ ] Add background render jobs with waiting/rendering/ready/failed states,
   visible errors, retry and regeneration.
 - [ ] Generate reviewable stills first; create full motion assets afterward.

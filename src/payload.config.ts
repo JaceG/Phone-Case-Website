@@ -23,6 +23,8 @@ import { Pages } from '@/collections/Pages'
 import { PhoneModels } from '@/collections/PhoneModels'
 import { ProductionAssets } from '@/collections/ProductionAssets'
 import { Users } from '@/collections/Users'
+import { StudioRevisions } from '@/collections/StudioRevisions'
+import { CaseBlanks } from '@/collections/CaseBlanks'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
 import { plugins } from './plugins'
@@ -40,7 +42,10 @@ export default buildConfig({
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard'],
       // Operator work list for in-house printing. Sidebar link + root view.
-      afterNavLinks: ['@/components/admin/PrintQueue/NavLink#PrintQueueNavLink'],
+      afterNavLinks: [
+        '@/components/admin/PrintQueue/NavLink#PrintQueueNavLink',
+        '@/components/admin/CatalogStudioLink#CatalogStudioLink',
+      ],
       views: {
         printQueue: {
           Component: '@/components/admin/PrintQueue#PrintQueue',
@@ -51,7 +56,17 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  collections: [Users, Pages, Categories, Media, PhoneModels, Artwork, ProductionAssets],
+  collections: [
+    Users,
+    Pages,
+    Categories,
+    Media,
+    PhoneModels,
+    Artwork,
+    ProductionAssets,
+    StudioRevisions,
+    CaseBlanks,
+  ],
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || '',

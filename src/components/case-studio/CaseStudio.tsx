@@ -30,6 +30,14 @@ import {
   readFile,
   type Placement,
 } from './artwork'
+import { CatalogFields } from './CatalogFields'
+import {
+  effectiveDPI,
+  emptyDetails,
+  validateSave,
+  type StudioDetails,
+  type StudioDocument,
+} from '@/lib/studio/contract'
 import './studio.css'
 
 type SavedFile = { file: string; name: string; url: string; project: boolean }
@@ -73,7 +81,14 @@ function Slider({
   )
 }
 
-export default function CaseStudio() {
+export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
+  const [details, setDetails] = useState<StudioDetails>(emptyDetails)
+  const [drafts, setDrafts] = useState<StudioDocument[]>([])
+  const [collections, setCollections] = useState<{ id: number; title: string }[]>([])
+  const [currentDraft, setCurrentDraft] = useState<StudioDocument | null>(null)
+  const [geometryVersion, setGeometryVersion] = useState('')
+  const [dirty, setDirty] = useState(false)
+  const [catalogReady, setCatalogReady] = useState(!catalog)
   const [placement, setPlacement] = useState<Placement>(DEFAULT)
   const [image, setImage] = useState<HTMLImageElement | null>(null)
   const [source, setSource] = useState('')
@@ -91,11 +106,12 @@ export default function CaseStudio() {
   const loadVersion = useRef(0)
 
   useEffect(() => {
+    if (catalog) return
     void fetch('/case-studio/files')
       .then((r) => (r.ok ? r.json() : []))
       .then(setSaved)
       .catch(() => {})
-  }, [])
+  }, [catalog])
   useEffect(() => {
     if (!canvas) return
     drawArtwork(canvas, image, placement)
@@ -104,6 +120,7 @@ export default function CaseStudio() {
 
   // Seed the local demo from the original upload, never from a product photo.
   useEffect(() => {
+    if (catalog) return
     let cancelled = false
     const version = loadVersion.current
     void (async () => {
@@ -124,9 +141,136 @@ export default function CaseStudio() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [catalog])
 
-  const change = (patch: Partial<Placement>) => setPlacement((p) => ({ ...p, ...patch }))
+  useEffect(() => {
+    if (!catalog) return
+    let cancelled = false
+    void fetch('/api/catalog-studio')
+      .then(async (response) => {
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error)
+        if (cancelled) return
+        setDrafts(result.drafts)
+        setCollections(result.collections)
+        setGeometryVersion(result.geometryVersion)
+        setCatalogReady(true)
+      })
+      .catch((e) => {
+        if (!cancelled) setError(e.message || 'Could not load your catalog.')
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [catalog])
+  useEffect(() => {
+    if (!catalog || !dirty) return
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [catalog, dirty])
+
+  const change = (patch: Partial<Placement>) => {
+    setPlacement((p) => ({ ...p, ...patch }))
+    setDirty(true)
+  }
+  const changeDetails = (patch: Partial<StudioDetails>) => {
+    setDetails((d) => ({ ...d, ...patch }))
+    setDirty(true)
+  }
+  async function openDraft(id: number) {
+    if (dirty && !window.confirm('Discard unsaved changes and open this draft?')) return
+    const version = ++loadVersion.current
+    setBusy(true)
+    setError('')
+    setMessage('')
+    try {
+      const response = await fetch(`/api/catalog-studio?revision=${id}`)
+      const doc: StudioDocument & { error?: string } = await response.json()
+      if (!response.ok) throw new Error(doc.error)
+      if (!doc.currentGeometry)
+        throw new Error(
+          'This revision uses a different case model version. Keep its saved layout; model migration will need a placement review.',
+        )
+      const original = await fetch(doc.originalURL)
+      if (!original.ok)
+        throw new Error('Could not load the private original. Sign in again and retry.')
+      const data = await readFile(await original.blob())
+      const img = await loadImage(data)
+      if (version !== loadVersion.current) return
+      setSource(data)
+      setImage(img)
+      setPlacement(doc.placement)
+      setDetails(doc.details)
+      setName(doc.title)
+      setCurrentDraft(doc)
+      setDirty(false)
+      setMessage(`Opened revision ${doc.revision}. The original image and placement are restored.`)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not open draft.')
+    } finally {
+      if (version === loadVersion.current) setBusy(false)
+    }
+  }
+  async function saveDraft() {
+    if (!canvas || !image || !source || busy) return
+    setBusy(true)
+    setError('')
+    setMessage('')
+    try {
+      const settings = validateSave({
+        previous: currentDraft?.id ?? null,
+        model: MODEL.slug,
+        details,
+        placement,
+      })
+      drawArtwork(canvas, image, placement)
+      const exported = createPrintExport(canvas, placement.printMode)
+      const print = await new Promise<Blob>((resolve, reject) =>
+        exported.toBlob(
+          (blob) => (blob ? resolve(blob) : reject(new Error('Could not prepare the layout.'))),
+          'image/png',
+        ),
+      )
+      const form = new FormData()
+      form.append('settings', JSON.stringify(settings))
+      form.append('geometryVersion', geometryVersion)
+      form.append('original', await (await fetch(source)).blob(), 'original')
+      form.append('print', print, 'layout.png')
+      const preview = await viewer.current?.snapshot()
+      if (preview) form.append('preview', preview, 'preview.png')
+      const response = await fetch('/api/catalog-studio', { method: 'POST', body: form })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'Could not save draft.')
+      setCurrentDraft(result)
+      setName(details.title)
+      setDirty(false)
+      setDrafts((previous) => [result, ...previous.filter((d) => d.product !== result.product)])
+      setMessage(
+        `Draft saved · revision ${result.revision}. Original image, placement and print layout are private. Storefront renders are still pending.`,
+      )
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not save draft.')
+    } finally {
+      setBusy(false)
+    }
+  }
+  function newDesign() {
+    if (dirty && !window.confirm('Discard unsaved changes and start a new design?')) return
+    ++loadVersion.current
+    setCurrentDraft(null)
+    setDetails(emptyDetails)
+    setSource('')
+    setImage(null)
+    setPlacement(DEFAULT)
+    setName('Your artwork')
+    setDirty(false)
+    setError('')
+    setMessage('')
+  }
   const fit = (mode: 'portrait' | 'fill') => {
     if (image) change(fitPlacement(image, mode, placement.printMode))
   }
@@ -159,10 +303,22 @@ export default function CaseStudio() {
         if (version !== loadVersion.current) return
         setImage(img)
         setSource(data)
-        setName(file.name.replace(/\.[^.]+$/, ''))
+        const title = file.name.replace(/\.[^.]+$/, '')
+        setName(title)
+        if (catalog && !details.title)
+          setDetails((d) => ({
+            ...d,
+            title,
+            slug: title
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '')
+              .slice(0, 100),
+          }))
         setPlacement((p) => ({ ...p, ...fitPlacement(img, 'portrait', p.printMode) }))
         setMessage('Image ready. Drag it on the flat layout to position it.')
       }
+      setDirty(true)
     } catch (e) {
       if (version === loadVersion.current)
         setError(e instanceof Error ? e.message : 'Could not open this file.')
@@ -178,6 +334,11 @@ export default function CaseStudio() {
       .replace(/^-|-$/g, '')
       .slice(0, 90) || 'case-artwork'
   async function saveLocal(blob: Blob, filename: string, message: string) {
+    if (catalog) {
+      download(blob, filename)
+      setMessage(message)
+      return
+    }
     setBusy(true)
     setError('')
     try {
@@ -246,13 +407,13 @@ export default function CaseStudio() {
   }
 
   return (
-    <main className="case-studio">
+    <main className={`case-studio${catalog ? ' cs-catalog' : ''}`}>
       <header className="cs-header">
-        <Link href="/?device=desktop" className="cs-brand">
+        <Link href={catalog ? '/admin' : '/?device=desktop'} className="cs-brand">
           <ArrowLeft size={16} /> CASE / STUDIO
         </Link>
         <span className="cs-local">
-          <i /> Local workspace
+          <i /> {catalog ? 'Private catalog workspace' : 'Local workspace'}
         </span>
         <button
           className="cs-text-button"
@@ -275,7 +436,52 @@ export default function CaseStudio() {
           See every angle.
         </p>
       </section>
-      <div className="cs-workspace">
+      {catalog && (
+        <section className="cs-catalog-toolbar" aria-label="Catalog drafts">
+          <div>
+            <strong>
+              {currentDraft
+                ? `Editing ${currentDraft.title} · revision ${currentDraft.revision}`
+                : 'New design'}
+            </strong>
+            <span>
+              {dirty
+                ? 'Unsaved changes'
+                : currentDraft
+                  ? 'Saved as a draft'
+                  : 'Upload artwork to begin'}
+            </span>
+          </div>
+          <div className="cs-catalog-actions">
+            <button disabled={busy} onClick={newDesign}>
+              New design
+            </button>
+            <select
+              aria-label="Open saved catalog draft"
+              value=""
+              disabled={busy || !catalogReady}
+              onChange={(e) => {
+                if (e.target.value) void openDraft(Number(e.target.value))
+              }}
+            >
+              <option value="">Open a saved draft…</option>
+              {drafts.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.title} · revision {d.revision}
+                </option>
+              ))}
+            </select>
+            <button
+              className="cs-primary"
+              disabled={!image || busy || !catalogReady}
+              onClick={() => void saveDraft()}
+            >
+              {busy ? 'Working…' : 'Save catalog draft'}
+            </button>
+          </div>
+        </section>
+      )}
+      <div className="cs-workspace" inert={busy || (catalog && !catalogReady)}>
         <aside className="cs-controls">
           <section className="cs-section">
             <div className="cs-section-title">
@@ -300,7 +506,20 @@ export default function CaseStudio() {
             <p className="cs-file-name" title={name}>
               {image ? name : 'A blank canvas, ready for you.'}
             </p>
-            <p className="cs-note">Your artwork stays on this computer.</p>
+            <p className="cs-note">
+              {catalog
+                ? 'Saved originals and print layouts are private to your admin account.'
+                : 'Your artwork stays on this computer.'}
+            </p>
+            {image && (
+              <p className="cs-note">
+                {image.naturalWidth} × {image.naturalHeight} px · about{' '}
+                {effectiveDPI(image.naturalWidth, placement.width, PX)} DPI at this placement.
+                {effectiveDPI(image.naturalWidth, placement.width, PX) < 150
+                  ? ' Enlarge less or use a higher-resolution image for finer detail.'
+                  : ' Check fine detail on a physical sample.'}
+              </p>
+            )}
           </section>
           <section className="cs-section">
             <div className="cs-section-title">
@@ -414,6 +633,14 @@ export default function CaseStudio() {
               <i /> Live 3D
             </span>
           </div>
+          {catalog && (
+            <p className="cs-model-note">
+              Provisional model ·{' '}
+              <a href="/catalog-studio/models" target="_blank" rel="noreferrer">
+                Review case model library
+              </a>
+            </p>
+          )}
           <CaseViewer
             ref={viewer}
             canvas={canvas}
@@ -459,6 +686,45 @@ export default function CaseStudio() {
               ? 'Artwork covers the back and camera surround. Sides stay solid; lens and sensor openings are transparent in the export.'
               : 'Artwork continues over the sides and camera surround. Camera guides won’t appear in the export.'}
           </p>
+          {catalog && (
+            <div className="cs-draft-summary">
+              <strong>
+                {currentDraft
+                  ? `Saved revision ${currentDraft.revision}`
+                  : 'Create a catalog draft'}
+              </strong>
+              <p>
+                Your image, placement and print layout are saved together. Publishing and storefront
+                render generation follow after review.
+              </p>
+              <button
+                className="cs-primary"
+                disabled={!image || busy || !catalogReady}
+                onClick={() => void saveDraft()}
+              >
+                Save catalog draft
+              </button>
+              {currentDraft && (
+                <>
+                  <a
+                    href={`/admin/collections/products/${currentDraft.product}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open product draft ↗
+                  </a>
+                  <a href={currentDraft.printURL} target="_blank" rel="noreferrer">
+                    View saved print layout ↗
+                  </a>
+                  {currentDraft.previewURL && (
+                    <a href={currentDraft.previewURL} target="_blank" rel="noreferrer">
+                      View saved 3D preview ↗
+                    </a>
+                  )}
+                </>
+              )}
+            </div>
+          )}
           <div className="cs-export-buttons">
             <button className="cs-primary" disabled={!image || busy} onClick={saveLayout}>
               <Download size={16} /> Export layout
@@ -477,6 +743,23 @@ export default function CaseStudio() {
           </p>
         </aside>
       </div>
+      {catalog && (
+        <section className="cs-details-panel" aria-label="Catalog design details">
+          <CatalogFields
+            details={details}
+            change={changeDetails}
+            collections={collections}
+            disabled={busy || !catalogReady}
+          />
+          <button
+            className="cs-primary"
+            disabled={!image || busy || !catalogReady}
+            onClick={() => void saveDraft()}
+          >
+            Save catalog draft
+          </button>
+        </section>
+      )}
       {saved.length > 0 && (
         <section className="cs-saved" aria-label="Saved files">
           <div>

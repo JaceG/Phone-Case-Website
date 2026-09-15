@@ -80,11 +80,11 @@ activate live payments as part of the immediate milestone.
 
 | Area | Built | Limits / remaining work |
 |---|---|---|
-| Catalog/admin | Payload designs, phone models, private artwork/assets, public media, collections and generated variants | Owner Studio → product workflow is not connected |
+| Catalog/admin | Payload catalog plus authenticated Catalog Studio → product drafts, private originals/print layouts and append-only saved revisions | Automatic storefront rendering and integrated publishing remain pending |
 | Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | Presentation catalog; most phone choices reuse one provisional shell |
 | Cart | Persistent cart, repeating set offer, server subtotal validation, grouped designs, add-for-another-phone and order review | Payment/order/refund reconciliation is unfinished |
-| Case Studio | Uploads, placement, direct artwork zoom, rotation, colors, two print modes, Three.js mesh preview, layout/view/project saves | Development-only; one iPhone shell; no Payload catalog creation |
-| Blender | Parametric shell, geometry/UV checks, stills, turntable/hero frames, GLB export and repeatable media imports | Manual execution; background jobs and full revision orchestration are not built |
+| Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | One provisional iPhone shell; per-model switching and geometry migration remain pending |
+| Blender/model library | Existing pipeline plus private blank records and first review package at `/catalog-studio/models` | Render execution remains manual; additional phone models await sourcing and individual review |
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
@@ -103,8 +103,9 @@ reseed an existing working catalog casually.
   the geometry. Use supplier references and eventually physical measurements.
 - Research purchasable iPhone and major flagship Android blanks, then complete
   the model checklist one at a time with Jace reviewing each finished result.
-  Render review, sample validation and sales eligibility are distinct; those
-  separate approval states are planned, not implemented in the current schema.
+  Render review, sample validation and sales eligibility are distinct; the
+  `caseBlanks` collection separates preview review and physical sample status.
+  Sales eligibility enforcement is still planned.
 - The current detailed shell is a provisional iPhone 17 Pro Max interpretation:
   broad camera deck, individual openings/lips, rounded shoulders, side controls,
   bottom openings and shallow MagSafe grooves. Other phone choices currently
@@ -123,7 +124,9 @@ reseed an existing working catalog casually.
   numbered checkers plus artwork examples. Curved-surface compensation remains
   approximate until matched against physical samples.
 - Keep source artwork, per-model placement, geometry/template versions, generated
-  renders and real photos separable. Full revision tracking is roadmap work.
+  renders and real photos separable. `studioRevisions` preserves the source file,
+  placement, print layout, metadata and a params/GLB version fingerprint for each
+  catalog save. Background render revision tracking remains planned.
 - Development trial assets without catalog clearance stay in ignored
   `placeholder/` directories and out of deployed assets. Properly licensed
   catalog artwork is not automatically a placeholder. Originals stay private.
@@ -147,16 +150,19 @@ reseed an existing working catalog casually.
   image optimization. Preserve `productImages`/Media handling.
 - `artwork` and `productionAssets` use admin-only access and ignored local
   `uploads/`; public renders use media. Durable storage is later work.
-- Local artwork-preview and Case Studio routes/files stay development-only
-  until replaced with an authenticated owner workflow. They currently return
-  404 outside development.
+- Local artwork-preview and `/case-studio` routes/files stay development-only.
+  `/catalog-studio`, its model review page and `/api/catalog-studio` authenticate
+  administrators in every environment. Originals, layouts and review images
+  remain private. Do not expose those assets through public media merely to
+  preview an unpublished draft.
 - Imports match design slugs. Preserve animation phase sidecars and use
   `RENDERS_KEEP_PREVIOUS=1` for review iterations; see the pipeline guide for
   per-model imports and media retention behavior.
 - With `payload run`, await work at module scope; prefer positional slugs and
   environment options because CLI flags after the script can be stripped.
 - Focused pricing, set-builder and grouped-cart tests coexist with template
-  tests. Do not claim all tests are template-only or launch validation complete.
+  tests, with additional Studio contract and end-to-end save/reopen checks.
+  Do not claim all tests are template-only or launch validation complete.
 
 ## Local references
 

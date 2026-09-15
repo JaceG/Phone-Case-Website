@@ -10,6 +10,154 @@
   padding: 0 38px;
   color-scheme: light;
 }
+.cs-catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid #ddded7;
+  background: #fff;
+}
+.cs-catalog-toolbar strong,
+.cs-catalog-toolbar span {
+  display: block;
+}
+.cs-catalog-toolbar span {
+  font-size: 13px;
+  color: #73766e;
+  margin-top: 5px;
+}
+.cs-catalog-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cs-catalog-actions button,
+.cs-catalog-actions select,
+.cs-draft-summary button {
+  border: 1px solid #cdd0c3;
+  padding: 12px;
+  border-radius: 4px;
+  background: #f8f8f3;
+  color: #232522;
+  font: inherit;
+}
+.cs-catalog .cs-primary {
+  background: #d7ee8a;
+  color: #232522;
+}
+.cs-catalog-fields {
+  border: 0;
+  padding: 28px 0 0;
+  margin: 0;
+  min-width: 0;
+}
+.cs-catalog-fields legend {
+  font-weight: 600;
+  padding-top: 20px;
+}
+.cs-catalog-fields label {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  font-size: 13px;
+  margin-bottom: 17px;
+}
+.cs-catalog-fields input,
+.cs-catalog-fields select,
+.cs-catalog-fields textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #ddded7;
+  border-radius: 3px;
+  padding: 10px;
+  background: white;
+  color: #232522;
+  font: inherit;
+}
+.cs-catalog-fields textarea {
+  resize: vertical;
+}
+.cs-details-panel {
+  margin-top: 24px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #ddded7;
+}
+.cs-details-panel .cs-catalog-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 24px;
+  padding: 24px 0 0;
+}
+.cs-details-panel .cs-catalog-fields legend {
+  font-size: 20px;
+  padding: 0;
+}
+.cs-details-panel > button {
+  padding: 14px 22px;
+  border: 0;
+  border-radius: 4px;
+  font: inherit;
+}
+@media (min-width: 781px) {
+  .cs-catalog .cs-stage {
+    position: sticky;
+    top: 30px;
+    align-self: start;
+    height: 760px;
+  }
+}
+@media (max-width: 780px) {
+  .cs-details-panel .cs-catalog-fields {
+    grid-template-columns: 1fr;
+  }
+}
+.cs-catalog-fields small {
+  overflow-wrap: anywhere;
+  color: #73766e;
+}
+.cs-draft-summary {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid #ddded7;
+  margin-top: 24px;
+  padding-top: 20px;
+  font-size: 13px;
+}
+.cs-draft-summary p {
+  color: #73766e;
+  line-height: 1.6;
+  margin: 0;
+}
+.cs-draft-summary a {
+  color: #475d27;
+}
+.cs-model-note {
+  position: absolute;
+  z-index: 2;
+  top: 65px;
+  left: 24px;
+  right: 24px;
+  font-size: 12px;
+  color: #73766e;
+}
+.cs-model-note a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+@media (max-width: 800px) {
+  .cs-catalog-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .cs-catalog-actions > * {
+    flex: 1;
+    min-width: 140px;
+  }
+}
 .case-studio * {
   box-sizing: border-box;
 }
