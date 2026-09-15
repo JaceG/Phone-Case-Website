@@ -506,6 +506,116 @@
       ],
       "concept": false,
       "notes": "Raised covered camera deck with individual lens, flash and microphone openings. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-12",
+      "name": "iPhone 12",
+      "geometryFile": "pipeline/blender/params/iphone-12.json",
+      "referenceImage": "placeholder/model-references/iphone-12-17/iphone-12-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 12 official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-12.pdf",
+          "kind": "phone",
+          "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+        },
+        {
+          "title": "iPhone 12 finished fine-hole case",
+          "url": "https://rozetka.com.ua/332410273/p332410273/",
+          "kind": "finishedCase",
+          "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera surround with individual lens, flash, microphone openings. Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Case clearances, deck depth, radii, lips, interior and port patterns require a selected blank and physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-12-mini",
+      "name": "iPhone 12 mini",
+      "geometryFile": "pipeline/blender/params/iphone-12-mini.json",
+      "referenceImage": "placeholder/model-references/iphone-12-17/iphone-12-mini-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 12 mini official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-12-mini.pdf",
+          "kind": "phone",
+          "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+        },
+        {
+          "title": "iPhone 12 mini finished fine-hole case",
+          "url": "https://snpmarket.com/catalog/smartfonyi-i-aksessuaryi/chehlyi-ryukzaki-keysyi/chehlyi-dlya-smartfonov-i-telefonov/417370-chehol-iphone-12-mini-full-camera-silikon-matovyiy-jeltyiy.html",
+          "kind": "finishedCase",
+          "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera surround with individual lens, flash, microphone openings. Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Case clearances, deck depth, radii, lips, interior and port patterns require a selected blank and physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-12-pro",
+      "name": "iPhone 12 Pro",
+      "geometryFile": "pipeline/blender/params/iphone-12-pro.json",
+      "referenceImage": "placeholder/model-references/iphone-12-17/iphone-12-pro-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 12 Pro official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-12-pro.pdf",
+          "kind": "phone",
+          "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+        },
+        {
+          "title": "iPhone 12 Pro finished fine-hole case",
+          "url": "https://rozetka.com.ua/286928828/p286928828/",
+          "kind": "finishedCase",
+          "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera surround with individual lens, flash, microphone and LiDAR openings. Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Case clearances, deck depth, radii, lips, interior and port patterns require a selected blank and physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-12-pro-max",
+      "name": "iPhone 12 Pro Max",
+      "geometryFile": "pipeline/blender/params/iphone-12-pro-max.json",
+      "referenceImage": "placeholder/model-references/iphone-12-17/iphone-12-pro-max-detail.jpg",
+      "references": [
+        {
+          "title": "iPhone 12 Pro Max official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-12-pro-max.pdf",
+          "kind": "phone",
+          "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+        },
+        {
+          "title": "iPhone 12 Pro Max finished fine-hole case",
+          "url": "https://mobikoff.com.ua/chehol-dlja-iphone-12-pro-max-silicone-case-full-camera-protective.html",
+          "kind": "finishedCase",
+          "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera surround with individual lens, flash, microphone and LiDAR openings. Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Case clearances, deck depth, radii, lips, interior and port patterns require a selected blank and physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-17e",
+      "name": "iPhone 17e",
+      "geometryFile": "pipeline/blender/params/iphone-17e.json",
+      "referenceImage": "placeholder/model-references/iphone-12-17/iphone-17e-flat.jpg",
+      "references": [
+        {
+          "title": "iPhone 17e official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-17e.pdf",
+          "kind": "phone",
+          "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+        },
+        {
+          "title": "iPhone 17e finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-17e-silicone-case-with-magsafe",
+          "kind": "finishedCase",
+          "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Seller uses 16e-named imagery on its 17e product listing; dimensions and optical/control centres use the exact Apple 17e drawing."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual lens, flash, microphone openings. Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Seller uses 16e-named imagery on its 17e product listing; dimensions and optical/control centres use the exact Apple 17e drawing. Case clearances, deck depth, radii, lips, interior and port patterns require a selected blank and physical sample. Not a manufacturing dieline."
     }
   ]
 }

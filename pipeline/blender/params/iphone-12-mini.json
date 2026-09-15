@@ -1,0 +1,165 @@
+{
+  "slug": "iphone-12-mini",
+  "label": "iPhone 12 mini \u2014 visual case study",
+  "height_mm": 134.7,
+  "width_mm": 67.41,
+  "depth_mm": 10.59,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 10.5,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "x_mm": 1.6,
+    "y_mm": 1.6,
+    "w_mm": 32,
+    "h_mm": 35,
+    "height_mm": 2.4,
+    "deck_height_mm": 1.7,
+    "corner_radius_mm": 8,
+    "enabled": true
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 10.67,
+      "y_mm": 10.67,
+      "d_mm": 12.4
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 10.67,
+      "y_mm": 24.95,
+      "d_mm": 12.4
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 22.21,
+      "y_mm": 17.81,
+      "d_mm": 5.96
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 22.21,
+      "y_mm": 10.22,
+      "d_mm": 2.7
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.45,
+    "height_mm": 0.45
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 24.97,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 38.28,
+      "length_mm": 11.6
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 52.28,
+      "length_mm": 11.6
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 45.28,
+      "length_mm": 18.3
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "Individual optical holes follow the Apple phone drawing plus 0.30 mm diametral preview clearance. Case deck shape, lip thickness and bottom opening pattern remain estimates.",
+      "Mute-switch opening and Lightning cable opening; no Action button or Camera Control."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      13.7,
+      6.8
+    ],
+    [
+      -15.3,
+      1.9,
+      2.1
+    ],
+    [
+      -11.4,
+      1.9,
+      2.1
+    ],
+    [
+      10.5,
+      1.9,
+      2.1
+    ],
+    [
+      13.6,
+      1.9,
+      2.1
+    ],
+    [
+      16.7,
+      1.9,
+      2.1
+    ],
+    [
+      19.8,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 64.21,
+      "height": 131.5,
+      "depth": 7.39
+    },
+    "camera_coordinate_basis": "Dimensioned Apple phone centres plus 1.6 mm case border, minus camera deck origin; Pro LiDAR is a visual estimate.",
+    "references": [
+      {
+        "title": "iPhone 12 mini official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-12-mini.pdf",
+        "kind": "phone",
+        "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+      },
+      {
+        "title": "iPhone 12 mini finished fine-hole case",
+        "url": "https://snpmarket.com/catalog/smartfonyi-i-aksessuaryi/chehlyi-ryukzaki-keysyi/chehlyi-dlya-smartfonov-i-telefonov/417370-chehol-iphone-12-mini-full-camera-silikon-matovyiy-jeltyiy.html",
+        "kind": "finishedCase",
+        "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

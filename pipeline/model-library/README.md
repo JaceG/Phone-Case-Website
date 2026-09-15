@@ -20,7 +20,7 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
 
 ## Assets and repeatability
 
-- Committed: twenty-three additional parameter JSON files, the geometry builder, source-link records.
+- Committed: twenty-eight additional parameter JSON files, the geometry builder, source-link records.
 - Private local outputs: `pipeline/out/model-library/<slug>/shell.blend`, seven
   neutral views, two numbered checker views and two Static Bloom artwork views.
 - Private source photos: `placeholder/model-references/`. Apple drawings are
@@ -30,7 +30,7 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
   No new storefront media, phone activation or design publishing occurred.
 
 Build any subset with `python3 pipeline/blender/build_review_library.py <slugs>`;
-omit slugs for all twenty-three. Inspect every result, then use the existing operator
+omit slugs for all twenty-eight. Inspect every result, then use the existing operator
 importer described in `docs/model-review-batches.md`. Do not ask Jace to export a
 worklist. Read fresh library IDs/revisions directly from Payload.
 
@@ -116,6 +116,33 @@ The live dashboard shows all eight new models; the mini artwork gallery loads,
 and anonymous requests to all eight covers return 403. User decisions remain in the
 review database. New phone records stay hidden from commerce pending the later
 reviewed-model integration and physical validation steps.
+
+## iPhone 12 family and iPhone 17e
+
+Prepared 2026-09-15. This completes the missing 12-family studies and adds 17e
+to the existing 17/17 Pro/17 Pro Max/Air coverage.
+
+| Model | Geometry direction | Local review entry |
+| --- | --- | --- |
+| iPhone 12 | Raised covered camera area; two vertical lenses, flash and mic | 41 |
+| iPhone 12 mini | Smaller envelope; separate vertical camera spacing and controls | 40 |
+| iPhone 12 Pro | Covered camera area; three lenses, flash, mic and estimated LiDAR | 39 |
+| iPhone 12 Pro Max | Larger lens diameters, spacing, envelope and camera deck | 38 |
+| iPhone 17e | Flush covered back; single lens, flash and mic; Action button, USB-C | 37 |
+
+The four 12 models use mute-switch openings and Lightning connector clearances.
+Each uses its exact Apple drawing for phone dimensions, camera and button centres.
+The 17e also has its own Apple drawing; its Otofly 17e listing uses 16e-named
+photos for the flush-back direction. Finished 12-case photographs are from
+SNPMarket, Rozetka sellers and Mobikoff. The mini reference is low resolution;
+the 12 Pro image does not clearly resolve every small sensor opening. Pro LiDAR
+positions and all case-specific details remain estimates pending samples. No
+logos from reference photos are copied into the generated meshes or artwork.
+
+Five private packages contain 60 images: 55 renders and five reference photos.
+Existing 17-family reviews remain separate and unchanged: 17/17 Pro/Air each
+have twelve views, while the original 17 Pro Max has eight. This preparation
+does not replace the storefront/editor shell or make these phones sellable.
 
 ## Known geometric approximations
 

@@ -22,14 +22,15 @@ details are negotiated with the supplier. No order or inquiry was submitted.
 ## iPhone candidates
 
 The same listing's expanded variant picker offered the options marked below.
-The main iPhone 13–17 families and iPhone Air now have individual review packages.
-The 14 Plus is an additional finished-case-backed candidate; its exact printable
-blank is unverified. The supplier's "iPhone17 Air" wording needs identity confirmation.
+The main iPhone 12–17 families, iPhone 17e and iPhone Air now have individual review packages.
+The 12 family, 14 Plus and 17e include additional finished-case-backed candidates;
+their exact printable blanks are unverified. The supplier's "iPhone17 Air" wording needs identity confirmation.
 
 | Phone / supplier option | Listing evidence | Geometry / review |
 |---|---|---|
 | iPhone 17 Pro Max | Exact variant present | First review pending |
 | iPhone 17 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 17e | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
 | iPhone 17 | Exact variant present | Visual study prepared; review and sample validation separate |
 | "iPhone17 Air" | Exact supplier label | Apple iPhone Air study prepared; supplier identity still unconfirmed |
 | iPhone 16 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
@@ -48,6 +49,10 @@ blank is unverified. The supplier's "iPhone17 Air" wording needs identity confir
 | iPhone 13 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 13 mini | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 13 | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 12 Pro Max | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
+| iPhone 12 Pro | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
+| iPhone 12 mini | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
+| iPhone 12 | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
 
 ## Android sourcing queue
 
@@ -143,3 +148,33 @@ horizontal placement and bottom opening patterns remain estimates. Each model
 has eleven rendered views and one private source photo, ready for independent
 review. These new phone records also use the hidden review-only catalog status;
 none is activated for sale or installed into Case Studio by this preparation.
+
+## iPhone 12 family and 17e completion — 2026-09-15
+
+The 12, 12 mini, 12 Pro and 12 Pro Max now have separate covered-camera studies,
+using exact Apple dimensional drawings. The base/mini use vertical lenses,
+while the Pros have their own triangular layouts and individual sensor openings.
+Reference photographs come from SNPMarket (mini), seller listings on Rozetka
+(12 and 12 Pro), and Mobikoff (12 Pro Max). These are finished-case shape
+references, not confirmed printable blanks or US-deliverable stock. Camera-deck
+heights, clearances and Pro LiDAR placement remain estimates. The low-resolution
+mini photo and partially resolved Pro sensor details are recorded limitations.
+
+The 17e adds the remaining named 17-series phone: single lens, separate mic and
+flash, Action button and USB-C opening. Its flush covered back follows Otofly's
+17e MagSafe case listing; that page reuses 16e-named imagery. Geometry uses the
+exact Apple 17e drawing, not a renamed 16e mesh. The existing 17 (entry 20),
+17 Pro (21), 17 Pro Max (1), and Air (19) retain their own review packages and
+decisions. The original 17 Pro Max has eight review views; the other three have
+twelve each. No duplicate 17 entries or review resets are needed.
+
+The five additions each contain eleven rendered views and a private reference
+photo. They stay hidden from the storefront while awaiting owner review and
+physical validation; Case Studio still uses its existing provisional shell.
+
+Verification: all five passed the shell geometry checks, and all 55 rendered
+views were visually inspected before importing the 60 private gallery images.
+The live 17e artwork preview loads correctly. All 44 existing 17/Air gallery
+files are present, and all 24 prior review records are unchanged. The catalog
+still has 18 variants and three published designs. Anonymous requests to each
+new gallery cover return 403. Owner review remains pending.

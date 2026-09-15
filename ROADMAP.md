@@ -67,6 +67,9 @@ blank and manufacturing process determine which print modes can be enabled.
   13 Pro, 13 mini and 13, each with model-specific drawings, inspected case
   references and private review galleries. Blank and physical-sample validation
   remain pending; the 14 Plus exact blank is an unverified sourcing candidate.
+- [x] Complete the iPhone 12 family (12, mini, Pro, Pro Max) and add 17e;
+  existing 17, 17 Pro, 17 Pro Max and Air reviews remain separate. Each new
+  model has its own Apple drawing, covered-camera reference and private gallery.
 - [ ] Continue the broader blank/model checklist and resolve the Pixel fine-hole
   sourcing gap. Codex handles preparation; Jace reviews results. An outstanding
   review does not block another model. Approval remains per model.

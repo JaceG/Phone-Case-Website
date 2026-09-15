@@ -1,0 +1,190 @@
+{
+  "slug": "iphone-12-pro",
+  "label": "iPhone 12 Pro \u2014 visual case study",
+  "height_mm": 149.91,
+  "width_mm": 74.72,
+  "depth_mm": 10.59,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 11.7,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "x_mm": 2.1,
+    "y_mm": 2.1,
+    "w_mm": 37,
+    "h_mm": 39.5,
+    "height_mm": 2.6,
+    "deck_height_mm": 1.9,
+    "corner_radius_mm": 9,
+    "enabled": true
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 11.66,
+      "y_mm": 11.66,
+      "d_mm": 12.75
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 11.66,
+      "y_mm": 27.08,
+      "d_mm": 12.75
+    },
+    {
+      "name": "lens_right",
+      "kind": "lens",
+      "x_mm": 25.01,
+      "y_mm": 19.37,
+      "d_mm": 12.75
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 25.01,
+      "y_mm": 8.67,
+      "d_mm": 6.58
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 29.73,
+      "y_mm": 26.88,
+      "d_mm": 1.45
+    },
+    {
+      "name": "lidar",
+      "kind": "sensor",
+      "x_mm": 25.01,
+      "y_mm": 31.0,
+      "d_mm": 6.4
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.55,
+    "height_mm": 0.45
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 27.59,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 40.91,
+      "length_mm": 11.6
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 54.91,
+      "length_mm": 11.6
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 47.91,
+      "length_mm": 18.3
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "Individual optical holes follow the Apple phone drawing plus 0.30 mm diametral preview clearance. Case deck shape, lip thickness and bottom opening pattern remain estimates.",
+      "LiDAR centre and diameter are estimated; the drawing omits its dimensions. The reference photo does not resolve every tiny sensor aperture, so each camera, flash, microphone and LiDAR opening remains separately modeled and requires sample confirmation.",
+      "Mute-switch opening and Lightning cable opening; no Action button or Camera Control."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      13.7,
+      6.8
+    ],
+    [
+      -18,
+      1.9,
+      2.1
+    ],
+    [
+      -14.5,
+      1.9,
+      2.1
+    ],
+    [
+      -11,
+      1.9,
+      2.1
+    ],
+    [
+      11,
+      1.9,
+      2.1
+    ],
+    [
+      14.2,
+      1.9,
+      2.1
+    ],
+    [
+      17.4,
+      1.9,
+      2.1
+    ],
+    [
+      20.6,
+      1.9,
+      2.1
+    ],
+    [
+      23.8,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 71.52,
+      "height": 146.71,
+      "depth": 7.39
+    },
+    "camera_coordinate_basis": "Dimensioned Apple phone centres plus 1.6 mm case border, minus camera deck origin; Pro LiDAR is a visual estimate.",
+    "references": [
+      {
+        "title": "iPhone 12 Pro official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-12-pro.pdf",
+        "kind": "phone",
+        "notes": "Dimensioned phone envelope, camera and controls; case dimensions are estimates, not supplier CAD."
+      },
+      {
+        "title": "iPhone 12 Pro finished fine-hole case",
+        "url": "https://rozetka.com.ua/286928828/p286928828/",
+        "kind": "finishedCase",
+        "notes": "Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}
