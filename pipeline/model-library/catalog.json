@@ -330,6 +330,182 @@
       ],
       "concept": false,
       "notes": "Flush covered back with individual camera openings. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-14-pro-max",
+      "name": "iPhone 14 Pro Max",
+      "geometryFile": "pipeline/blender/params/iphone-14-pro-max.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-14-pro-max-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 14 Pro Max official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-14-pro-max.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 14 Pro Max finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-14-pro-max-silicone-case-1",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual lens, flash and microphone openings and LiDAR. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-14-pro",
+      "name": "iPhone 14 Pro",
+      "geometryFile": "pipeline/blender/params/iphone-14-pro.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-14-pro-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 14 Pro official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-14-pro.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 14 Pro finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-14-pro-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual lens, flash and microphone openings and LiDAR. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-14-plus",
+      "name": "iPhone 14 Plus",
+      "geometryFile": "pipeline/blender/params/iphone-14-plus.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-14-plus-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 14 Plus official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-14-plus.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 14 Plus finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-14-plus-silicone-case-1",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual lens, flash and microphone openings. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-14",
+      "name": "iPhone 14",
+      "geometryFile": "pipeline/blender/params/iphone-14.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-14-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 14 official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-14.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 14 finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-14-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual lens, flash and microphone openings. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-13-pro-max",
+      "name": "iPhone 13 Pro Max",
+      "geometryFile": "pipeline/blender/params/iphone-13-pro-max.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-13-pro-max-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 13 Pro Max official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13-pro-max.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 13 Pro Max finished fine-hole case",
+          "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-pro-max-case-6-7-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual lens, flash and microphone openings and LiDAR. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-13-pro",
+      "name": "iPhone 13 Pro",
+      "geometryFile": "pipeline/blender/params/iphone-13-pro.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-13-pro-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 13 Pro official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13-pro.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 13 Pro finished fine-hole case",
+          "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-pro-case-6-1-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual lens, flash and microphone openings and LiDAR. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-13-mini",
+      "name": "iPhone 13 mini",
+      "geometryFile": "pipeline/blender/params/iphone-13-mini.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-13-mini-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 13 mini official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13-mini.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 13 mini finished fine-hole case",
+          "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-mini-case-5-4-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual lens, flash and microphone openings. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-13",
+      "name": "iPhone 13",
+      "geometryFile": "pipeline/blender/params/iphone-13.json",
+      "referenceImage": "placeholder/model-references/iphone-14-13/iphone-13-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 13 official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+        },
+        {
+          "title": "iPhone 13 finished fine-hole case",
+          "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-case-6-1-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+          "kind": "finishedCase",
+          "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual lens, flash and microphone openings. Exact phone drawing and model-specific finished-case photo establish this visual study. Mute-switch opening, volume and power controls; Lightning port. Blank dimensions, clearances, lip profiles, interior recesses and print compatibility need a physical sample. Not a manufacturing dieline."
     }
   ]
 }

@@ -1,0 +1,199 @@
+{
+  "slug": "iphone-13-pro-max",
+  "label": "iPhone 13 Pro Max \u2014 visual case study",
+  "height_mm": 164.04,
+  "width_mm": 81.27,
+  "depth_mm": 10.85,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 12,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "x_mm": 2.2,
+    "y_mm": 2.2,
+    "w_mm": 42.5,
+    "h_mm": 44,
+    "height_mm": 3.2,
+    "deck_height_mm": 2.4,
+    "corner_radius_mm": 10,
+    "enabled": true
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 12.83,
+      "y_mm": 12.83,
+      "d_mm": 15.83
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 12.83,
+      "y_mm": 30.75,
+      "d_mm": 15.83
+    },
+    {
+      "name": "lens_right",
+      "kind": "lens",
+      "x_mm": 29.48,
+      "y_mm": 21.79,
+      "d_mm": 15.83
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 29.48,
+      "y_mm": 8.82,
+      "d_mm": 6.6
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 35.16,
+      "y_mm": 31.61,
+      "d_mm": 1.45
+    },
+    {
+      "name": "lidar",
+      "kind": "sensor",
+      "x_mm": 29.48,
+      "y_mm": 34.9,
+      "d_mm": 6.7
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.65,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 33.82,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 47.13,
+      "length_mm": 11.6
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 61.13,
+      "length_mm": 11.6
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 54.13,
+      "length_mm": 18.3
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "LiDAR position is estimated from the exact finished-case photo; it is not dimensioned in the Apple drawing.",
+      "Lightning cable opening and speaker/microphone groups are case-design estimates; no Camera Control or Action button is present on these models."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      12.8,
+      5.5
+    ],
+    [
+      -22,
+      1.9,
+      2.1
+    ],
+    [
+      -19,
+      1.9,
+      2.1
+    ],
+    [
+      -16,
+      1.9,
+      2.1
+    ],
+    [
+      -13,
+      1.9,
+      2.1
+    ],
+    [
+      12,
+      1.9,
+      2.1
+    ],
+    [
+      15,
+      1.9,
+      2.1
+    ],
+    [
+      18,
+      1.9,
+      2.1
+    ],
+    [
+      21,
+      1.9,
+      2.1
+    ],
+    [
+      24,
+      1.9,
+      2.1
+    ],
+    [
+      27,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 78.07,
+      "height": 160.84,
+      "depth": 7.65
+    },
+    "camera_coordinate_basis": "Apple dimensioned camera centres plus estimated 1.6 mm case border, minus raised deck origin. Pro LiDAR and mini flash horizontal centre are visual estimates.",
+    "references": [
+      {
+        "title": "iPhone 13 Pro Max official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13-pro-max.pdf",
+        "kind": "phone",
+        "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+      },
+      {
+        "title": "iPhone 13 Pro Max finished fine-hole case",
+        "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-pro-max-case-6-7-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+        "kind": "finishedCase",
+        "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

@@ -21,9 +21,10 @@ details are negotiated with the supplier. No order or inquiry was submitted.
 
 ## iPhone candidates
 
-The same listing's expanded variant picker offered these exact phone options.
-The 17, 16 and 15 family studies listed below now have individual review packages.
-The older 14 and 13 candidates still need their own references and geometry. The supplier's "iPhone17 Air" wording needs identity confirmation.
+The same listing's expanded variant picker offered the options marked below.
+The main iPhone 13–17 families and iPhone Air now have individual review packages.
+The 14 Plus is an additional finished-case-backed candidate; its exact printable
+blank is unverified. The supplier's "iPhone17 Air" wording needs identity confirmation.
 
 | Phone / supplier option | Listing evidence | Geometry / review |
 |---|---|---|
@@ -39,13 +40,14 @@ The older 14 and 13 candidates still need their own references and geometry. The
 | iPhone 15 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 15 Plus | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 15 | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 14 Pro Max | Exact variant present | Not modeled |
-| iPhone 14 Pro | Exact variant present | Not modeled |
-| iPhone 14 | Exact variant present | Not modeled |
-| iPhone 13 Pro Max | Exact variant present | Not modeled |
-| iPhone 13 Pro | Exact variant present | Not modeled |
-| iPhone 13 mini | Exact variant present | Not modeled |
-| iPhone 13 | Exact variant present | Not modeled |
+| iPhone 14 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 14 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 14 Plus | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
+| iPhone 14 | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 13 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 13 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 13 mini | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 13 | Exact variant present | Visual study prepared; review and sample validation separate |
 
 ## Android sourcing queue
 
@@ -122,3 +124,22 @@ New phone records are hidden from the storefront using the existing `retired`
 status while they are review-only candidates. This is a temporary catalog state,
 not a decision to discontinue these models. Reviews do not activate sales or
 replace the Studio shell. Existing review decisions are preserved.
+
+## iPhone 14 and 13 expansion — 2026-09-15
+
+Eight further studies cover 14 Pro Max, 14 Pro, 14 Plus, 14, 13 Pro Max, 13 Pro,
+13 mini and 13. Apple dimensional drawings establish each phone's envelope and
+dimensioned camera/control positions. Inspected Otofly 14-family photographs
+and Surphy 13-family photographs establish camera coverage and case shaping.
+The 14 and 14 Pro have flush covered backs; the other six have raised covered
+camera surrounds. All retain separate optical openings, mute-switch openings
+and an estimated Lightning-port case opening. The mini has its own smaller
+envelope and camera arrangement.
+
+The initially located Otofly 13 Pro/Pro Max photos showed newer phones and were
+rejected as model-specific evidence; the imported references are Surphy photos.
+Case clearances, back/deck depths, lens lips, Pro LiDAR centres, mini flash
+horizontal placement and bottom opening patterns remain estimates. Each model
+has eleven rendered views and one private source photo, ready for independent
+review. These new phone records also use the hidden review-only catalog status;
+none is activated for sale or installed into Case Studio by this preparation.

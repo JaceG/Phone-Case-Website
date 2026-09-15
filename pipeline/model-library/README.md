@@ -20,17 +20,17 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
 
 ## Assets and repeatability
 
-- Committed: fifteen additional parameter JSON files, the geometry builder, source-link records.
+- Committed: twenty-three additional parameter JSON files, the geometry builder, source-link records.
 - Private local outputs: `pipeline/out/model-library/<slug>/shell.blend`, seven
   neutral views, two numbered checker views and two Static Bloom artwork views.
 - Private source photos: `placeholder/model-references/`. Apple drawings are
   dimensional references, not public assets. Re-download from recorded sources
   if rebuilding on another machine; product listings can change.
-- Review packages: 98 newly imported private images (88 renders + ten references).
+- Initial eight review packages: 98 private images (88 renders + ten references).
   No new storefront media, phone activation or design publishing occurred.
 
 Build any subset with `python3 pipeline/blender/build_review_library.py <slugs>`;
-omit slugs for all fifteen. Inspect every result, then use the existing operator
+omit slugs for all twenty-three. Inspect every result, then use the existing operator
 importer described in `docs/model-review-batches.md`. Do not ask Jace to export a
 worklist. Read fresh library IDs/revisions directly from Payload.
 
@@ -81,6 +81,41 @@ close-up, checker, artwork, inside, side and bottom views were inspected. New
 phone records use the existing hidden `retired` status to keep preparation out
 of the storefront. Existing reviews, published designs and sellable variants
 remain unchanged. The local database holds review status and private assets.
+
+## iPhone 14 and 13 expansion
+
+Prepared 2026-09-15, with eight independent review packages.
+
+| Model | Geometry direction | Local review entry |
+| --- | --- | --- |
+| iPhone 14 Pro Max | Raised covered deck; triangular lenses, flash, mic, LiDAR | 36 |
+| iPhone 14 Pro | Flush covered back; triangular lenses, flash, mic, LiDAR | 35 |
+| iPhone 14 Plus | Raised covered deck; diagonal lenses, flash, mic | 34 |
+| iPhone 14 | Flush covered back; diagonal lenses, flash, mic | 33 |
+| iPhone 13 Pro Max | Raised covered deck; triangular lenses, flash, mic, LiDAR | 32 |
+| iPhone 13 Pro | Smaller envelope; raised covered deck and model-specific right lens | 31 |
+| iPhone 13 mini | Distinct smaller envelope/camera spacing; raised covered deck | 30 |
+| iPhone 13 | Raised covered deck; diagonal lenses, flash, mic | 29 |
+
+Each exact Apple drawing and inspected Otofly (14 family) or Surphy (13 family)
+case photo is linked in `catalog.json` and its params file. Incorrect newer-phone
+photos on the initially found Otofly 13 Pro/Pro Max pages were rejected. All eight
+have mute-switch openings and an estimated Lightning-port opening, without
+Action/Camera Control features. The 14 Plus has a finished-case shape reference
+but no verified exact printable blank listing. Case details, Pro LiDAR centres,
+mini flash horizontal position and bottom speaker/microphone case patterns
+remain estimates; phone drawings do not establish blank fit.
+
+The eight meshes pass topology, outward-normal, aperture, envelope and UV checks.
+All eleven rendered views per model were visually inspected, including neutral,
+inside, side, bottom, close-up, checker and artwork. The private import contains
+96 images (88 renders plus eight source photos). Import checks confirmed all
+eight packages are ready with twelve views, all sixteen previous reviews are
+unchanged, and the eighteen variants and three published designs are unchanged.
+The live dashboard shows all eight new models; the mini artwork gallery loads,
+and anonymous requests to all eight covers return 403. User decisions remain in the
+review database. New phone records stay hidden from commerce pending the later
+reviewed-model integration and physical validation steps.
 
 ## Known geometric approximations
 

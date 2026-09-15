@@ -1,0 +1,165 @@
+{
+  "slug": "iphone-13-mini",
+  "label": "iPhone 13 mini \u2014 visual case study",
+  "height_mm": 134.7,
+  "width_mm": 67.41,
+  "depth_mm": 10.85,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 10.5,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "x_mm": 1.6,
+    "y_mm": 1.6,
+    "w_mm": 34.8,
+    "h_mm": 34.8,
+    "height_mm": 2.7,
+    "deck_height_mm": 2,
+    "corner_radius_mm": 8.8,
+    "enabled": true
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 10.85,
+      "y_mm": 10.85,
+      "d_mm": 13.99
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 23.21,
+      "y_mm": 23.21,
+      "d_mm": 13.99
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 25.08,
+      "y_mm": 8.99,
+      "d_mm": 6.6
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 9.4,
+      "y_mm": 24.66,
+      "d_mm": 2.7
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.55,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 24.97,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 38.28,
+      "length_mm": 11.6
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 52.28,
+      "length_mm": 11.6
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 45.28,
+      "length_mm": 18.3
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "Flash horizontal centre is estimated from the drawing and finished-case photo; lens centres, microphone and flash height are dimensioned.",
+      "Lightning cable opening and speaker/microphone groups are case-design estimates; no Camera Control or Action button is present on these models."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      12.8,
+      5.5
+    ],
+    [
+      -16,
+      1.9,
+      2.1
+    ],
+    [
+      -12.6,
+      1.9,
+      2.1
+    ],
+    [
+      12,
+      1.9,
+      2.1
+    ],
+    [
+      15.2,
+      1.9,
+      2.1
+    ],
+    [
+      18.4,
+      1.9,
+      2.1
+    ],
+    [
+      21.6,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 64.21,
+      "height": 131.5,
+      "depth": 7.65
+    },
+    "camera_coordinate_basis": "Apple dimensioned camera centres plus estimated 1.6 mm case border, minus raised deck origin. Pro LiDAR and mini flash horizontal centre are visual estimates.",
+    "references": [
+      {
+        "title": "iPhone 13 mini official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13-mini.pdf",
+        "kind": "phone",
+        "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+      },
+      {
+        "title": "iPhone 13 mini finished fine-hole case",
+        "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-mini-case-5-4-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+        "kind": "finishedCase",
+        "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

@@ -1,0 +1,189 @@
+{
+  "slug": "iphone-14-pro",
+  "label": "iPhone 14 Pro \u2014 visual case study",
+  "height_mm": 150.66,
+  "width_mm": 74.65,
+  "depth_mm": 13.95,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 12,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": false,
+    "x_mm": 0,
+    "y_mm": 0,
+    "w_mm": 1,
+    "h_mm": 1,
+    "height_mm": 0,
+    "deck_height_mm": 0,
+    "corner_radius_mm": 1
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 15.88,
+      "y_mm": 15.88,
+      "d_mm": 15.91
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 15.88,
+      "y_mm": 35.12,
+      "d_mm": 15.91
+    },
+    {
+      "name": "lens_right",
+      "kind": "lens",
+      "x_mm": 33.72,
+      "y_mm": 25.5,
+      "d_mm": 15.91
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 33.72,
+      "y_mm": 11.92,
+      "d_mm": 7.1
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 39.51,
+      "y_mm": 35.58,
+      "d_mm": 1.45
+    },
+    {
+      "name": "lidar",
+      "kind": "sensor",
+      "x_mm": 33.72,
+      "y_mm": 38.9,
+      "d_mm": 6.7
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.65,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 32.74,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 46.19,
+      "length_mm": 11.6
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 60.39,
+      "length_mm": 11.6
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 57.14,
+      "length_mm": 18.3
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "LiDAR position is estimated from the exact finished-case photo; it is not dimensioned in the Apple drawing.",
+      "Lightning cable opening and speaker/microphone groups are case-design estimates; no Camera Control or Action button is present on these models."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 4.7,
+  "bottom_openings": [
+    [
+      0,
+      12.8,
+      5.5
+    ],
+    [
+      -20,
+      1.9,
+      2.1
+    ],
+    [
+      -16.8,
+      1.9,
+      2.1
+    ],
+    [
+      -13.6,
+      1.9,
+      2.1
+    ],
+    [
+      12,
+      1.9,
+      2.1
+    ],
+    [
+      15.2,
+      1.9,
+      2.1
+    ],
+    [
+      18.4,
+      1.9,
+      2.1
+    ],
+    [
+      21.6,
+      1.9,
+      2.1
+    ],
+    [
+      24.8,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 71.45,
+      "height": 147.46,
+      "depth": 7.85
+    },
+    "camera_coordinate_basis": "Apple dimensioned camera centres plus estimated 1.6 mm case border, minus raised deck origin. Pro LiDAR and mini flash horizontal centre are visual estimates.",
+    "references": [
+      {
+        "title": "iPhone 14 Pro official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-14-pro.pdf",
+        "kind": "phone",
+        "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+      },
+      {
+        "title": "iPhone 14 Pro finished fine-hole case",
+        "url": "https://www.otofly.co/products/iphone-14-pro-silicone-case-2",
+        "kind": "finishedCase",
+        "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

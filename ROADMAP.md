@@ -63,6 +63,10 @@ blank and manufacturing process determine which print modes can be enabled.
 - [x] Seven more iPhone studies: 16 Pro Max, 16 Plus, 16, 15 Pro Max, 15 Pro,
   15 Plus and 15, with official phone drawings, finished-case shape references
   and individual review packages. These complete the main 16/15 family previews.
+- [x] Eight more iPhone studies: 14 Pro Max, 14 Pro, 14 Plus, 14, 13 Pro Max,
+  13 Pro, 13 mini and 13, each with model-specific drawings, inspected case
+  references and private review galleries. Blank and physical-sample validation
+  remain pending; the 14 Plus exact blank is an unverified sourcing candidate.
 - [ ] Continue the broader blank/model checklist and resolve the Pixel fine-hole
   sourcing gap. Codex handles preparation; Jace reviews results. An outstanding
   review does not block another model. Approval remains per model.

@@ -1,0 +1,174 @@
+{
+  "slug": "iphone-13",
+  "label": "iPhone 13 \u2014 visual case study",
+  "height_mm": 149.9,
+  "width_mm": 74.72,
+  "depth_mm": 10.85,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 11.7,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "x_mm": 2,
+    "y_mm": 2,
+    "w_mm": 36,
+    "h_mm": 36,
+    "height_mm": 2.7,
+    "deck_height_mm": 2,
+    "corner_radius_mm": 9,
+    "enabled": true
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 11.48,
+      "y_mm": 11.48,
+      "d_mm": 13.99
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 23.84,
+      "y_mm": 23.84,
+      "d_mm": 13.99
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 25.71,
+      "y_mm": 9.61,
+      "d_mm": 6.6
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 10.03,
+      "y_mm": 25.29,
+      "d_mm": 2.7
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.65,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 33.82,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 47.13,
+      "length_mm": 11.6
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 61.13,
+      "length_mm": 11.6
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 54.13,
+      "length_mm": 18.3
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "Lightning cable opening and speaker/microphone groups are case-design estimates; no Camera Control or Action button is present on these models."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      12.8,
+      5.5
+    ],
+    [
+      -20,
+      1.9,
+      2.1
+    ],
+    [
+      -16.8,
+      1.9,
+      2.1
+    ],
+    [
+      -13.6,
+      1.9,
+      2.1
+    ],
+    [
+      12,
+      1.9,
+      2.1
+    ],
+    [
+      15.2,
+      1.9,
+      2.1
+    ],
+    [
+      18.4,
+      1.9,
+      2.1
+    ],
+    [
+      21.6,
+      1.9,
+      2.1
+    ],
+    [
+      24.8,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 71.52,
+      "height": 146.7,
+      "depth": 7.65
+    },
+    "camera_coordinate_basis": "Apple dimensioned camera centres plus estimated 1.6 mm case border, minus raised deck origin. Pro LiDAR and mini flash horizontal centre are visual estimates.",
+    "references": [
+      {
+        "title": "iPhone 13 official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-13.pdf",
+        "kind": "phone",
+        "notes": "Phone dimensions and dimensioned lens/control centres; case clearances and bottom openings are estimates."
+      },
+      {
+        "title": "iPhone 13 finished fine-hole case",
+        "url": "https://surphy.net/products/surphy-silicone-case-compatible-with-iphone-13-case-6-1-inch-2021-with-camera-protection-liquid-silicone-phone-case-with-microfiber-lining",
+        "kind": "finishedCase",
+        "notes": "Inspected model-specific covered-camera photograph for shape only. Printable blank, magnetic features and material compatibility remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}
