@@ -1,97 +1,172 @@
 # Phone Case Store
 
-Direct-to-consumer store for original-design phone cases, printed to order
-in-house. Payload CMS + `@payloadcms/plugin-ecommerce` + Next.js in one app.
+An ecommerce site for original and licensed phone-case designs. Each design
+gets a landing-page-style product page, with phone selection, a shared cart
+and repeating three-case sets. Next.js, Payload CMS and its ecommerce plugin
+run in one TypeScript app backed by Postgres.
 
-See [CLAUDE.md](./CLAUDE.md) for the full brief and every decision made so far.
+The storefront, local Case Studio and manual Blender pipeline are working
+drafts. Next: connect image upload/placement to catalog creation, automate
+rendering and build a reviewed case-model library. Live checkout and operational
+launch work follow that milestone.
+
+- [Current brief and development constraints](AGENTS.md)
+- [Roadmap and case-model checklist](ROADMAP.md)
+- [Blender pipeline and Case Studio](pipeline/README.md)
+- [Presentation artwork workflow](pipeline/artwork/README.md)
 
 ## Run locally
 
-Requires Node ≥ 20, pnpm, and a local Postgres.
+Use Node 22, pnpm and Postgres. Blender is needed to generate new case assets,
+not to serve previously generated images or open the existing editor.
+
+For a **new checkout/database**:
 
 ```bash
-createdb phone_case_dev
-cp .env.example .env      # set PAYLOAD_SECRET; DATABASE_URL already points at phone_case_dev
 pnpm install
+cp .env.example .env
+createdb phone_case_dev
+```
+
+Set `DATABASE_URL` for your Postgres user/database, replace `PAYLOAD_SECRET` and
+`PREVIEW_SECRET`, and match server URLs to your local origin. Preserve an
+existing `.env` rather than copying over it. Keep
+`NEXT_PUBLIC_CHECKOUT_ENABLED=false`; Stripe setup is not required for this phase.
+
+```bash
 pnpm dev
 ```
 
-Then:
+Open [the admin](http://localhost:3000/admin); on a new database, create the first
+user, who becomes admin. Optionally use the dashboard seed action for a disposable
+development catalog. **Seeding clears and replaces catalog, cart, order and
+related data.** It is not an additive import or a way to resume an existing
+project. It creates synthetic checkers; use the presentation workflow afterward
+for the presentation artwork.
 
-1. Open <http://localhost:3000/admin> and create the first user (it becomes admin).
-2. On the dashboard click **Seed your database**. This creates phone models,
-   three placeholder designs with generated UV-checker imagery, and one
-   variant per design × active phone model.
-3. Storefront: <http://localhost:3000/shop>.
+Open [the storefront](http://localhost:3000/) or
+[Case Studio](http://localhost:3000/case-studio). Existing installations only
+need the configured database and `pnpm dev`.
 
-Stripe keys in `.env` are needed for checkout. Forward webhooks in dev with:
+## Current routes
 
-```bash
-pnpm stripe-webhooks
-```
+| Route | Purpose |
+|---|---|
+| `/` | Featured design landing page |
+| `/products/[slug]` | Individual design landing page |
+| `/checkout` | Storefront order review; payment interface gated off by default |
+| `/shop` | Retained template catalog; main experience uses the design switcher/overlay |
+| `/account`, `/login`, other account/auth pages | Retained template foundations |
+| `/admin` | Payload catalog and commerce admin |
+| `/admin/print-queue` | Basic queue with artwork/order links; edit statuses on the order |
+| `/case-studio` | Development-only placement tool, live 3D preview and local saves |
+
+Landing pages select desktop/mobile layouts through server-side device detection.
+Use `?device=desktop` or `?device=mobile` for previews. The shared client component
+currently imports both layouts; separate code delivery remains planned.
+
+## Current catalog workflow
+
+The integrated owner Studio workflow is **planned**. Today:
+
+1. Upload a prepared master under **Artwork**, with licensing information. Keep
+   original images separate from fitted print masters.
+2. Create a draft **Design** with artwork, story, collection and price.
+3. Prepare its artwork for the template, render using the matching design slug,
+   and import outputs using the [pipeline guide](pipeline/README.md).
+4. Inspect imagery and page content, then publish. Publishing creates missing
+   variants for active phone models. Sync preserves existing variant prices.
+
+The presentation studies have a repeatable workflow in
+[pipeline/artwork/README.md](pipeline/artwork/README.md). They are draft assets,
+not an approved launch catalog. Per-model render overrides exist, but most phone
+options currently share the provisional iPhone 17 Pro Max shell.
+
+Case Studio preserves image aspect ratio, supports direct artwork zoom and
+placement, and saves local projects. Back only includes the camera surround
+with solid sides; Wraparound also covers sides. It supports one shell and does
+not create catalog records. Its page/file routes return 404 outside development.
+
+## Phone models
+
+Create models under **Phone Models**. Setting one to **Active** generates variants
+for published designs; it does not build geometry or validate a blank. Current
+statuses are Active, Coming soon and Retired. Separate visual review, sample
+validation and sales eligibility are roadmap work.
+
+Follow the [model checklist](ROADMAP.md) to source exact blanks with covered
+camera surrounds and individual openings, build geometry and review each result
+with Jace. Equipment selection and manufacturing budgets are outside this repo.
 
 ## Data model
 
-| Collection | What it is |
+| Collection | Role |
 |---|---|
-| `products` (labelled **Designs**) | One design. Artwork upload, story, renders, base price. |
-| `phoneModels` | A blank you can print on. Geometry, dieline, status. |
-| `variantTypes` / `variantOptions` | Plugin collections. Exactly one type, *Phone Model*; one option per phone model. Mirrored automatically. |
-| `variants` | Design × phone model, with price. Generated on publish. |
-| `artwork` | Private print masters. Licence metadata required. |
-| `productionAssets` | Private dielines, `.blend`, `.glb`, test textures. |
-| `media` | Public renders and site imagery. |
-| `categories` (labelled **Collections**) | Thematic groupings of designs. |
+| `products` / **Designs** | Artwork relationship, story, palette, shared/per-model renders, price and publishing state |
+| `phoneModels` | Phone/blank identity, geometry metadata, asset links and availability status |
+| `variantTypes` / `variantOptions` | One Phone Model type, with options mirrored from phone models |
+| `variants` | Design × phone model and price; generated by catalog hooks |
+| `artwork` | Admin-only artwork files and licensing metadata |
+| `productionAssets` | Admin-only templates, models and supporting files |
+| `media` | Public renders and site imagery |
+| `categories` / **Collections** | Design groupings |
+| `carts` | Product/variant lines and authoritative server-priced subtotal |
+| `orders`, `transactions`, `addresses`, `users` | Commerce foundations and basic fulfillment fields |
 
-Inventory is disabled at the plugin level. Everything is printed to order.
+Plugin inventory is disabled. Future blank availability will be tracked by phone
+model without stocking each finished design × model combination. Private assets
+currently use local `uploads/`; public media is local too. Durable storage and
+transactional email are not configured for launch.
 
-## Adding a design
+## Offer behavior
 
-1. Upload the print master to **Artwork** with its licence basis.
-2. Create a **Design**, attach the artwork, set the price, publish.
-3. Variants for every active phone model appear automatically.
-4. Run the render pipeline (see [pipeline/README.md](./pipeline/README.md))
-   and attach the outputs under **Imagery**. Automating step 4 is the next
-   pipeline milestone.
+Each complete trio is capped at $50; leftovers keep their single prices.
+Higher-priced cases enter sets first, and a cheaper trio is not marked up.
+At $39 each: 3 cases = $50, 4 = $89, 5 = $128, 6 = $100. Those steps are
+intentional. Starting another set does not add or charge for anything.
 
-## Adding a phone model
+The bag groups matching designs while preserving each phone variant's line
+identity. Server pricing is implemented; the complete payment/refund/fulfillment
+path still needs to be connected and validated.
 
-Create it under **Phone Models** and set status to *Active*. A variant is
-created for every published design.
+## Commands and verification
 
-## Scripts
-
-| Script | Purpose |
+| Command | Purpose |
 |---|---|
-| `pnpm dev` | Next + Payload dev server |
-| `pnpm generate:types` | Regenerate `src/payload-types.ts` after schema changes |
-| `pnpm lint` | ESLint |
-| `pnpm test:int` / `pnpm test:e2e` | Vitest / Playwright (template tests, not yet adapted) |
-| `pnpm tsx pipeline/scripts/uv-checker.ts` | Write a UV checker PNG for Blender validation |
+| `pnpm dev` | Development server |
+| `pnpm build` / `pnpm start` | Build / serve the production-mode app |
+| `pnpm generate:types` | Regenerate Payload types after schema edits |
+| `pnpm generate:importmap` | Regenerate admin component imports |
+| `pnpm renders:import` | Import a manually rendered batch; see pipeline options |
+| `pnpm presentation:prepare` / `pnpm presentation:import` | Prepare/import presentation designs |
+| `pnpm verify:offer` | Verify server cart offer using temporary local data |
+| `pnpm test:int` / `pnpm test:e2e` | Vitest / Playwright suites |
+| `pnpm lint` | ESLint; legacy FlatCompat configuration needs repair |
 
-## Storefront routes
+Focused pricing, set-builder and grouped-cart tests coexist with template tests.
+Run the focused set with:
 
-| Route | What |
-|---|---|
-| `/` | Featured design's landing page (cinematic tree) |
-| `/products/[slug]` | Design landing page. Server-side device split: phones get the mobile tree, everything else desktop. `?device=mobile\|desktop` forces one for previewing. |
-| `/shop`, `/checkout`, `/account`, `/login`, … | Payload template pages, kept as-is under `src/app/(app)/(template)` |
-| `/admin` | Payload admin. `/admin/print-queue` lists orders waiting to print. |
-
-## Layout
-
+```bash
+pnpm test:int tests/int/bundlePricing.int.spec.ts tests/int/setBuilder.int.spec.ts tests/int/groupCartDesigns.int.spec.ts
 ```
-src/
-  collections/      Payload collections (PhoneModels, Artwork, ProductionAssets, Products override, …)
-  lib/catalog/      variant sync between phone models and designs
-  plugins/          ecommerce / seo / form-builder plugin config
-  endpoints/seed/   seed data and generated textures
-  app/(app)/(cinematic)/  the real storefront (home + product landing pages)
-  app/(app)/(template)/   Payload template pages (shop, checkout, account, auth, CMS)
-  app/(payload)/          admin
-  components/store/       cinematic storefront: shared state, catalog overlay, desktop/ and mobile/ trees
-  components/admin/       print queue view
-pipeline/           Blender batch render skeleton
-uploads/            private files (gitignored)
-placeholder/        borrowed prototyping images (gitignored, never deployed)
+
+Use a development/test database for checks that create records. A passing focused
+suite does not mean the template suites or launch flows have been validated.
+
+## Source layout
+
+```text
+src/collections/              Catalog, assets and commerce overrides
+src/lib/catalog/              Variant synchronization
+src/lib/commerce/             Offer pricing and cart grouping
+src/components/store/         Shared shopping state and desktop/mobile storefronts
+src/components/Cart/          Grouped bag and add-for-another-phone controls
+src/components/case-studio/   Local artwork editor and Three.js preview
+src/components/admin/         Basic print queue
+src/app/(app)/(cinematic)/    Home, design landing pages and checkout review
+src/app/(app)/(template)/     Remaining template catalog/account/CMS routes
+src/app/(payload)/            Payload admin and API
+pipeline/                    Blender, artwork preparation and import scripts
+uploads/                     Private local assets (ignored)
+placeholder/                 Local trial artwork/projects/exports (ignored)
 ```

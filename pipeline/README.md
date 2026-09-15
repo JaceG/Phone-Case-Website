@@ -4,6 +4,12 @@ Goal: adding a design is **one artwork upload**; every product image renders
 itself. Runs are manual for now; the folder layout is shaped so a Payload
 hook can later hand work to a headless Blender worker without reorganising.
 
+For project scope and planned automation, see [the current brief](../AGENTS.md)
+and [roadmap](../ROADMAP.md). This guide documents the current manual tools.
+The existing shell is provisional; equipment selection and manufacturing costs
+are outside this repository. A preview mode does not establish that a blank
+supports that print coverage.
+
 ```
 pipeline/
   blender/
@@ -60,8 +66,10 @@ Camera sizes: `hero` and `three_quarter` 1200 × 1500; orthographic `flat`
 ## 2. Render designs
 
 Artwork goes in `pipeline/designs/<slug>.png` where `<slug>` is the product's
-slug; the file name is what links a render to a product. Synthetic checkers for
-the three seeded designs:
+slug; the file name is what links a render to a product. For current presentation
+artwork, follow [the presentation workflow](artwork/README.md). The optional
+commands below replace these design inputs with diagnostic checkers; do not run
+them over prepared artwork unless that replacement is intended:
 
 ```bash
 pnpm tsx pipeline/scripts/uv-checker.ts pipeline/designs/meridian.png     1070 1910 220 MERIDIAN
@@ -100,21 +108,27 @@ change the saved blend or the artwork masters.
 pnpm renders:import                      # everything in pipeline/out
 pnpm renders:import meridian            # one design (payload run strips flags)
 RENDERS_OUT=pipeline/out/refined RENDERS_KEEP_PREVIOUS=1 pnpm renders:import
+# A batch rendered from that exact model's geometry can use a per-model slot:
+# RENDERS_OUT=<batch-directory> RENDERS_MODEL=<phone-model-slug> RENDERS_KEEP_PREVIOUS=1 pnpm renders:import
 ```
 
 Uploads each `<slug>_<camera>.png` to `media` (alt `"<Title> — <camera>
 render"`), sets `renders.hero` / `threeQuarter` / `flat`, `renders.turntable`
 (ordered frames), `renders.tumble` / `tumblePhases`, and `renderStatus = 'ready'`
 on the product with that slug. Loops are converted to WebP during import.
+With `RENDERS_MODEL`, assets go into that phone's `modelRenders` entry instead;
+this does not generate or validate model geometry or mark the shared render
+status ready. The general importer handles hero/three-quarter/flat and motion;
+the presentation importer handles the separate detail/gallery image convention.
 By default it deletes media from earlier runs (matched by that alt text). Uses the local
 API straight against Postgres; the dev server does not need to be up.
 
 For review iterations, `RENDERS_KEEP_PREVIOUS=1` saves the old product render
 relationships in `<out>/previous-renders/<timestamp>/<slug>.json` and retains
-their media. The September 12 pre-edit model, source and sample renders are
-also in `pipeline/out/review/baseline/`. These ignored local copies preserve
-the prior uncommitted shell; do not use a git reset to recover it. A later
-import without `RENDERS_KEEP_PREVIOUS=1` can delete that retained media.
+their media. Optional local snapshots may also exist in
+`pipeline/out/review/baseline/`; ignored output directories are not guaranteed
+to exist in a fresh checkout. Source history lives in Git. A later import
+without `RENDERS_KEEP_PREVIOUS=1` can delete retained media for the same import target.
 
 ## Contract between `master.blend` and `render.py`
 
@@ -122,7 +136,8 @@ import without `RENDERS_KEEP_PREVIOUS=1` can delete that retained media.
   printable face. Its filepath is the only per-design change.
 - Camera objects named **`hero`**, **`three_quarter`**, **`flat`**, and
   **`turntable`**; an empty named **`turntable_pivot`** that the script
-  rotates around Z (the shell is parented to it, the camera is not).
+  rotates for turntable frames (the shell is parented to it, the camera is not).
+  The hero tumble uses a separate fixed tilted-axis quaternion rotation.
 - Optional per-camera custom props `res_x` / `res_y` set the output size.
 - Hero and three-quarter render with Cycles; flat and turntable with EEVEE.
   `render.py` reads the EEVEE engine id from the enum (`BLENDER_EEVEE` on
@@ -135,7 +150,8 @@ import without `RENDERS_KEEP_PREVIOUS=1` can delete that retained media.
 
 The printable surface uses **one shared rectangle** for artwork placement.
 This is the draft template coordinate system; a measured supplier dieline and
-an applied-film test are still needed before treating it as a physical proof.
+validation against the selected physical blank and printing result are still
+needed before treating it as a physical proof.
 The inside, lens lips, buttons and cut walls use plain silicone material.
 
 Template size in mm: `(width + 2·depth) × (height + 2·depth)`; for the
@@ -171,8 +187,8 @@ phone top; UV `u` runs left→right, `v` bottom→top):
   arclength flattening or compensation for film stretch.
 - **Rounded corners** fan radially: the corner arc of radius `r` extends to
   radius `r + depth`, so the template's four corner squares are only partly
-  used (the unused bits are what the die cuts away). The film stretches here
-  in reality too.
+  used. This preview layout does not establish a physical die-cut boundary or
+  the compensation required by a particular printing process.
 - **Camera island**: all UVs are reprojected after cuts and bevels, using the
   same XY mapping as the back. Artwork crosses the deck without the previous
   triangulation streaks. Its curved surround still uses planar projection;
@@ -183,23 +199,23 @@ outer rows/columns on the walls for continuity. Some distortion on compound
 curves is expected from this draft mapping. The checker is diagnostic artwork,
 not a design intended for sale.
 
-Every number that shapes this space is in `params/*.json`. The envelope is from
-the supplier listing; wall thickness, corner radius, island and cutout are
-placeholders until calipers replace them.
+The main dimensions live in `params/*.json`; some geometry profiles and bottom
+opening dimensions live in `shell_geometry.py`. The envelope is from the supplier
+listing; detailed dimensions remain estimates until measured.
 
 ## Rules (from the project brief)
 
-- Validate with a numbered UV checker, not real artwork
-  (`pnpm tsx pipeline/scripts/uv-checker.ts`).
-- Product pixels are truthful: case, print, colour, cutouts. Environment,
-  light, atmosphere and motion may be synthetic.
-- Nothing borrowed in `designs/`; only originals, licensed art or generated
-  test textures.
+- Validate mapping with a numbered checker, then inspect artwork placement too.
+- Keep estimated geometry and draft print coverage clearly identified. Before
+  sales, match product previews to validated cases and printing results.
+  Environment, light, atmosphere and motion may be synthetic.
+- Use originals, properly licensed art or synthetic test textures in catalog
+  inputs. Local trial artwork without catalog clearance stays in `placeholder/`.
 
 ## Shell parameters: holes, rims, MagSafe ring
 
-Every blank is model-specific because of the **holes**, not the envelope.
-`params/<model>.json` therefore carries:
+Each blank needs model-specific dimensions, profiles, camera geometry, controls
+and openings. The existing `params/<model>.json` carries:
 
 - `camera_island` — the raised plateau (top-left offset, size, height, corner radius).
 - `holes[]` — one entry per opening, centre `x_mm`/`y_mm` measured from the
@@ -247,12 +263,11 @@ tumble frames to WebP, retaining the tumble JSON phase sidecar. The preview
 uses those files directly and does not change Payload products or media.
 Both the query override and asset endpoint are disabled outside development.
 
-The Gohan trial uses the supplied 1080 × 1344 image, scaled evenly to 1535 ×
-1910 then cropped to the 1070 × 1910 template (256 px from the left). The
-composition is shifted down 220 px; a 90 px fade blends its top into the dark
-background. This moves the face below the camera surround. The original
-image is unchanged. `first-crop/` retains the earlier crop for comparison.
-The trial blank uses `#17171b` silicone; the committed master remains lavender.
+This earlier trial reads pre-rendered files; its composition depends on the local
+assets present. It is separate from the current interactive editor. Do not reuse
+the superseded top-edge fade treatment: current artwork placement preserves the
+source aspect ratio and applies no fade or gradient over it. Trial directories
+are ignored and may be absent in a fresh checkout.
 
 ## Interactive Case Studio (local draft)
 
