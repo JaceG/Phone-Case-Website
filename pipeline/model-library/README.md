@@ -20,7 +20,7 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
 
 ## Assets and repeatability
 
-- Committed: twenty-eight additional parameter JSON files, the geometry builder, source-link records.
+- Committed: thirty-one additional parameter JSON files, the geometry builder, source-link records.
 - Private local outputs: `pipeline/out/model-library/<slug>/shell.blend`, seven
   neutral views, two numbered checker views and two Static Bloom artwork views.
 - Private source photos: `placeholder/model-references/`. Apple drawings are
@@ -30,7 +30,7 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
   No new storefront media, phone activation or design publishing occurred.
 
 Build any subset with `python3 pipeline/blender/build_review_library.py <slugs>`;
-omit slugs for all twenty-eight. Inspect every result, then use the existing operator
+omit slugs for all thirty-one. Inspect every result, then use the existing operator
 importer described in `docs/model-review-batches.md`. Do not ask Jace to export a
 worklist. Read fresh library IDs/revisions directly from Payload.
 
@@ -153,3 +153,41 @@ flush-back studies approximate the extra back thickness around the cameras; they
 are not fit-ready tooling models. Pixel sensor placement is a concept and must be
 replaced from an exact qualifying blank. The UV rectangle preserves artwork
 proportions but does not simulate material stretch around a curved surface.
+
+## iPhone submodel completeness audit — 2026-09-15
+
+The missing 16e and SE (2020/2nd generation, 2022/3rd generation) now have
+separate review packages. `iphone-lineup.json` records the 28 expected Apple
+models across the prepared range: all 12–17 variants, Air and those two SEs.
+It is independently transcribed from Apple's model-identification list, not
+inferred from whatever entries already happen to exist in the catalog.
+
+Run `python3 pipeline/blender/audit_iphone_coverage.py` to detect missing or
+duplicate catalog entries, missing/wrong geometry and iPhone studies omitted
+from the checklist. This offline check does not assert live review readiness.
+Refresh the checklist from its official source when expanding the model range.
+Color, storage and regional A-numbers do not create separate case studies;
+regional fit differences must still be checked against a chosen blank. iPhone
+11 and earlier, and SE 1st generation, remain outside this prepared range.
+
+| Addition | Review entry | Geometry/reference |
+| --- | --- | --- |
+| iPhone 16e | 44 | Exact Apple 16e drawing; Otofly fine-hole flush-back case, exposed Action button |
+| iPhone SE (2020) | 43 | Apple shared SE drawing; covered camera surround, mute switch, Lightning |
+| iPhone SE (2022) | 42 | Same dimensioned shape as 2020; independent review record |
+
+Apple explicitly labels its SE drawing for both 2nd and 3rd generations. The
+SE finished-case photo is labeled 2022; reuse for 2020 is based on that documented
+compatibility. The listing was out of stock. The initial Otofly 16e variant with
+a common camera window was rejected; the selected reference has separate holes.
+The 16e reference has no built-in magnets. All are shape references, not verified
+printable blanks. Case clearances, optical keepouts, thickness and curved SE side
+profiles remain estimates. These three models add 33 renders and three private
+reference photos. User approval and physical validation remain pending.
+
+Verification: all three new shells pass topology, aperture, envelope and UV checks;
+all 33 rendered views were inspected. Live audit confirms exactly one review for
+each of the 28 expected iPhones and every referenced gallery file is present.
+All 29 previous review records, 18 sellable variants and three published designs
+are unchanged. The 16e artwork gallery loads in the browser; anonymous access to
+each new cover returns 403. Local database snapshots were saved before and after.

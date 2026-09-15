@@ -134,7 +134,7 @@ comparison, nonsequential review, mobile layout and cleanup using temporary reco
 
 ## Researched catalog library
 
-`pipeline/model-library/catalog.json` records eight additional model studies and
+`pipeline/model-library/catalog.json` records the additional model studies and
 their model-specific source links. Their parameter files live under
 `pipeline/blender/params/`. Build them locally with:
 

@@ -22,7 +22,7 @@ details are negotiated with the supplier. No order or inquiry was submitted.
 ## iPhone candidates
 
 The same listing's expanded variant picker offered the options marked below.
-The main iPhone 12–17 families, iPhone 17e and iPhone Air now have individual review packages.
+All iPhone 12–17 variants, iPhone Air, and SE (2020/2022) now have individual review packages.
 The 12 family, 14 Plus and 17e include additional finished-case-backed candidates;
 their exact printable blanks are unverified. The supplier's "iPhone17 Air" wording needs identity confirmation.
 
@@ -36,6 +36,7 @@ their exact printable blanks are unverified. The supplier's "iPhone17 Air" wordi
 | iPhone 16 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 16 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 16 Plus | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 16e | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
 | iPhone 16 | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 15 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 15 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
@@ -53,6 +54,38 @@ their exact printable blanks are unverified. The supplier's "iPhone17 Air" wordi
 | iPhone 12 Pro | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
 | iPhone 12 mini | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
 | iPhone 12 | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
+| iPhone SE (2020 / 2nd generation) | SE 2022 case reference + Apple shared dimensions; exact blank unverified | Separate visual study prepared; sample pending |
+| iPhone SE (2022 / 3rd generation) | Finished-case reference (out of stock); exact blank unverified | Separate visual study prepared; sample pending |
+
+## Complete iPhone coverage audit
+
+Checked against [Apple's model identification list](https://support.apple.com/en-us/108044)
+on 2026-09-15. The prepared range contains **28 models**:
+
+| Family | Models with review packages |
+| --- | --- |
+| 12 | 12, 12 mini, 12 Pro, 12 Pro Max |
+| 13 | 13, 13 mini, 13 Pro, 13 Pro Max |
+| 14 | 14, 14 Plus, 14 Pro, 14 Pro Max |
+| 15 | 15, 15 Plus, 15 Pro, 15 Pro Max |
+| 16 | 16, 16 Plus, 16 Pro, 16 Pro Max, **16e** |
+| 17 / Air | 17, 17 Pro, 17 Pro Max, 17e, Air |
+| SE | **SE (2020 / 2nd generation), SE (2022 / 3rd generation)** |
+
+The 16e was omitted in the earlier generation passes and is now added as entry
+44. The two recent SE generations are entries 43 and 42. Apple's SE drawing
+explicitly covers both generations, so shared provisional geometry is intentional;
+review decisions remain separate. Each new package has eleven rendered views and
+one private finished-case reference. Individual lens, flash and mic holes retain
+material across the camera area. The 16e has an exposed Action button and USB-C;
+the SEs have mute-switch openings and Lightning, with broader rounded shoulders.
+
+The 28-entry source checklist is `pipeline/model-library/iphone-lineup.json`.
+`python3 pipeline/blender/audit_iphone_coverage.py` reports missing entries or
+geometry, duplicates and studies left out of the checklist. Earlier iPhones
+(11 and older, including SE 1st generation) are outside this prepared range.
+Storage/color options are not new case shapes; regional hardware differences
+still require exact blank fit checks. No model is made sellable by this audit.
 
 ## Android sourcing queue
 

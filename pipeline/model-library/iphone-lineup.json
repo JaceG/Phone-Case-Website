@@ -1,0 +1,119 @@
+{
+  "checkedOn": "2026-09-15",
+  "source": "https://support.apple.com/en-us/108044",
+  "scope": "iPhone 12 through 17 families, Air, and contemporary SE 2nd/3rd generation. Model names distinguish case geometry; storage, color and regional A-numbers are not separate case studies. Earlier families and SE 1st generation are outside this prepared range.",
+  "models": [
+    {
+      "name": "iPhone 17e",
+      "slug": "iphone-17e"
+    },
+    {
+      "name": "iPhone 17 Pro Max",
+      "slug": "iphone-17-pro-max"
+    },
+    {
+      "name": "iPhone 17 Pro",
+      "slug": "iphone-17-pro"
+    },
+    {
+      "name": "iPhone 17",
+      "slug": "iphone-17"
+    },
+    {
+      "name": "iPhone Air",
+      "slug": "iphone-air"
+    },
+    {
+      "name": "iPhone 16e",
+      "slug": "iphone-16e"
+    },
+    {
+      "name": "iPhone 16 Pro Max",
+      "slug": "iphone-16-pro-max"
+    },
+    {
+      "name": "iPhone 16 Pro",
+      "slug": "iphone-16-pro"
+    },
+    {
+      "name": "iPhone 16 Plus",
+      "slug": "iphone-16-plus"
+    },
+    {
+      "name": "iPhone 16",
+      "slug": "iphone-16"
+    },
+    {
+      "name": "iPhone 15 Pro Max",
+      "slug": "iphone-15-pro-max"
+    },
+    {
+      "name": "iPhone 15 Pro",
+      "slug": "iphone-15-pro"
+    },
+    {
+      "name": "iPhone 15 Plus",
+      "slug": "iphone-15-plus"
+    },
+    {
+      "name": "iPhone 15",
+      "slug": "iphone-15"
+    },
+    {
+      "name": "iPhone 14 Pro Max",
+      "slug": "iphone-14-pro-max"
+    },
+    {
+      "name": "iPhone 14 Pro",
+      "slug": "iphone-14-pro"
+    },
+    {
+      "name": "iPhone 14 Plus",
+      "slug": "iphone-14-plus"
+    },
+    {
+      "name": "iPhone 14",
+      "slug": "iphone-14"
+    },
+    {
+      "name": "iPhone SE (3rd generation)",
+      "slug": "iphone-se-2022"
+    },
+    {
+      "name": "iPhone 13 Pro Max",
+      "slug": "iphone-13-pro-max"
+    },
+    {
+      "name": "iPhone 13 Pro",
+      "slug": "iphone-13-pro"
+    },
+    {
+      "name": "iPhone 13",
+      "slug": "iphone-13"
+    },
+    {
+      "name": "iPhone 13 mini",
+      "slug": "iphone-13-mini"
+    },
+    {
+      "name": "iPhone 12 Pro Max",
+      "slug": "iphone-12-pro-max"
+    },
+    {
+      "name": "iPhone 12 Pro",
+      "slug": "iphone-12-pro"
+    },
+    {
+      "name": "iPhone 12",
+      "slug": "iphone-12"
+    },
+    {
+      "name": "iPhone 12 mini",
+      "slug": "iphone-12-mini"
+    },
+    {
+      "name": "iPhone SE (2nd generation)",
+      "slug": "iphone-se-2020"
+    }
+  ]
+}

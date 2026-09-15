@@ -1,0 +1,168 @@
+{
+  "slug": "iphone-16e",
+  "label": "iPhone 16e \u2014 visual case study",
+  "height_mm": 149.91,
+  "width_mm": 74.72,
+  "depth_mm": 12.0,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 11.7,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": false,
+    "x_mm": 0,
+    "y_mm": 0,
+    "w_mm": 38,
+    "h_mm": 26,
+    "height_mm": 0,
+    "deck_height_mm": 0,
+    "corner_radius_mm": 8
+  },
+  "holes": [
+    {
+      "name": "lens",
+      "kind": "lens",
+      "x_mm": 14.92,
+      "y_mm": 14.92,
+      "d_mm": 15.27
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 25.9,
+      "y_mm": 14.92,
+      "d_mm": 1.6
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 31.26,
+      "y_mm": 14.92,
+      "d_mm": 4.05
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.55,
+    "height_mm": 0.45
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "action",
+      "side": "right",
+      "from_top_mm": 32.88,
+      "length_mm": 8.5,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 47.03,
+      "length_mm": 12.1
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 61.23,
+      "length_mm": 12.1
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 54.13,
+      "length_mm": 18.7
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "Individual optical holes follow the Apple phone drawing plus 0.30 mm diametral preview clearance. Case deck shape, lip thickness and bottom opening pattern remain estimates.",
+      "Action button and USB-C cable opening; no Camera Control."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 2.8,
+  "bottom_openings": [
+    [
+      0,
+      13.3,
+      6.8
+    ],
+    [
+      -18,
+      1.9,
+      2.1
+    ],
+    [
+      -14.5,
+      1.9,
+      2.1
+    ],
+    [
+      -11,
+      1.9,
+      2.1
+    ],
+    [
+      11,
+      1.9,
+      2.1
+    ],
+    [
+      14.2,
+      1.9,
+      2.1
+    ],
+    [
+      17.4,
+      1.9,
+      2.1
+    ],
+    [
+      20.6,
+      1.9,
+      2.1
+    ],
+    [
+      23.8,
+      1.9,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 71.52,
+      "height": 146.71,
+      "depth": 7.8
+    },
+    "camera_coordinate_basis": "Exact Apple 16e drawing: lens/mic/flash at y=13.32 mm, x=13.32/24.30/29.66 mm; add 1.6 mm case border. Same dimensioned geometry as 17e, separately verified.",
+    "references": [
+      {
+        "title": "iPhone 16e official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16e.pdf",
+        "kind": "phone",
+        "notes": "Phone dimensions only; case geometry remains provisional."
+      },
+      {
+        "title": "iPhone 16e finished fine-hole case reference",
+        "url": "https://www.otofly.co/products/iphone-16e-silicone-case",
+        "kind": "finishedCase",
+        "notes": "Flush covered back with individual lens, flash and mic openings. Official 16e drawing verifies shared phone dimensions with 17e; separate reference case uses an exposed Action-button opening, covered volume/power controls and USB-C. Case thickness, clearances and printable compatibility await an exact blank. This reference has no built-in magnets; no MagSafe performance is claimed."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

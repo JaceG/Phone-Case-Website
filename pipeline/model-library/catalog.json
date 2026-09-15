@@ -616,6 +616,72 @@
       ],
       "concept": false,
       "notes": "Flush covered back with individual lens, flash, microphone openings. Inspected finished-case photo for coverage and silhouette only. Exact printable blank and physical fit remain unverified. Seller uses 16e-named imagery on its 17e product listing; dimensions and optical/control centres use the exact Apple 17e drawing. Case clearances, deck depth, radii, lips, interior and port patterns require a selected blank and physical sample. Not a manufacturing dieline."
+    },
+    {
+      "slug": "iphone-16e",
+      "name": "iPhone 16e",
+      "geometryFile": "pipeline/blender/params/iphone-16e.json",
+      "referenceImage": "placeholder/model-references/iphone-submodels/16e-fine.jpg",
+      "references": [
+        {
+          "title": "iPhone 16e official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16e.pdf",
+          "kind": "phone",
+          "notes": "Phone dimensions only; case geometry remains provisional."
+        },
+        {
+          "title": "iPhone 16e finished fine-hole case reference",
+          "url": "https://www.otofly.co/products/iphone-16e-silicone-case",
+          "kind": "finishedCase",
+          "notes": "Flush covered back with individual lens, flash and mic openings. Official 16e drawing verifies shared phone dimensions with 17e; separate reference case uses an exposed Action-button opening, covered volume/power controls and USB-C. Case thickness, clearances and printable compatibility await an exact blank. This reference has no built-in magnets; no MagSafe performance is claimed."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual lens, flash and mic openings. Official 16e drawing verifies shared phone dimensions with 17e; separate reference case uses an exposed Action-button opening, covered volume/power controls and USB-C. Case thickness, clearances and printable compatibility await an exact blank. This reference has no built-in magnets; no MagSafe performance is claimed."
+    },
+    {
+      "slug": "iphone-se-2020",
+      "name": "iPhone SE (2020)",
+      "geometryFile": "pipeline/blender/params/iphone-se-2020.json",
+      "referenceImage": "placeholder/model-references/iphone-submodels/se-case-1.jpg",
+      "references": [
+        {
+          "title": "iPhone SE (2020) official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-se-3rd-generation.pdf",
+          "kind": "phone",
+          "notes": "Apple drawing explicitly labeled for both SE (2nd generation) and SE (3rd generation). Shared geometry is intentional."
+        },
+        {
+          "title": "iPhone SE (2020) finished fine-hole case reference",
+          "url": "https://rozetka.com.ua/568189831/p568189831/",
+          "kind": "finishedCase",
+          "notes": "Covered pill-shaped camera surround with separate lens, mic and flash holes. Apple explicitly supplies one drawing for SE 2nd and 3rd generation; these intentionally share provisional case geometry but retain separate review decisions. The inspected finished-case photograph is labeled SE 2022; its shape is applied to SE 2020 using Apple dimensional compatibility. Rounded shoulder, mute switch and Lightning opening. Seller listing was out of stock when checked; exact printable blank, optical clearance and physical fit remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Covered pill-shaped camera surround with separate lens, mic and flash holes. Apple explicitly supplies one drawing for SE 2nd and 3rd generation; these intentionally share provisional case geometry but retain separate review decisions. The inspected finished-case photograph is labeled SE 2022; its shape is applied to SE 2020 using Apple dimensional compatibility. Rounded shoulder, mute switch and Lightning opening. Seller listing was out of stock when checked; exact printable blank, optical clearance and physical fit remain unverified."
+    },
+    {
+      "slug": "iphone-se-2022",
+      "name": "iPhone SE (2022)",
+      "geometryFile": "pipeline/blender/params/iphone-se-2022.json",
+      "referenceImage": "placeholder/model-references/iphone-submodels/se-case-1.jpg",
+      "references": [
+        {
+          "title": "iPhone SE (2022) official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-se-3rd-generation.pdf",
+          "kind": "phone",
+          "notes": "Apple drawing explicitly labeled for both SE (2nd generation) and SE (3rd generation). Shared geometry is intentional."
+        },
+        {
+          "title": "iPhone SE (2022) finished fine-hole case reference",
+          "url": "https://rozetka.com.ua/568189831/p568189831/",
+          "kind": "finishedCase",
+          "notes": "Covered pill-shaped camera surround with separate lens, mic and flash holes. Apple explicitly supplies one drawing for SE 2nd and 3rd generation; these intentionally share provisional case geometry but retain separate review decisions. The inspected finished-case photograph is labeled SE 2022; its shape is applied to SE 2020 using Apple dimensional compatibility. Rounded shoulder, mute switch and Lightning opening. Seller listing was out of stock when checked; exact printable blank, optical clearance and physical fit remain unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Covered pill-shaped camera surround with separate lens, mic and flash holes. Apple explicitly supplies one drawing for SE 2nd and 3rd generation; these intentionally share provisional case geometry but retain separate review decisions. The inspected finished-case photograph is labeled SE 2022; its shape is applied to SE 2020 using Apple dimensional compatibility. Rounded shoulder, mute switch and Lightning opening. Seller listing was out of stock when checked; exact printable blank, optical clearance and physical fit remain unverified."
     }
   ]
 }

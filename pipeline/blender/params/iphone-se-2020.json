@@ -1,0 +1,168 @@
+{
+  "slug": "iphone-se-2020",
+  "label": "iPhone SE (2020) \u2014 visual case study",
+  "height_mm": 141.64,
+  "width_mm": 70.47,
+  "depth_mm": 10.51,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 11.6,
+  "back_roll_mm": 2.8,
+  "camera_island": {
+    "enabled": true,
+    "x_mm": 3.0,
+    "y_mm": 3.0,
+    "w_mm": 29,
+    "h_mm": 18,
+    "height_mm": 1.8,
+    "deck_height_mm": 0.9,
+    "corner_radius_mm": 8.5
+  },
+  "holes": [
+    {
+      "name": "lens",
+      "kind": "lens",
+      "x_mm": 9.04,
+      "y_mm": 8.84,
+      "d_mm": 12.44
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 16.73,
+      "y_mm": 8.84,
+      "d_mm": 1.8
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 21.44,
+      "y_mm": 8.84,
+      "d_mm": 4.05
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.55,
+    "height_mm": 0.45
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 19.16,
+      "length_mm": 8.6,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 36.16,
+      "length_mm": 10.9
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 48.77,
+      "length_mm": 10.9
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 36.24,
+      "length_mm": 10.9
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "Lens opening uses 12.14 mm Apple camera surround plus 0.30 mm diametral clearance; mic and flash clearances and deck dimensions are visual estimates.",
+      "Mute switch and Lightning connector opening; no Action button or Camera Control. SE side curvature is approximated by a broader rolled shoulder."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      13.85,
+      7.05
+    ],
+    [
+      -22,
+      1.8,
+      2.1
+    ],
+    [
+      -18.8,
+      1.8,
+      2.1
+    ],
+    [
+      -15.6,
+      1.8,
+      2.1
+    ],
+    [
+      -12.4,
+      1.8,
+      2.1
+    ],
+    [
+      12.4,
+      1.8,
+      2.1
+    ],
+    [
+      15.6,
+      1.8,
+      2.1
+    ],
+    [
+      18.8,
+      1.8,
+      2.1
+    ],
+    [
+      22,
+      1.8,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 67.27,
+      "height": 138.44,
+      "depth": 7.31
+    },
+    "camera_coordinate_basis": "Apple drawing explicitly covers SE 2nd and 3rd generation: rear lens/mic/flash x=10.44/18.13/22.84 mm, y=10.24 mm. Lens opening clears the 12.14 mm camera surround; tiny apertures and case lips use provisional clearance.",
+    "references": [
+      {
+        "title": "iPhone SE (2020) official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-se-3rd-generation.pdf",
+        "kind": "phone",
+        "notes": "Apple drawing explicitly labeled for both SE (2nd generation) and SE (3rd generation). Shared geometry is intentional."
+      },
+      {
+        "title": "iPhone SE (2020) finished fine-hole case reference",
+        "url": "https://rozetka.com.ua/568189831/p568189831/",
+        "kind": "finishedCase",
+        "notes": "Covered pill-shaped camera surround with separate lens, mic and flash holes. Apple explicitly supplies one drawing for SE 2nd and 3rd generation; these intentionally share provisional case geometry but retain separate review decisions. The inspected finished-case photograph is labeled SE 2022; its shape is applied to SE 2020 using Apple dimensional compatibility. Rounded shoulder, mute switch and Lightning opening. Seller listing was out of stock when checked; exact printable blank, optical clearance and physical fit remain unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}
