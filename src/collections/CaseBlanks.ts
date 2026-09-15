@@ -17,8 +17,61 @@ export const CaseBlanks: CollectionConfig = {
     { name: 'title', type: 'text', required: true },
     { name: 'referenceKey', type: 'text', unique: true, required: true },
     { name: 'phoneModel', type: 'relationship', relationTo: 'phoneModels', required: true },
+    { name: 'batch', type: 'text', index: true },
+    {
+      name: 'priority',
+      type: 'select',
+      defaultValue: 'normal',
+      options: [
+        { label: 'Normal', value: 'normal' },
+        { label: 'High', value: 'high' },
+      ],
+    },
+    {
+      name: 'buildStage',
+      type: 'select',
+      options: [
+        { label: 'Queued', value: 'queued' },
+        { label: 'Modeling', value: 'modeling' },
+        { label: 'Rendering', value: 'rendering' },
+        { label: 'Ready', value: 'ready' },
+        { label: 'Needs attention', value: 'failed' },
+      ],
+    },
+    { name: 'buildError', type: 'textarea' },
+    {
+      name: 'reviewFeedback',
+      type: 'textarea',
+      admin: { description: 'Jace’s latest feedback; separate from preparation notes.' },
+    },
+    {
+      name: 'reviewHistory',
+      type: 'json',
+      admin: { readOnly: true },
+      access: { create: () => false, update: () => false },
+    },
     { name: 'supplierURL', type: 'text' },
     { name: 'supplierVariant', type: 'text' },
+    {
+      name: 'references',
+      type: 'array',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'url', type: 'text', required: true },
+        {
+          name: 'kind',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Exact blank', value: 'blank' },
+            { label: 'Finished case / shape reference', value: 'finishedCase' },
+            { label: 'Phone dimensions', value: 'phone' },
+            { label: 'Physical sample', value: 'sample' },
+          ],
+        },
+        { name: 'notes', type: 'textarea' },
+      ],
+    },
     {
       name: 'availability',
       type: 'select',
@@ -81,6 +134,15 @@ export const CaseBlanks: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ data, originalDoc, operation, req }) => {
+        const imageSignature = (
+          images: { caption?: string; image: number | { id: number } }[] = [],
+        ) =>
+          JSON.stringify(
+            images.map(({ caption, image }) => [
+              caption,
+              typeof image === 'object' ? image.id : image,
+            ]),
+          )
         const identityChanged =
           operation === 'update' &&
           originalDoc &&
@@ -94,6 +156,8 @@ export const CaseBlanks: CollectionConfig = {
           operation === 'update' &&
           originalDoc &&
           (identityChanged ||
+            (data.reviewImages !== undefined &&
+              imageSignature(data.reviewImages) !== imageSignature(originalDoc.reviewImages)) ||
             (data.geometryVersion !== undefined &&
               data.geometryVersion !== originalDoc.geometryVersion) ||
             (data.geometry !== undefined &&
@@ -103,6 +167,7 @@ export const CaseBlanks: CollectionConfig = {
           data.sampleStatus = 'pending'
           data.reviewedBy = null
           data.reviewedAt = null
+          data.buildStage = 'queued'
         } else if (
           data.previewStatus !== undefined &&
           data.previewStatus !== originalDoc?.previewStatus &&
@@ -111,6 +176,24 @@ export const CaseBlanks: CollectionConfig = {
           data.reviewedBy = req.user?.id ?? null
           data.reviewedAt = new Date().toISOString()
         }
+        const statusChanged =
+          data.previewStatus !== undefined && data.previewStatus !== originalDoc?.previewStatus
+        const feedbackChanged =
+          data.reviewFeedback !== undefined && data.reviewFeedback !== originalDoc?.reviewFeedback
+        // Build history from stored data, never from an incoming history field.
+        const history = Array.isArray(originalDoc?.reviewHistory) ? originalDoc.reviewHistory : []
+        if (statusChanged || feedbackChanged) {
+          data.reviewHistory = [
+            ...history,
+            {
+              at: new Date().toISOString(),
+              status: data.previewStatus ?? originalDoc?.previewStatus ?? 'draft',
+              note: data.reviewFeedback ?? originalDoc?.reviewFeedback ?? '',
+              geometryVersion: data.geometryVersion ?? originalDoc?.geometryVersion,
+              reviewer: req.user?.id ?? null,
+            },
+          ]
+        } else if (data.reviewHistory !== undefined) data.reviewHistory = history
         return data
       },
     ],

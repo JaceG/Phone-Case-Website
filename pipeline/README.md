@@ -346,3 +346,14 @@ with `pnpm exec tsx pipeline/scripts/import-model-review.ts`; it requires the lo
 reference/review files listed in that script and preserves existing decisions on
 repeat runs. See [the case checklist](../docs/case-models.md). These records do not
 automatically change storefront phone availability or switch the editor's mesh.
+
+## Batch case-model reviews
+
+Model preparation and owner review no longer need to run in a fixed order.
+`/catalog-studio/models` provides a batch queue, search/filter, two/three-model
+comparison and per-model decisions/feedback. See [the batch guide](../docs/model-review-batches.md)
+for worklist export, stage updates and importing many completed packages through
+`pipeline/scripts/model-review-batch.ts`. Rendering still runs through the existing
+operator-driven Blender pipeline; adding a queue entry does not start a worker.
+Use model-specific blank/finished-case references when a shared listing photo
+cannot establish the selected phone's shape.

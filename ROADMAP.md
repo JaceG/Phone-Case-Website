@@ -55,8 +55,10 @@ blank and manufacturing process determine which print modes can be enabled.
   This is a research scope, not a verified availability or launch list.
 - [ ] Reassess the existing iPhone 17 Pro Max shell against its selected blank
   as the first full review cycle.
-- [ ] Work through subsequent models one at a time, incorporating Jace's review
-  before treating each model as approved or completing the next model cycle.
+- [x] Support batch preparation, search/filter, side-by-side comparison, and independent
+  review decisions with feedback/history. Jace may review in any order.
+- [ ] Research and build subsequent model-specific shells in batches; an outstanding
+  review does not block preparation of other models. Approval remains per model.
 
 The first package is at `/catalog-studio/models`; exact iPhone candidates and Android sourcing gaps are tracked in [docs/case-models.md](docs/case-models.md).
 
@@ -147,8 +149,10 @@ milestone. They are not part of the immediate implementation scope.
 Start with the shared model/placement structure, connect the owner studio to
 product drafts, and complete the first blank/model review cycle. Use that first
 cycle to establish the reusable review package and generation workflow, then
-expand the model checklist. Software work can continue while a model awaits
-review; its approval remains pending until Jace responds.
+expand the model checklist in batches. Modeling and software work can continue
+while any model awaits review; Jace chooses review order and approval remains
+per model. Use finished-case references for shaping when the blank listing lacks
+model-specific images.
 
 Codex: implementation, supplier research, modeling, render generation and review
 packages. Jace: supplied artwork/permissions, model review and physical sample

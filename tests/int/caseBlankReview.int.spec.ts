@@ -48,6 +48,15 @@ describe('case model review boundaries', () => {
       sampleStatus: 'pending',
     })
   })
+  it('invalidates approval when review pictures are replaced', async () => {
+    expect(
+      await apply({ reviewImages: [{ caption: 'New camera detail', image: 12 }] }),
+    ).toMatchObject({
+      previewStatus: 'draft',
+      sampleStatus: 'pending',
+      buildStage: 'queued',
+    })
+  })
   it('keeps review decisions intact when only notes change', async () => {
     expect(await apply({ reviewNotes: 'Additional reference' })).toEqual({
       reviewNotes: 'Additional reference',

@@ -209,10 +209,11 @@ try {
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1))
   await page.goto(`${base}/catalog-studio/models`)
   await page.getByRole('heading', { name: 'Case model review', exact: true }).waitFor()
+  await page.getByRole('button', { name: 'Review iPhone 17 Pro Max', exact: true }).first().click()
   await page.waitForFunction(
     () =>
-      [...document.querySelectorAll('figure img')].length === 8 &&
-      [...document.querySelectorAll('figure img')].every(
+      [...document.querySelectorAll('dialog .mr-thumbnails img')].length === 8 &&
+      [...document.querySelectorAll('dialog .mr-thumbnails img')].every(
         (img) => (img as HTMLImageElement).complete && (img as HTMLImageElement).naturalWidth > 0,
       ),
   )

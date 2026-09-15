@@ -1359,8 +1359,34 @@ export interface CaseBlank {
   title: string;
   referenceKey: string;
   phoneModel: number | PhoneModel;
+  batch?: string | null;
+  priority?: ('normal' | 'high') | null;
+  buildStage?: ('queued' | 'modeling' | 'rendering' | 'ready' | 'failed') | null;
+  buildError?: string | null;
+  /**
+   * Jace’s latest feedback; separate from preparation notes.
+   */
+  reviewFeedback?: string | null;
+  reviewHistory?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   supplierURL?: string | null;
   supplierVariant?: string | null;
+  references?:
+    | {
+        title: string;
+        url: string;
+        kind: 'blank' | 'finishedCase' | 'phone' | 'sample';
+        notes?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   availability?: ('unverified' | 'verified' | 'unavailable') | null;
   availabilityCheckedAt?: string | null;
   cameraCoverage?: ('fineHoles' | 'open' | 'unknown') | null;
@@ -1884,8 +1910,23 @@ export interface CaseBlanksSelect<T extends boolean = true> {
   title?: T;
   referenceKey?: T;
   phoneModel?: T;
+  batch?: T;
+  priority?: T;
+  buildStage?: T;
+  buildError?: T;
+  reviewFeedback?: T;
+  reviewHistory?: T;
   supplierURL?: T;
   supplierVariant?: T;
+  references?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        kind?: T;
+        notes?: T;
+        id?: T;
+      };
   availability?: T;
   availabilityCheckedAt?: T;
   cameraCoverage?: T;

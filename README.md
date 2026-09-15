@@ -62,7 +62,7 @@ need the configured database and `pnpm dev`.
 | `/admin/print-queue` | Basic queue with artwork/order links; edit statuses on the order |
 | `/case-studio` | Development-only placement tool, live 3D preview and local saves |
 | `/catalog-studio` | Admin-only editor with design details, revision saves and product drafts |
-| `/catalog-studio/models` | Admin-only model review images and links to record review decisions |
+| `/catalog-studio/models` | Admin-only batch queue, searchable model grid, comparison, feedback and review decisions |
 
 Landing pages select desktop/mobile layouts through server-side device detection.
 Use `?device=desktop` or `?device=mobile` for previews. The shared client component
@@ -195,3 +195,17 @@ pipeline/                    Blender, artwork preparation and import scripts
 uploads/                     Private local assets (ignored)
 placeholder/                 Local trial artwork/projects/exports (ignored)
 ```
+
+## Batch model review
+
+[Case model review](http://localhost:3000/catalog-studio/models) supports preparing
+multiple models together and reviewing them in any order. Search by phone/blank,
+filter by brand/status/batch, compare two or three selected models, and save
+feedback or individual approval directly in a review window. Queued models
+remain visibly unfinished. Export selected worklists for the operator.
+
+See [the batch preparation/import guide](docs/model-review-batches.md).
+Verification: `pnpm exec tsx tests/scripts/verifyModelReview.ts` creates and removes
+its own test records, checks imports/revisions/access and exercises desktop/mobile
+review, comparison and queueing. `STUDIO_TEST_ORIGIN` can target a built app on a
+different local port. This requires a local running app/database and Chrome.

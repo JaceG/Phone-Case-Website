@@ -84,7 +84,7 @@ activate live payments as part of the immediate milestone.
 | Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | Presentation catalog; most phone choices reuse one provisional shell |
 | Cart | Persistent cart, repeating set offer, server subtotal validation, grouped designs, add-for-another-phone and order review | Payment/order/refund reconciliation is unfinished |
 | Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | One provisional iPhone shell; per-model switching and geometry migration remain pending |
-| Blender/model library | Existing pipeline plus private blank records and first review package at `/catalog-studio/models` | Render execution remains manual; additional phone models await sourcing and individual review |
+| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Bulk package imports work; Blender execution remains operator-driven and additional geometry still needs model-specific research |
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
@@ -102,7 +102,10 @@ reseed an existing working catalog casually.
 - Build a reusable model per exact phone/blank variant. Different designs reuse
   the geometry. Use supplier references and eventually physical measurements.
 - Research purchasable iPhone and major flagship Android blanks, then complete
-  the model checklist one at a time with Jace reviewing each finished result.
+  models in batches. Jace can compare and review any model in any order; do not wait
+  for one approval before preparing the next. Each model still needs its own decision.
+  Use model-specific shape references, including finished printed cases when useful;
+  a shared supplier photo is not evidence for every phone variant.
   Render review, sample validation and sales eligibility are distinct; the
   `caseBlanks` collection separates preview review and physical sample status.
   Sales eligibility enforcement is still planned.
