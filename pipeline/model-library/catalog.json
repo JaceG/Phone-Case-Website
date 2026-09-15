@@ -176,6 +176,160 @@
       ],
       "concept": true,
       "notes": "Fine-hole CONCEPT ONLY. The linked Pixel reference has a common camera window, not separate lens openings. Matching blank sourcing remains my task. Review the silhouette, camera arrangement, lens lips and artwork coverage. Case clearances and underside details are estimates pending a physical blank. This preview is not a verified printable blank or production template."
+    },
+    {
+      "slug": "iphone-16-pro-max",
+      "name": "iPhone 16 Pro Max",
+      "geometryFile": "pipeline/blender/params/iphone-16-pro-max.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-16-pro-max-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 16 Pro Max official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16-pro-max.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 16 Pro Max finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-16-pro-max-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified. Seller reuses family imagery; absolute size and control placement use the exact Apple model drawing."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual camera openings. Seller uses family photos; proportions and controls follow this exact phone drawing. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-16-plus",
+      "name": "iPhone 16 Plus",
+      "geometryFile": "pipeline/blender/params/iphone-16-plus.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-16-plus-alt.jpg",
+      "references": [
+        {
+          "title": "iPhone 16 Plus official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16-plus.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 16 Plus finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-16-plus-silicone-case-1",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified. Seller reuses family imagery; absolute size and control placement use the exact Apple model drawing."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual camera openings. Seller uses family photos; proportions and controls follow this exact phone drawing. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-16",
+      "name": "iPhone 16",
+      "geometryFile": "pipeline/blender/params/iphone-16.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-16-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 16 official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 16 finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-16-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual camera openings. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-15-pro-max",
+      "name": "iPhone 15 Pro Max",
+      "geometryFile": "pipeline/blender/params/iphone-15-pro-max.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-15-pro-max-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 15 Pro Max official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-15-pro-max.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 15 Pro Max finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-15-pro-max-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual camera openings. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-15-pro",
+      "name": "iPhone 15 Pro",
+      "geometryFile": "pipeline/blender/params/iphone-15-pro.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-15-pro-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 15 Pro official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-15-pro.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 15 Pro finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-15-pro-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual camera openings. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-15-plus",
+      "name": "iPhone 15 Plus",
+      "geometryFile": "pipeline/blender/params/iphone-15-plus.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-15-plus-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 15 Plus official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-15-plus.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 15 Plus finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-15-plus-silicone-case-1",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Raised covered camera deck with individual openings. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
+    },
+    {
+      "slug": "iphone-15",
+      "name": "iPhone 15",
+      "geometryFile": "pipeline/blender/params/iphone-15.json",
+      "referenceImage": "placeholder/model-references/iphone-expansion/iphone-15-0.jpg",
+      "references": [
+        {
+          "title": "iPhone 15 official phone drawing",
+          "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-15.pdf",
+          "kind": "phone",
+          "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+        },
+        {
+          "title": "iPhone 15 finished fine-hole case",
+          "url": "https://www.otofly.co/products/iphone-15-silicone-case-2",
+          "kind": "finishedCase",
+          "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified."
+        }
+      ],
+      "concept": false,
+      "notes": "Flush covered back with individual camera openings. Official phone dimensions establish scale; case clearances, thickness, radii, lens lips, ports and interior recesses are estimates. Review-only study, not a verified printable blank or manufacturing dieline."
     }
   ]
 }

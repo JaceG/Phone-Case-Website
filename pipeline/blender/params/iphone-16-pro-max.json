@@ -1,0 +1,184 @@
+{
+  "slug": "iphone-16-pro-max",
+  "label": "iPhone 16 Pro Max \u2014 visual case study",
+  "height_mm": 166.23,
+  "width_mm": 80.78,
+  "depth_mm": 14.55,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 12,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": false,
+    "x_mm": 0,
+    "y_mm": 0,
+    "w_mm": 1,
+    "h_mm": 1,
+    "height_mm": 0,
+    "deck_height_mm": 0,
+    "corner_radius_mm": 1
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 15.77,
+      "y_mm": 15.77,
+      "d_mm": 16.5
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 15.77,
+      "y_mm": 35.01,
+      "d_mm": 16.5
+    },
+    {
+      "name": "lens_right",
+      "kind": "lens",
+      "x_mm": 33.76,
+      "y_mm": 25.39,
+      "d_mm": 16.5
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 33.76,
+      "y_mm": 11.82,
+      "d_mm": 7.1
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 39.6,
+      "y_mm": 35.74,
+      "d_mm": 1.2
+    },
+    {
+      "name": "lidar",
+      "kind": "sensor",
+      "x_mm": 33.76,
+      "y_mm": 39.0,
+      "d_mm": 6.7
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.72,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "action",
+      "side": "right",
+      "from_top_mm": 35.68,
+      "length_mm": 6.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 49.83,
+      "length_mm": 10
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 64.03,
+      "length_mm": 10
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 56.93,
+      "length_mm": 18
+    },
+    {
+      "name": "camera_control",
+      "side": "left",
+      "from_top_mm": 113.22,
+      "length_mm": 20,
+      "kind": "opening",
+      "height_mm": 5
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid.",
+      "LiDAR centre is estimated from finished-case photos because this drawing does not dimension it."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 4.9,
+  "bottom_openings": [
+    [
+      0,
+      12,
+      4.8
+    ],
+    [
+      -24,
+      1.8,
+      2.1
+    ],
+    [
+      -20.5,
+      1.8,
+      2.1
+    ],
+    [
+      -17,
+      1.8,
+      2.1
+    ],
+    [
+      17,
+      1.8,
+      2.1
+    ],
+    [
+      20.5,
+      1.8,
+      2.1
+    ],
+    [
+      24,
+      1.8,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 77.58,
+      "height": 163.03,
+      "depth": 8.25
+    },
+    "camera_coordinate_basis": "Dimensioned Apple rear-view lens/flash/mic centres plus estimated 1.6 mm case border, minus deck origin when raised. Pro LiDAR centre is a photo estimate.",
+    "references": [
+      {
+        "title": "iPhone 16 Pro Max official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-16-pro-max.pdf",
+        "kind": "phone",
+        "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+      },
+      {
+        "title": "iPhone 16 Pro Max finished fine-hole case",
+        "url": "https://www.otofly.co/products/iphone-16-pro-max-silicone-case-2",
+        "kind": "finishedCase",
+        "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified. Seller reuses family imagery; absolute size and control placement use the exact Apple model drawing."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

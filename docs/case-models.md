@@ -22,23 +22,23 @@ details are negotiated with the supplier. No order or inquiry was submitted.
 ## iPhone candidates
 
 The same listing's expanded variant picker offered these exact phone options.
-Only the first has a model review package; other shapes need their own references
-and geometry. The supplier's "iPhone17 Air" wording needs identity confirmation.
+The 17, 16 and 15 family studies listed below now have individual review packages.
+The older 14 and 13 candidates still need their own references and geometry. The supplier's "iPhone17 Air" wording needs identity confirmation.
 
 | Phone / supplier option | Listing evidence | Geometry / review |
 |---|---|---|
 | iPhone 17 Pro Max | Exact variant present | First review pending |
-| iPhone 17 Pro | Exact variant present | Not modeled |
-| iPhone 17 | Exact variant present | Not modeled |
-| "iPhone17 Air" | Exact supplier label | Identity and geometry unverified |
-| iPhone 16 Pro Max | Exact variant present | Not modeled |
-| iPhone 16 Pro | Exact variant present | Not modeled |
-| iPhone 16 Plus | Exact variant present | Not modeled |
-| iPhone 16 | Exact variant present | Not modeled |
-| iPhone 15 Pro Max | Exact variant present | Not modeled |
-| iPhone 15 Pro | Exact variant present | Not modeled |
-| iPhone 15 Plus | Exact variant present | Not modeled |
-| iPhone 15 | Exact variant present | Not modeled |
+| iPhone 17 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 17 | Exact variant present | Visual study prepared; review and sample validation separate |
+| "iPhone17 Air" | Exact supplier label | Apple iPhone Air study prepared; supplier identity still unconfirmed |
+| iPhone 16 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 16 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 16 Plus | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 16 | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 15 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 15 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 15 Plus | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 15 | Exact variant present | Visual study prepared; review and sample validation separate |
 | iPhone 14 Pro Max | Exact variant present | Not modeled |
 | iPhone 14 Pro | Exact variant present | Not modeled |
 | iPhone 14 | Exact variant present | Not modeled |
@@ -51,12 +51,15 @@ and geometry. The supplier's "iPhone17 Air" wording needs identity confirmation.
 
 Start with the existing catalog's Galaxy S25 Ultra, Galaxy S25, Pixel 9 Pro and
 Pixel 9 candidates, then assess additional flagship models against actual blank
-supply. No accurate Android geometry has been built or approved.
+supply. Galaxy S25 and S25 Ultra have model-specific visual studies based on
+finished fine-hole cases. Pixel 9 and Pixel 9 Pro have concepts awaiting matching
+fine-hole references. None of these establishes physical blank fit.
 
 The Walker listing title mentions Samsung series, but its expanded option list
 in this check contained iPhones only. Do not promote the title into proof of an
 exact Android variant. Samsung and Pixel fine-hole blanks need separate verified
-listings and model-specific photographs before entering the modeling queue.
+listings. Samsung finished-case photographs support visual studies; the Pixel
+reference gap remains open.
 
 ## Updating a review
 
@@ -103,3 +106,19 @@ are included privately. The existing iPhone 17 Pro Max review stays separate.
 
 See [the preparation guide](model-review-batches.md). Storefront and Studio still
 use the existing shell until reviewed model integration is implemented.
+
+## iPhone 16 and 15 expansion — 2026-09-15
+
+Seven further studies complete the main 16 and 15 families: iPhone 16 Pro Max,
+16 Plus, 16, 15 Pro Max, 15 Pro, 15 Plus and 15. Each has its own Apple dimensional
+drawing and an inspected finished-case reference, eleven rendered views and one
+private source photo. The Otofly 16 Pro Max and 16 Plus pages reuse family imagery;
+exact model dimensions and control locations come from their Apple drawings.
+The 15 Plus reference has a raised covered camera deck; the other six use a flush
+covered back. Pro cases retain three lens openings plus flash, microphone and
+LiDAR; regular 16s have vertical lenses and regular 15s have diagonal lenses.
+
+New phone records are hidden from the storefront using the existing `retired`
+status while they are review-only candidates. This is a temporary catalog state,
+not a decision to discontinue these models. Reviews do not activate sales or
+replace the Studio shell. Existing review decisions are preserved.

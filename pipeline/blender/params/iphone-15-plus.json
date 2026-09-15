@@ -1,0 +1,163 @@
+{
+  "slug": "iphone-15-plus",
+  "label": "iPhone 15 Plus \u2014 visual case study",
+  "height_mm": 164.09,
+  "width_mm": 80.96,
+  "depth_mm": 11.01,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 13,
+  "back_roll_mm": 1.7,
+  "camera_island": {
+    "enabled": true,
+    "x_mm": 2.4,
+    "y_mm": 2.4,
+    "w_mm": 38.2,
+    "h_mm": 38.2,
+    "height_mm": 3.1,
+    "deck_height_mm": 2.4,
+    "corner_radius_mm": 10
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 11.93,
+      "y_mm": 11.93,
+      "d_mm": 15.4
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 24.84,
+      "y_mm": 24.84,
+      "d_mm": 15.4
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 26.52,
+      "y_mm": 10.26,
+      "d_mm": 6.6
+    },
+    {
+      "name": "mic",
+      "kind": "mic",
+      "x_mm": 10.67,
+      "y_mm": 26.1,
+      "d_mm": 2.4
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.72,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "mute_switch",
+      "side": "right",
+      "from_top_mm": 33.54,
+      "length_mm": 9,
+      "kind": "opening",
+      "height_mm": 4.5
+    },
+    {
+      "name": "volume_up",
+      "side": "right",
+      "from_top_mm": 46.99,
+      "length_mm": 10
+    },
+    {
+      "name": "volume_down",
+      "side": "right",
+      "from_top_mm": 61.19,
+      "length_mm": 10
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 54.09,
+      "length_mm": 18
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "Case envelope uses an estimated 1.6 mm side border; depth, back thickness, radii, lip, buttons and port clearances are visual estimates.",
+      "Camera hole diameters and rim clearances require exact blank measurements. Interior camera recesses are not fit-validated.",
+      "No externally visible magnetic groove added: these specific references do not establish one. This does not claim presence or absence of an internal magnet.",
+      "Print coordinates remain a geometric approximation; this is not a manufacturing dieline.",
+      "Bottom port pattern is a provisional case opening layout, not an exact reproduction of the phone speaker grid."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 1.8,
+  "bottom_openings": [
+    [
+      0,
+      12,
+      4.8
+    ],
+    [
+      -24,
+      1.8,
+      2.1
+    ],
+    [
+      -20.5,
+      1.8,
+      2.1
+    ],
+    [
+      -17,
+      1.8,
+      2.1
+    ],
+    [
+      17,
+      1.8,
+      2.1
+    ],
+    [
+      20.5,
+      1.8,
+      2.1
+    ],
+    [
+      24,
+      1.8,
+      2.1
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "width": 77.76,
+      "height": 160.89,
+      "depth": 7.81
+    },
+    "camera_coordinate_basis": "Dimensioned Apple rear-view lens/flash/mic centres plus estimated 1.6 mm case border, minus deck origin when raised. Pro LiDAR centre is a photo estimate.",
+    "references": [
+      {
+        "title": "iPhone 15 Plus official phone drawing",
+        "url": "https://developer.apple.com/download/files/accessories/dimensional-drawings/iphone-15-plus.pdf",
+        "kind": "phone",
+        "notes": "Exact phone envelope, dimensioned camera centres and controls. Case walls, clearances, lip profiles and LiDAR positions remain visual estimates."
+      },
+      {
+        "title": "iPhone 15 Plus finished fine-hole case",
+        "url": "https://www.otofly.co/products/iphone-15-plus-silicone-case-1",
+        "kind": "finishedCase",
+        "notes": "Inspected covered-camera product photo for shape only; printable blank and material compatibility unverified."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

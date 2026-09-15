@@ -60,6 +60,9 @@ blank and manufacturing process determine which print modes can be enabled.
 - [x] First additional catalog pass: six fine-hole case studies plus two Pixel
   concepts, with separate geometry, neutral/checker/artwork views and private
   review packages. Exact printable blanks remain unverified.
+- [x] Seven more iPhone studies: 16 Pro Max, 16 Plus, 16, 15 Pro Max, 15 Pro,
+  15 Plus and 15, with official phone drawings, finished-case shape references
+  and individual review packages. These complete the main 16/15 family previews.
 - [ ] Continue the broader blank/model checklist and resolve the Pixel fine-hole
   sourcing gap. Codex handles preparation; Jace reviews results. An outstanding
   review does not block another model. Approval remains per model.

@@ -20,7 +20,7 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
 
 ## Assets and repeatability
 
-- Committed: eight parameter JSON files, the geometry builder, source-link records.
+- Committed: fifteen additional parameter JSON files, the geometry builder, source-link records.
 - Private local outputs: `pipeline/out/model-library/<slug>/shell.blend`, seven
   neutral views, two numbered checker views and two Static Bloom artwork views.
 - Private source photos: `placeholder/model-references/`. Apple drawings are
@@ -30,7 +30,7 @@ The original iPhone 17 Pro Max remains in review entry 1, unchanged.
   No new storefront media, phone activation or design publishing occurred.
 
 Build any subset with `python3 pipeline/blender/build_review_library.py <slugs>`;
-omit slugs for all eight. Inspect every result, then use the existing operator
+omit slugs for all fifteen. Inspect every result, then use the existing operator
 importer described in `docs/model-review-batches.md`. Do not ask Jace to export a
 worklist. Read fresh library IDs/revisions directly from Payload.
 
@@ -41,7 +41,7 @@ mark a conceptual camera deck as a verified blank.
 
 ## Geometry checks
 
-All eight meshes passed closed topology, outward normals, actual camera and
+The initial eight meshes passed closed topology, outward normals, actual camera and
 bottom-port clearance, correct outer envelope and matching back/deck UV checks.
 The unchanged iPhone 17 Pro Max parameters also passed a separate rebuild.
 Neutral/camera/interior/side/bottom/checker/artwork contact sheets were inspected.
@@ -52,7 +52,35 @@ The website production build and nine focused review tests passed. The existing
 ESLint configuration still fails during setup with a circular-config error.
 Browser checks confirmed loaded private images, model detail/artwork switching,
 and comparison of the distinct Samsung cases. Anonymous review-image access
-returns 403. No human review or sample approval has been recorded.
+returns 403. Human decisions live in the review database; this document does not override them.
+
+## iPhone 16 and 15 expansion
+
+Prepared 2026-09-15, separately from the original eight studies.
+
+| Model | Geometry direction | Local review entry |
+| --- | --- | --- |
+| iPhone 16 Pro Max | Flush back; three lenses, flash, mic, LiDAR; Camera Control opening | 28 |
+| iPhone 16 Plus | Flush back; vertical lenses, flash, mic; Camera Control opening | 27 |
+| iPhone 16 | Smaller envelope; vertical lenses, flash, mic; Camera Control opening | 26 |
+| iPhone 15 Pro Max | Flush back; three lenses, flash, mic, LiDAR; Action button | 25 |
+| iPhone 15 Pro | Smaller envelope and estimated camera/back depth; Action button | 24 |
+| iPhone 15 Plus | Raised covered camera deck; diagonal lenses; mute-switch opening | 23 |
+| iPhone 15 | Flush back; diagonal lenses; mute-switch opening | 22 |
+
+Each exact Apple drawing establishes phone dimensions and dimensioned camera and
+control positions. Inspected Otofly finished-case photos establish the coverage
+style; their 16 Pro Max and 16 Plus pages reuse family imagery, so those photos
+are not treated as dimensional evidence. Pro LiDAR positions, case clearances,
+back thickness, protection lips, interior recesses and bottom port patterns remain
+estimates. These cases are not verified sublimation blanks or physical-fit CAD.
+
+Each package has eleven renders and one private source image (84 new images).
+All seven pass topology, outward-normal, aperture, envelope and UV checks; neutral,
+close-up, checker, artwork, inside, side and bottom views were inspected. New
+phone records use the existing hidden `retired` status to keep preparation out
+of the storefront. Existing reviews, published designs and sellable variants
+remain unchanged. The local database holds review status and private assets.
 
 ## Known geometric approximations
 
