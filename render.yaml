@@ -1,0 +1,74 @@
+# Render Blueprint for a hosted review instance of the Phone Case Store.
+#
+# Creates one Postgres database and one Node web service running Next.js +
+# Payload. Apply it from the Render dashboard: New > Blueprint > pick this repo.
+#
+# Notes
+# - Payload only auto-creates tables outside production, so the start script
+#   runs the committed migrations in src/migrations before `next start`.
+# - This is the free tier: the service sleeps after 15 minutes idle (first
+#   request takes ~1 minute), and the free Postgres instance expires 30 days
+#   after creation unless upgraded.
+# - Payload writes artwork masters, production assets and public media to local
+#   folders, which are wiped on every deploy on the free tier. To keep them,
+#   move to a paid instance and add a disk (scripts/render-start.sh already
+#   links the folders to $RENDER_DATA_DIR when it is set):
+#     plan: starter
+#     disk: { name: phone-case-data, mountPath: /var/data, sizeGB: 5 }
+#     envVars: - { key: RENDER_DATA_DIR, value: /var/data }
+# - Checkout stays off and the Stripe keys are placeholders; the ecommerce
+#   plugin needs *some* value to boot. Replace them in the dashboard when
+#   test-mode checkout is ready.
+# - Blender is not installed on Render, so Studio's "Generate previews" will
+#   fail here; render locally and publish, or import presentation assets.
+# - NEXT_PUBLIC_SERVER_URL is baked in at build time. If Render assigns a
+#   different hostname than phone-case-website.onrender.com, update both
+#   *_SERVER_URL values in the dashboard and redeploy.
+
+services:
+  - type: web
+    name: phone-case-website
+    runtime: node
+    plan: free
+    region: ohio
+    repo: https://github.com/JaceG/Phone-Case-Website
+    branch: main
+    buildCommand: npm install -g pnpm@11 && pnpm install --frozen-lockfile && pnpm build
+    startCommand: bash scripts/render-start.sh
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: phone-case-db
+          property: connectionString
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: PREVIEW_SECRET
+        generateValue: true
+      - key: NEXT_PUBLIC_SERVER_URL
+        value: https://phone-case-website.onrender.com
+      - key: PAYLOAD_PUBLIC_SERVER_URL
+        value: https://phone-case-website.onrender.com
+      - key: COMPANY_NAME
+        value: Phone Case Store
+      - key: SITE_NAME
+        value: Phone Case Store
+      - key: NEXT_PUBLIC_SITE_NAME
+        value: Phone Case Store
+      - key: NEXT_PUBLIC_CHECKOUT_ENABLED
+        value: "false"
+      # Placeholders: checkout is disabled. Replace with real test keys later.
+      - key: STRIPE_SECRET_KEY
+        value: sk_test_placeholder
+      - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        value: pk_test_placeholder
+      - key: STRIPE_WEBHOOKS_SIGNING_SECRET
+        value: whsec_placeholder
+
+databases:
+  - name: phone-case-db
+    plan: free
+    region: ohio
+    databaseName: phone_case
+    user: phone_case
