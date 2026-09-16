@@ -1,4 +1,5 @@
 import { requireStudioPreviews } from '@/lib/catalog/requireStudioPreviews'
+import { deleteDesignDependents } from '@/lib/catalog/deleteDesignDependents'
 import { autofillProduct } from '@/lib/catalog/autofillProduct'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
@@ -396,6 +397,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
   ],
   hooks: {
     ...defaultCollection.hooks,
+    beforeDelete: [...(defaultCollection.hooks?.beforeDelete ?? []), deleteDesignDependents],
     beforeValidate: [...(defaultCollection.hooks?.beforeValidate ?? []), autofillProduct],
     beforeChange: [
       requireStudioPreviews,
@@ -412,7 +414,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
     afterChange: [
       ...(defaultCollection.hooks?.afterChange ?? []),
       async ({ doc, req }) => {
-        if (doc?._status !== 'published') return doc
+        if (doc?._status !== 'published' || doc.deletedAt) return doc
 
         // Idempotent: only missing design × active-model variants are created.
 

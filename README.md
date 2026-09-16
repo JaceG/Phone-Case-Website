@@ -91,6 +91,12 @@ not separate catalog designs. Competing edits from another tab are rejected;
 retrying an already-saved change returns the existing save. Published artwork
 stays live until updated previews are generated, reviewed and published.
 
+Moving a design to Trash preserves its Studio history and phone variants for
+restoration, and hides it from the Studio picker and design library. Permanent
+deletion removes that design's history and variants in the same transaction as
+the product, including trashed variants. Artwork and media files are retained
+because other designs or historical print jobs may reference them.
+
 Routine details now fill on save: editable title-based tagline/story defaults,
 colors extracted from the artwork, search title/description, related designs, and
 $39 when no price exists. **Suggest missing copy** previews the copy in Studio.
@@ -244,6 +250,10 @@ pnpm test:int tests/int/bundlePricing.int.spec.ts tests/int/setBuilder.int.spec.
 With the local server running, `pnpm exec tsx tests/scripts/verifyStudioUpdates.ts`
 checks unchanged saves, retry deduplication, stable design links, private access,
 concurrent edits and cleanup with disposable records.
+
+`pnpm exec tsx tests/scripts/verifyDesignDeletion.ts` checks permanent and bulk
+deletion, trash/restore, hidden trashed drafts, shared-asset retention and rollback
+with disposable records. It does not delete existing catalog designs.
 
 The older `pnpm exec tsx tests/scripts/verifyStudio.ts` tests
 authentication, original preservation, draft/revision saves, racing saves, published

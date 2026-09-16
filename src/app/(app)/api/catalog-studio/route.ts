@@ -94,9 +94,7 @@ export async function GET(request: Request) {
     where: {
       id: {
         in: [
-          ...new Set(
-            revisions.docs.map((d) => (typeof d.product === 'object' ? d.product.id : d.product)),
-          ),
+          ...new Set(revisions.docs.map((d) => relationID(d.product)).filter((id) => id !== null)),
         ],
       },
     },
@@ -106,6 +104,8 @@ export async function GET(request: Request) {
     collections: collections.docs.map((c) => ({ id: c.id, title: c.title })),
     drafts: revisions.docs
       .filter((doc) => {
+        // Trash preserves snapshots for restoration, but isn't an editable design.
+        if (!products.docs.some((product) => product.id === relationID(doc.product))) return false
         if (seen.has(doc.lineage)) return false
         seen.add(doc.lineage)
         return true
