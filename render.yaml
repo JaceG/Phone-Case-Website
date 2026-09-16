@@ -33,7 +33,9 @@ services:
     region: ohio
     repo: https://github.com/JaceG/Phone-Case-Website
     branch: main
-    buildCommand: npm install -g pnpm@11 && pnpm install --frozen-lockfile && pnpm build
+    # Migrations run before the build because generateStaticParams queries the
+    # database at build time. The start script runs them again (no-op) to be safe.
+    buildCommand: npm install -g pnpm@11 && pnpm install --frozen-lockfile && pnpm payload migrate && pnpm build
     startCommand: bash scripts/render-start.sh
     envVars:
       - key: NODE_VERSION
