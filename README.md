@@ -74,9 +74,12 @@ currently imports both layouts; separate code delivery remains planned.
 ## Current catalog workflow
 
 Start at **Overview** (`/admin`) or **My designs** (`/catalog-studio/designs`).
-The workspace navigation connects designs, the artwork editor, case models, orders,
-the print queue and the storefront. Advanced Payload records remain available below
-the shortcuts; internal Studio history is hidden from the main navigation.
+The shared navigation bar is visible at the top of every Studio and admin screen,
+including collection lists, individual design/order records and the print queue,
+even when the admin sidebar is closed. It connects designs, the artwork editor,
+case models, orders, the print queue and the storefront, and highlights the current
+section on detail pages too. Advanced Payload records remain available in the sidebar;
+internal Studio history is hidden from the main navigation.
 
 Choose **Create a design**, upload artwork, adjust placement and fill Design details.
 **Create design** makes the product; **Save changes** updates that same design.

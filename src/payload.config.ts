@@ -37,6 +37,7 @@ export default buildConfig({
     components: {
       beforeLogin: ['@/components/BeforeLogin#BeforeLogin'],
       beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard'],
+      header: ['@/components/workspace/WorkspaceNav#WorkspaceNav'],
       beforeNavLinks: ['@/components/workspace/WorkspaceNav#WorkspaceSidebar'],
       views: {
         printQueue: {

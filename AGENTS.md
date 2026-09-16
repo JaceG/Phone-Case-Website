@@ -93,8 +93,10 @@ activate live payments as part of the immediate milestone.
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
 Operator navigation starts at `/admin` (workspace overview) or
-`/catalog-studio/designs` (one searchable card per product). Shared shortcuts connect
-the editor, case-model review, orders, print queue and storefront. Technical records
+`/catalog-studio/designs` (one searchable card per product). A shared top navigation
+bar connects the editor, case-model review, orders, print queue and storefront on
+all Studio and admin pages, including lists and detail records with the sidebar
+closed. Keep it registered as a global Payload header, not only sidebar links. Technical records
 remain under Advanced records; Studio history is hidden from normal navigation.
 Studio uses **Create design** / **Save changes** and stable `?product=…` links;
 legacy revision links resolve to the latest save. Unchanged saves and completed-save
