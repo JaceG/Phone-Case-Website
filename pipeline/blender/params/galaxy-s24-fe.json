@@ -1,0 +1,124 @@
+{
+  "slug": "galaxy-s24-fe",
+  "label": "Galaxy S24 FE \u2014 visual case study",
+  "height_mm": 165.2,
+  "width_mm": 80.5,
+  "depth_mm": 12.0,
+  "wall_mm": 1.6,
+  "corner_radius_mm": 11.5,
+  "back_roll_mm": 1.8,
+  "camera_island": {
+    "enabled": false,
+    "x_mm": 0,
+    "y_mm": 0,
+    "w_mm": 1,
+    "h_mm": 1,
+    "height_mm": 0,
+    "deck_height_mm": 0,
+    "corner_radius_mm": 1
+  },
+  "holes": [
+    {
+      "name": "lens_top",
+      "kind": "lens",
+      "x_mm": 14.7,
+      "y_mm": 16.6,
+      "d_mm": 13.8
+    },
+    {
+      "name": "lens_middle",
+      "kind": "lens",
+      "x_mm": 14.7,
+      "y_mm": 34.3,
+      "d_mm": 13.8
+    },
+    {
+      "name": "lens_bottom",
+      "kind": "lens",
+      "x_mm": 14.7,
+      "y_mm": 52.0,
+      "d_mm": 13.8
+    },
+    {
+      "name": "flash",
+      "kind": "flash",
+      "x_mm": 28.3,
+      "y_mm": 25.3,
+      "d_mm": 4.6
+    }
+  ],
+  "lens_rim": {
+    "width_mm": 0.65,
+    "height_mm": 0.5
+  },
+  "magsafe_ring": null,
+  "buttons": [
+    {
+      "name": "volume_rocker",
+      "side": "left",
+      "from_top_mm": 45.4,
+      "length_mm": 24
+    },
+    {
+      "name": "power",
+      "side": "left",
+      "from_top_mm": 72.9,
+      "length_mm": 13
+    }
+  ],
+  "silicone_color": "#9caaa5",
+  "bevel_mm": 0.12,
+  "corner_segments": 32,
+  "hole_segments": 96,
+  "template_px_per_mm": 10,
+  "notes": {
+    "measured": "No physical blank measured. Official PHONE envelope is a scaling reference only.",
+    "placeholder": [
+      "No physical blank measured. Case envelope adds an estimated 1.6 mm side border and 4.0 mm depth allowance; back, corner radii, camera centres, hole sizes, button and port clearances remain photo-based estimates.",
+      "Interior fit, camera recesses and speaker/microphone/USB-C clearances require exact blank measurements. Bottom layout is a provisional USB-C/speaker interpretation, not a hole-by-hole manufacturing drawing.",
+      "No external magnetic groove inferred from seller illustrations of hidden magnets. Internal magnetic hardware is not modeled.",
+      "Camera holes are separate openings in the covered back, with individual lens lips.",
+      "UVs and printable areas are draft preview coordinates, not a validated manufacturing dieline."
+    ],
+    "template": "UV and artwork use one rectangle: (width + 2*depth) by (height + 2*depth), at 10 pixels/mm."
+  },
+  "back_mm": 3.2,
+  "bottom_openings": [
+    [
+      0,
+      15.5,
+      4.6
+    ],
+    [
+      -20,
+      11.5,
+      2.3
+    ]
+  ],
+  "research": {
+    "checked_on": "2026-09-15",
+    "phone_dimensions_mm": {
+      "height": 162.0,
+      "width": 77.3,
+      "depth": 8.0
+    },
+    "camera_coordinate_basis": "Model-specific rear-view photo proportions scaled against official phone envelope. NOT measured camera centres.",
+    "references": [
+      {
+        "title": "Galaxy S24 FE official phone dimensions",
+        "url": "https://www.samsung.com/uk/smartphones/galaxy-s/galaxy-s25-fe-icyblue-128gb-sm-s731blbdeub/",
+        "kind": "phone",
+        "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+      },
+      {
+        "title": "Galaxy S24 FE covered-camera case shape",
+        "url": "https://www.samsung.com/sg/mobile-accessories/galaxy-s24-fe-silicone-case-gray-ef-ps721cjegww/",
+        "kind": "finishedCase",
+        "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+      }
+    ],
+    "supplier_blank_verified": false,
+    "fine_hole_reference_verified": true
+  },
+  "flat_side_shading": true
+}

@@ -1,0 +1,70 @@
+{
+  "checkedOn": "2026-09-15",
+  "scope": "Galaxy S23\u2013S26 slab-style flagships: base, Plus, Ultra, released S23/S24/S25 FE and S25 Edge. Fold/Flip, A-series and S22 or older are outside this preparation pass. No unannounced S26 FE or Edge inferred.",
+  "models": [
+    {
+      "name": "Galaxy S25",
+      "slug": "galaxy-s25"
+    },
+    {
+      "name": "Galaxy S25 Ultra",
+      "slug": "galaxy-s25-ultra"
+    },
+    {
+      "name": "Galaxy S26",
+      "slug": "galaxy-s26"
+    },
+    {
+      "name": "Galaxy S26 Plus",
+      "slug": "galaxy-s26-plus"
+    },
+    {
+      "name": "Galaxy S26 Ultra",
+      "slug": "galaxy-s26-ultra"
+    },
+    {
+      "name": "Galaxy S25 Plus",
+      "slug": "galaxy-s25-plus"
+    },
+    {
+      "name": "Galaxy S25 FE",
+      "slug": "galaxy-s25-fe"
+    },
+    {
+      "name": "Galaxy S25 Edge",
+      "slug": "galaxy-s25-edge"
+    },
+    {
+      "name": "Galaxy S24",
+      "slug": "galaxy-s24"
+    },
+    {
+      "name": "Galaxy S24 Plus",
+      "slug": "galaxy-s24-plus"
+    },
+    {
+      "name": "Galaxy S24 Ultra",
+      "slug": "galaxy-s24-ultra"
+    },
+    {
+      "name": "Galaxy S24 FE",
+      "slug": "galaxy-s24-fe"
+    },
+    {
+      "name": "Galaxy S23",
+      "slug": "galaxy-s23"
+    },
+    {
+      "name": "Galaxy S23 Plus",
+      "slug": "galaxy-s23-plus"
+    },
+    {
+      "name": "Galaxy S23 Ultra",
+      "slug": "galaxy-s23-ultra"
+    },
+    {
+      "name": "Galaxy S23 FE",
+      "slug": "galaxy-s23-fe"
+    }
+  ]
+}

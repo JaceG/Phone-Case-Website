@@ -87,19 +87,57 @@ geometry, duplicates and studies left out of the checklist. Earlier iPhones
 Storage/color options are not new case shapes; regional hardware differences
 still require exact blank fit checks. No model is made sellable by this audit.
 
-## Android sourcing queue
+## Samsung flagship review library
 
-Start with the existing catalog's Galaxy S25 Ultra, Galaxy S25, Pixel 9 Pro and
-Pixel 9 candidates, then assess additional flagship models against actual blank
-supply. Galaxy S25 and S25 Ultra have model-specific visual studies based on
-finished fine-hole cases. Pixel 9 and Pixel 9 Pro have concepts awaiting matching
-fine-hole references. None of these establishes physical blank fit.
+The prepared slab-phone range now has **16 Samsung models**, each independently
+reviewable. The 14 additions join the existing S25 and S25 Ultra packages.
 
-The Walker listing title mentions Samsung series, but its expanded option list
-in this check contained iPhones only. Do not promote the title into proof of an
-exact Android variant. Samsung and Pixel fine-hole blanks need separate verified
-listings. Samsung finished-case photographs support visual studies; the Pixel
-reference gap remains open.
+| Family | Models with review packages |
+| --- | --- |
+| Galaxy S26 | S26, S26 Plus, S26 Ultra |
+| Galaxy S25 | S25, S25 Plus, S25 Ultra, S25 FE, S25 Edge |
+| Galaxy S24 | S24, S24 Plus, S24 Ultra, S24 FE |
+| Galaxy S23 | S23, S23 Plus, S23 Ultra, S23 FE |
+
+Each addition has eleven rendered views and a private model-specific reference:
+plain case, camera close-up, interior, side, bottom, numbered checker and artwork.
+Samsung's official specifications establish the phone envelope. Camera positions,
+case wall allowances, ports and button positions are photo-based estimates.
+Elago's model-specific cases establish most covered camera shapes. Samsung's
+S23 FE and S24 FE silicone cases have separate lens openings. Its S25 FE silicone
+case uses one long opening and was **rejected** as fine-hole evidence; the S25 FE
+study uses a separately inspected covered-camera seller photo instead. All source
+links are recorded per model in `pipeline/model-library/catalog.json` and params.
+
+S26 models have narrow raised camera pills; the Ultra's smaller camera sits on the
+back beside the pill. S25 Edge has two lenses and a flash below them. S23/S24 Ultra
+retain squarer corners than S26 Ultra. These distinctions are separate definitions,
+not one shared mesh under different phone labels. Digital checks cover closed
+geometry, clear openings, envelope dimensions and aligned artwork coordinates.
+
+`pipeline/model-library/samsung-lineup.json` records the 16-model preparation
+scope; `python3 pipeline/blender/audit_samsung_coverage.py` checks for missing or
+duplicate definitions. Fold/Flip, A-series and S22 or older are outside this pass.
+No S26 FE or Edge is inferred. New models remain hidden from the storefront and
+await Jace's per-model preview decision and physical blank validation.
+
+## Android blank sourcing gaps
+
+Finished-case photographs establish the desired shapes, **not printable blank
+availability**. None of the Samsung studies is an approved production template.
+The Walker listing title mentions Samsung but the inspected option picker showed
+iPhones; it cannot establish an exact Android blank.
+
+[Innosub's 2-in-1 Samsung blanks](https://innosubusa.com/products/sublimation-blanks-3d-magnetic-phone-cases-for-samsung-s26-s25-s24-2-in-1-tough-case-copy)
+list S24/S25/S26 base, Plus and Ultra variants. Inspected gallery photos show a
+shared long camera window for the illustrated standard case, so that geometry
+does not meet the separate-hole requirement. The listing's other variants are not
+assumed to match. [SP Sublimation's full-wrap listing](https://spsub.com/products/3d-sublimation-blank-phone-cases-for-iphone-17-16-15-pro-max-samsung-s26-xiaomi-full-wrap-diy-heat-transfer-pc-hard-shell-case-blanks-bulk-wholesale)
+is another broad lead, not verified per-model evidence. Exact fine-hole blanks,
+materials, print compatibility and physical samples remain to be matched.
+
+Pixel 9 and Pixel 9 Pro remain concepts awaiting matching fine-hole references.
+Their existing review records and sourcing limitations are unchanged.
 
 ## Updating a review
 

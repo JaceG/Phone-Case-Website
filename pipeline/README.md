@@ -357,3 +357,18 @@ for worklist export, stage updates and importing many completed packages through
 operator-driven Blender pipeline; adding a queue entry does not start a worker.
 Use model-specific blank/finished-case references when a shared listing photo
 cannot establish the selected phone's shape.
+
+## Narrow camera-surround studies
+
+The Samsung review library uses the shared shell builder with optional
+`camera_island.shoulder_mm` to set the rounded transition width of narrow camera
+pills (default 3.2 mm preserves older decks). `holes[].deck_height_mm` can override
+a lens lip's base elevation when it sits beside the raised island, as on S26
+Ultra. Hole coordinates remain relative to the island origin, even when a hole
+is outside its footprint. Both the back and island retain the same UV space.
+These geometry options currently serve offline review builds; model selection in
+Case Studio and automatic per-model storefront rendering are still pending.
+
+Run `python3 pipeline/blender/audit_samsung_coverage.py` for the explicit Samsung
+scope and `python3 pipeline/blender/audit_iphone_coverage.py` for iPhones. These
+check definitions only; finished galleries and owner decisions live in Payload.

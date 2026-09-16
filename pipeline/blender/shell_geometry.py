@@ -164,8 +164,10 @@ def build_parts(p, template, print_mat, silicone):
                 (1.7, 2.8), (2.3, 2.65), (2.8, 2.2)]
     island = None
     if raised:
+        # Narrow camera pills need a smaller shoulder than a full-width deck.
+        shoulder_scale = ci.get('shoulder_mm', 3.2) / 3.2
         island = profile_solid('camera_island', ci['w_mm'], ci['h_mm'], ci['corner_radius_mm'],
-            [(inset, z*height_scale) for inset, z in surround] + [(3.2, deck)],
+            [(inset*shoulder_scale, z*height_scale) for inset, z in surround] + [(3.2*shoulder_scale, deck)],
             [print_mat, silicone], center=center, segments=p['corner_segments'])
         parts.append(island)
     for hole in p['holes']:
@@ -178,9 +180,11 @@ def build_parts(p, template, print_mat, silicone):
         if hole['kind'] == 'lens':
             # Separate annular topology: no union interpolation across the deck.
             rw, rh = p['lens_rim']['width_mm'], p['lens_rim']['height_mm']
+            # Ultra phones also have lenses beside the raised camera pill.
+            lip_deck = hole.get('deck_height_mm', deck)
             rim = annular_profile('lip_'+hole['name'], x, y,
-                [(rad+rw*.90, deck-.1), (rad+rw, deck+rh*.24), (rad+rw*.76, deck+rh*.84),
-                 (rad+rw*.42, deck+rh), (rad+rw*.07, deck+rh*.6), (rad, deck-.1)], [silicone])
+                [(rad+rw*.90, lip_deck-.1), (rad+rw, lip_deck+rh*.24), (rad+rw*.76, lip_deck+rh*.84),
+                 (rad+rw*.42, lip_deck+rh), (rad+rw*.07, lip_deck+rh*.6), (rad, lip_deck-.1)], [silicone])
             parts.append(rim)
 
     # Shallow channel with bevelled shoulders, retaining artwork at its floor.

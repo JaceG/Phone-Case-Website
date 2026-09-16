@@ -72,6 +72,10 @@ blank and manufacturing process determine which print modes can be enabled.
   model has its own Apple drawing, covered-camera reference and private gallery.
 - [x] Audit every iPhone submodel across the prepared range against Apple: add
   16e and SE 2020/2022, with a 28-model checklist and repeatable coverage check.
+- [x] Expand Samsung to 16 S23–S26 flagship studies, including released FE models
+  and S25 Edge. Fourteen new private packages use model-specific covered-camera
+  references; source/geometry coverage is checked against an explicit lineup.
+  Exact printable blanks and physical fit remain unverified.
 - [ ] Continue the broader blank/model checklist and resolve the Pixel fine-hole
   sourcing gap. Codex handles preparation; Jace reviews results. An outstanding
   review does not block another model. Approval remains per model.

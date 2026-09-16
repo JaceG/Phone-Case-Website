@@ -682,6 +682,314 @@
       ],
       "concept": false,
       "notes": "Covered pill-shaped camera surround with separate lens, mic and flash holes. Apple explicitly supplies one drawing for SE 2nd and 3rd generation; these intentionally share provisional case geometry but retain separate review decisions. The inspected finished-case photograph is labeled SE 2022; its shape is applied to SE 2020 using Apple dimensional compatibility. Rounded shoulder, mute switch and Lightning opening. Seller listing was out of stock when checked; exact printable blank, optical clearance and physical fit remain unverified."
+    },
+    {
+      "slug": "galaxy-s26",
+      "name": "Galaxy S26",
+      "geometryFile": "pipeline/blender/params/galaxy-s26.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s26-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S26 official phone dimensions",
+          "url": "https://news.samsung.com/sg/samsung-unveils-galaxy-s26-series-the-most-intuitive-galaxy-ai-phone-yet",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S26 covered-camera case shape",
+          "url": "https://www.elago.com/products/magnetic-silicone-galaxy-s26-case",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s26-plus",
+      "name": "Galaxy S26 Plus",
+      "geometryFile": "pipeline/blender/params/galaxy-s26-plus.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s26-plus-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S26 Plus official phone dimensions",
+          "url": "https://news.samsung.com/sg/samsung-unveils-galaxy-s26-series-the-most-intuitive-galaxy-ai-phone-yet",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S26 Plus covered-camera case shape",
+          "url": "https://www.elago.com/products/magnetic-silicone-galaxy-s26-plus-case",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s26-ultra",
+      "name": "Galaxy S26 Ultra",
+      "geometryFile": "pipeline/blender/params/galaxy-s26-ultra.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s26-ultra-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S26 Ultra official phone dimensions",
+          "url": "https://news.samsung.com/sg/samsung-unveils-galaxy-s26-series-the-most-intuitive-galaxy-ai-phone-yet",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S26 Ultra covered-camera case shape",
+          "url": "https://www.elago.com/products/magnetic-silicone-galaxy-s26-ultra-case",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s25-plus",
+      "name": "Galaxy S25 Plus",
+      "geometryFile": "pipeline/blender/params/galaxy-s25-plus.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s25-plus-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S25 Plus official phone dimensions",
+          "url": "https://news.samsung.com/us/samsung-galaxy-s25-series-sets-standard-of-ai-phone-true-ai-companion-unpacked2025/",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S25 Plus covered-camera case shape",
+          "url": "https://www.elago.com/products/silicone-galaxy-s25-plus-case",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s25-fe",
+      "name": "Galaxy S25 FE",
+      "geometryFile": "pipeline/blender/params/galaxy-s25-fe.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s25-fe-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S25 FE official phone dimensions",
+          "url": "https://www.samsung.com/uk/smartphones/galaxy-s/galaxy-s25-fe-icyblue-128gb-sm-s731blbdeub/",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S25 FE covered-camera case shape",
+          "url": "https://www.noon.com/egypt-en/liquid-silicone-case-compatible-with-samsung-s25-fe-full-camera-protection-with-soft-microfiber-lining-durable-shockproof-anti-scratch-cover-black/Z7D632ACB624154D057DDZ/p/",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s25-edge",
+      "name": "Galaxy S25 Edge",
+      "geometryFile": "pipeline/blender/params/galaxy-s25-edge.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s25-edge-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S25 Edge official phone dimensions",
+          "url": "https://news.samsung.com/ph/meet-the-samsung-galaxy-s25-edge-an-engineering-marvel-of-new-slim-hardware-innovation",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S25 Edge covered-camera case shape",
+          "url": "https://www.elago.com/products/collection-galaxy_cases-galaxy_s25_edge_case-magsafe_silicone_case",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s24",
+      "name": "Galaxy S24",
+      "geometryFile": "pipeline/blender/params/galaxy-s24.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s24-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S24 official phone dimensions",
+          "url": "https://news.samsung.com/sg/enter-the-new-era-of-mobile-ai-with-samsung-galaxy-s24-series",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S24 covered-camera case shape",
+          "url": "https://www.elago.com/products/silicone-case-for-galaxy-s23-5-colors",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s24-plus",
+      "name": "Galaxy S24 Plus",
+      "geometryFile": "pipeline/blender/params/galaxy-s24-plus.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s24-plus-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S24 Plus official phone dimensions",
+          "url": "https://news.samsung.com/sg/enter-the-new-era-of-mobile-ai-with-samsung-galaxy-s24-series",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S24 Plus covered-camera case shape",
+          "url": "https://www.elago.com/products/silicone-case-for-galaxy-s24-plus-5-colors",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s24-ultra",
+      "name": "Galaxy S24 Ultra",
+      "geometryFile": "pipeline/blender/params/galaxy-s24-ultra.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s24-ultra-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S24 Ultra official phone dimensions",
+          "url": "https://news.samsung.com/sg/enter-the-new-era-of-mobile-ai-with-samsung-galaxy-s24-series",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S24 Ultra covered-camera case shape",
+          "url": "https://www.elago.com/products/silicone-case-for-galaxy-s24-ultra-5-colors",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s24-fe",
+      "name": "Galaxy S24 FE",
+      "geometryFile": "pipeline/blender/params/galaxy-s24-fe.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s24-fe-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S24 FE official phone dimensions",
+          "url": "https://www.samsung.com/uk/smartphones/galaxy-s/galaxy-s25-fe-icyblue-128gb-sm-s731blbdeub/",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S24 FE covered-camera case shape",
+          "url": "https://www.samsung.com/sg/mobile-accessories/galaxy-s24-fe-silicone-case-gray-ef-ps721cjegww/",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s23",
+      "name": "Galaxy S23",
+      "geometryFile": "pipeline/blender/params/galaxy-s23.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s23-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S23 official phone dimensions",
+          "url": "https://news.samsung.com/sg/take-your-passions-further-with-the-new-samsung-galaxy-s23-series-designed-for-a-premium-experience-today-and-beyond",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S23 covered-camera case shape",
+          "url": "https://www.elago.com/products/samsung-galaxy-s23-silicone-case",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s23-plus",
+      "name": "Galaxy S23 Plus",
+      "geometryFile": "pipeline/blender/params/galaxy-s23-plus.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s23-plus-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S23 Plus official phone dimensions",
+          "url": "https://news.samsung.com/sg/take-your-passions-further-with-the-new-samsung-galaxy-s23-series-designed-for-a-premium-experience-today-and-beyond",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S23 Plus covered-camera case shape",
+          "url": "https://www.elago.com/products/silicone-case-for-samsung-galaxy-s23-plus-3-colors",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s23-ultra",
+      "name": "Galaxy S23 Ultra",
+      "geometryFile": "pipeline/blender/params/galaxy-s23-ultra.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s23-ultra-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S23 Ultra official phone dimensions",
+          "url": "https://news.samsung.com/sg/take-your-passions-further-with-the-new-samsung-galaxy-s23-series-designed-for-a-premium-experience-today-and-beyond",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S23 Ultra covered-camera case shape",
+          "url": "https://www.elago.com/products/silicone-case-for-galaxy-s23-ultra-3-colors",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
+    },
+    {
+      "slug": "galaxy-s23-fe",
+      "name": "Galaxy S23 FE",
+      "geometryFile": "pipeline/blender/params/galaxy-s23-fe.json",
+      "referenceImage": "placeholder/model-references/samsung-expansion/galaxy-s23-fe-ref.jpg",
+      "references": [
+        {
+          "title": "Galaxy S23 FE official phone dimensions",
+          "url": "https://www.samsung.com/uk/support/mobile-devices/specifications-for-the-new-galaxy-s23-fe/",
+          "kind": "phone",
+          "notes": "Official phone envelope only; case allowances and camera coordinates are estimates from model-specific photographs."
+        },
+        {
+          "title": "Galaxy S23 FE covered-camera case shape",
+          "url": "https://www.samsung.com/sg/mobile-accessories/galaxy-s23-fe-silicone-case-graphite-ef-ps711tbegww/",
+          "kind": "finishedCase",
+          "notes": "Model-specific finished-case photo inspected for individual openings. Shape evidence only; not a verified printable blank."
+        }
+      ],
+      "concept": false,
+      "notes": "Model-specific visual study with covered camera surround and individual openings. Phone dimensions follow Samsung; case clearances, camera positions, buttons and underside details remain estimates. Inspect the silhouette, camera arrangement and artwork coverage. Printable blank and physical fit are unverified; not a production template."
     }
   ]
 }
