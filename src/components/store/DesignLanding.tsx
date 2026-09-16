@@ -51,7 +51,8 @@ function ArtworkReveal({ design, selectedModel, mobile }: ExperienceProps & { mo
   const frames = [
     design.gallery[0] ?? renders.flat,
     renders.threeQuarter ?? renders.hero,
-    design.gallery[1] ?? renders.flat,
+    renders.detail ??
+      (selectedModel?.previewVersion ? renders.flat : (design.gallery[1] ?? renders.flat)),
   ]
   const stages = [
     [
@@ -125,7 +126,9 @@ function ArtworkReveal({ design, selectedModel, mobile }: ExperienceProps & { mo
             <p>{stages[active][2]}</p>
           </div>
           <p className="reveal-note">
-            Design preview on our sample case. Camera openings and placement vary by phone model.
+            {selectedModel
+              ? `Design preview for ${selectedModel.name}. Final fit and print coverage will be confirmed before ordering opens.`
+              : 'Choose your phone to see its case shape and camera openings.'}
           </p>
           {!mobile && !reduced && (
             <span className="reveal-scroll">
@@ -251,7 +254,7 @@ const questions = [
   ],
   [
     'Will the design look the same on every phone?',
-    'Each phone has different dimensions and camera openings, so placement changes with the model. The current preview uses our sample case to show the design. Final model-specific previews and print coverage will be confirmed before ordering opens.',
+    'Each phone has different dimensions and camera openings, so placement changes with the model. Choose your phone to see its reviewed case shape, camera openings and artwork placement. Final fit and print coverage will be confirmed before ordering opens.',
   ],
   [
     'When will ordering open?',

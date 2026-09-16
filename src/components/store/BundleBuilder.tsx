@@ -6,7 +6,7 @@ import { ArrowRight, Check, Plus, X } from 'lucide-react'
 import { toast } from 'sonner'
 import type { ExperienceProps } from './ProductExperience'
 import { AddToCartButton } from './AddToCartButton'
-import { formatPrice, thumbImageFor, variantFor } from './catalog'
+import { formatPrice, thumbImageFor, variantFor, groupPhoneModels } from './catalog'
 import { useStoreUI } from './StoreUI'
 import { SetOfferNotice } from './SetOfferNotice'
 import { AddCaseForPhone } from '@/components/Cart/AddCaseForPhone'
@@ -118,9 +118,11 @@ export function BundleBuilder(props: ExperienceProps) {
             const item = slots[index]
             const product = item && typeof item.product === 'object' ? item.product : null
             const match = catalog.find((d) => d.id === (product?.id ?? item?.product))
-            const src = match && thumbImageFor(match, null)
             const option =
               item && typeof item.variant === 'object' ? item.variant?.options?.[0] : null
+            const optionId = typeof option === 'object' ? option?.id : option
+            const itemModel = phoneModels.find((model) => model.optionId === optionId)
+            const src = match && thumbImageFor(match, itemModel)
             return (
               <div
                 className="bundle-slot"
@@ -176,13 +178,17 @@ export function BundleBuilder(props: ExperienceProps) {
             }
           >
             <option value="">Choose your phone model</option>
-            {phoneModels
-              .filter((model) => variantFor(design, model))
-              .map((model) => (
-                <option value={model.id} key={model.id}>
-                  {model.name}
-                </option>
-              ))}
+            {groupPhoneModels(phoneModels.filter((model) => variantFor(design, model))).map(
+              ([group, models]) => (
+                <optgroup key={group} label={group}>
+                  {models.map((model) => (
+                    <option value={model.id} key={model.id}>
+                      {model.name}
+                    </option>
+                  ))}
+                </optgroup>
+              ),
+            )}
           </select>
         </label>
         <p className="bundle-phone-help">

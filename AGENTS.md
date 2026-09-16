@@ -1,6 +1,6 @@
 # Phone Case Store — current project brief
 
-Updated 2026-09-15. Shared context for coding agents. Keep this brief current
+Updated 2026-09-16. Shared context for coding agents. Keep this brief current
 rather than appending contradictory progress reports.
 
 ## Documentation map
@@ -73,6 +73,9 @@ activate live payments as part of the immediate milestone.
   at the artwork-facing front and passes edges/back quickly. Preserve 288
   time-distributed frames, phase sidecars, `frontLingers(37.6, 0.14)` and the
   3.55-second hero loop (about 2.5 seconds front, 1.05 seconds remainder).
+- Approved phone selections use live GLB geometry with the same fixed axis,
+  288 phase samples and 3.55-second cadence. The original frame sequence remains
+  the default before selection. Matching stills cover mobile and WebGL failure.
 - Hero controls and sticky purchase controls keep buying accessible. Design
   switching, set building and clear model selection remain central.
 
@@ -81,10 +84,10 @@ activate live payments as part of the immediate milestone.
 | Area | Built | Limits / remaining work |
 |---|---|---|
 | Catalog/admin | Payload catalog plus authenticated Catalog Studio → product drafts, private originals/print layouts and append-only saved revisions | Automatic storefront rendering and integrated publishing remain pending |
-| Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | Presentation catalog; most phone choices reuse one provisional shell |
+| Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | 44 visually approved iPhone/Samsung shells with model-specific imagery for the three presentation designs; new-design rendering remains manual |
 | Cart | Persistent cart, repeating set offer, server subtotal validation, grouped designs, add-for-another-phone and order review | Payment/order/refund reconciliation is unfinished |
 | Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | One provisional iPhone shell; per-model switching and geometry migration remain pending |
-| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Forty-five additional model studies built; forty-three reference-backed fine-hole previews (iPhone 12–17 variants, Air, SE 2020/2022 and Samsung S23–S26 including FE/Edge) and two Pixel concepts awaiting matching blanks. Together with the original iPhone 17 Pro Max, there are 28 iPhone and 16 Samsung reviews. Editor/storefront integration remains pending |
+| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Forty-five additional model studies built; forty-three reference-backed fine-hole previews (iPhone 12–17 variants, Air, SE 2020/2022 and Samsung S23–S26 including FE/Edge) and two Pixel concepts awaiting matching blanks. Together with the original iPhone 17 Pro Max, there are 28 iPhone and 16 Samsung reviews. All 44 iPhone/Samsung previews approved by Jace on 2026-09-16 and integrated into landing pages. Editor model switching and physical validation remain pending |
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
@@ -113,8 +116,9 @@ reseed an existing working catalog casually.
   Sales eligibility enforcement is still planned.
 - The current detailed shell is a provisional iPhone 17 Pro Max interpretation:
   broad camera deck, individual openings/lips, rounded shoulders, side controls,
-  bottom openings and shallow MagSafe grooves. Other phone choices currently
-  reuse it; do not present that fallback as accurate model-specific geometry.
+  bottom openings and shallow MagSafe grooves. The editor still uses this shell.
+  Landing pages now select the approved phone-specific shell; never silently
+  substitute the original shell for a selected model with missing assets.
 - The 165 × 81 × 13 mm envelope comes from a supplied listing, not measurement.
   Detailed geometry is estimated. See params JSON and the pipeline guide for
   values. The mapping is a draft preview, not a verified production dieline.
@@ -151,6 +155,10 @@ reseed an existing working catalog casually.
 - Cart pricing resolves authoritative product/variant prices on the server,
   checking variant ownership and whole quantities. Grouped UI must preserve
   original line identities.
+- Public model derivatives are listed in `src/lib/storefront/model-assets.json`.
+  Landing pages require a live visual approval matching the exported geometry
+  version; missing/stale previews are not offered. Preview activation is not
+  physical-sample approval or launch eligibility. Pixel concepts remain excluded.
 - Keep same-origin media URLs relative; absolute localhost image URLs break
   image optimization. Preserve `productImages`/Media handling.
 - `artwork` and `productionAssets` use admin-only access and ignored local

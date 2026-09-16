@@ -5,11 +5,16 @@ No artwork, lights, or cameras are included. This never saves over master.blend.
 """
 
 import os
+import sys
+import argparse
 import bpy
 
 
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-destination = os.path.join(root, 'public', 'models', 'iphone-17-pro-max.glb')
+parser = argparse.ArgumentParser()
+parser.add_argument('--out', default=os.path.join(root, 'public', 'models', 'iphone-17-pro-max.glb'))
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
+destination = os.path.abspath(args.out)
 os.makedirs(os.path.dirname(destination), exist_ok=True)
 
 # Keep the mesh, normals, UVs and material assignments exactly as modeled.
@@ -17,10 +22,12 @@ os.makedirs(os.path.dirname(destination), exist_ok=True)
 # cannot accidentally embed the current test artwork or bake it into the asset.
 for name in ('case_print', 'case_inner'):
     material = bpy.data.materials[name]
+    original = next((n for n in material.node_tree.nodes if n.type == 'BSDF_PRINCIPLED'), None)
+    inner_color = tuple(original.inputs['Base Color'].default_value) if original else (.009, .009, .011, 1)
     material.node_tree.nodes.clear()
     output = material.node_tree.nodes.new('ShaderNodeOutputMaterial')
     surface = material.node_tree.nodes.new('ShaderNodeBsdfPrincipled')
-    surface.inputs['Base Color'].default_value = (1, 1, 1, 1) if name == 'case_print' else (.009, .009, .011, 1)
+    surface.inputs['Base Color'].default_value = (1, 1, 1, 1) if name == 'case_print' else inner_color
     surface.inputs['Roughness'].default_value = .62
     material.node_tree.links.new(surface.outputs['BSDF'], output.inputs['Surface'])
 

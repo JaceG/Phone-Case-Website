@@ -158,6 +158,7 @@ export const ProductExperience: React.FC<Props> = ({
         onClose={() => setCatalogOpen(false)}
         catalog={catalog}
         activeSlug={design.slug}
+        selectedModel={selectedModel}
         onSelect={(s) => {
           switchDesign(s)
           setCatalogOpen(false)

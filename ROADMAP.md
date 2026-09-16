@@ -76,6 +76,12 @@ blank and manufacturing process determine which print modes can be enabled.
   and S25 Edge. Fourteen new private packages use model-specific covered-camera
   references; source/geometry coverage is checked against an explicit lineup.
   Exact printable blanks and physical fit remain unverified.
+- [x] Record Jace's 2026-09-16 visual approval of all 28 iPhones and 16 Samsung
+  models, retaining separate physical-sample status and review history.
+- [x] Integrate all 44 approved geometries into landing-page phone selection:
+  live desktop hero, per-model stills/details, grouped/searchable phone choices,
+  and matching variants for all three presentation designs. Export versions must
+  match current approvals. Pixel concepts stay out of the selector.
 - [ ] Continue the broader blank/model checklist and resolve the Pixel fine-hole
   sourcing gap. Codex handles preparation; Jace reviews results. An outstanding
   review does not block another model. Approval remains per model.
@@ -86,7 +92,7 @@ One checklist row per exact phone model AND blank variant:
 
 | Phone model | Supplier / exact listing variant | Reference captured / availability checked | Camera geometry | Material / print method evidence | Dimensions / confidence | Model + UV | Review | Physical sample |
 |---|---|---|---|---|---|---|---|---|
-| iPhone 17 Pro Max, provisional shell | Walker / exact iPhone17 Pro Max option | Checked 2026-09-15 | Covered surround with individual holes | Silicone + PC listed; back printing stated, side wrap unverified | Listing envelope; detail estimates | Existing shell validated digitally | Review package ready; Jace decision pending | Pending |
+| iPhone 17 Pro Max, provisional shell | Walker / exact iPhone17 Pro Max option | Checked 2026-09-15 | Covered surround with individual holes | Silicone + PC listed; back printing stated, side wrap unverified | Listing envelope; detail estimates | Existing shell validated digitally | Visual preview approved 2026-09-16 | Pending |
 
 Add rows only with explicit evidence or mark them as unverified candidates.
 Record the exact variant, availability-check date, shipping availability and
@@ -166,10 +172,10 @@ milestone. They are not part of the immediate implementation scope.
 
 ## Sequence and ownership
 
-Start with the shared model/placement structure, connect the owner studio to
-product drafts, and complete the first blank/model review cycle. Use that first
-cycle to establish the reusable review package and generation workflow, then
-expand the model checklist in batches. Modeling and software work can continue
+The owner studio saves product drafts and all 44 iPhone/Samsung visual previews
+are approved and available on landing pages. Next, connect reviewed models to
+Studio placement, then automate revision-aware rendering and draft publication.
+Continue resolving exact blank and physical-sample gaps in parallel. Modeling and software work can continue
 while any model awaits review; Jace chooses review order and approval remains
 per model. Use finished-case references for shaping when the blank listing lacks
 model-specific images.

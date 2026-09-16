@@ -1,5 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { approvedModelVersions, modelAssets, hasCurrentApproval } from './approvedModels'
 
 import {
   toCatalogDesign,
@@ -22,9 +23,10 @@ export type Storefront = {
 export const loadStorefront = async ({ slug }: { slug?: string } = {}): Promise<Storefront> => {
   const payload = await getPayload({ config: configPromise })
 
-  const [products, models] = await Promise.all([
+  const [products, models, approvals] = await Promise.all([
     payload.find({
       collection: 'products',
+      joins: { variants: { limit: 1000 } },
       depth: 1,
       draft: false,
       overrideAccess: false,
@@ -46,10 +48,19 @@ export const loadStorefront = async ({ slug }: { slug?: string } = {}): Promise<
       sort: 'sortOrder',
       where: { status: { not_equals: 'retired' } },
     }),
+    approvedModelVersions(payload),
   ])
 
   const catalog = products.docs.map(toCatalogDesign)
-  const phoneModels = models.docs.map(toCatalogPhoneModel)
+  const phoneModels = models.docs.flatMap((model) => {
+    const asset = modelAssets[model.slug ?? '']
+    if (!hasCurrentApproval(asset, approvals.get(model.id))) return []
+    for (const design of catalog) {
+      const images = asset.designs[design.slug]
+      if (images) design.modelRenders[String(model.id)] = { ...images, geometry: asset.geometry }
+    }
+    return [{ ...toCatalogPhoneModel(model), previewVersion: asset.version }]
+  })
 
   const design = slug ? (catalog.find((d) => d.slug === slug) ?? null) : (catalog[0] ?? null)
 

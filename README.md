@@ -8,7 +8,8 @@ run in one TypeScript app backed by Postgres.
 The storefront, local Case Studio and manual Blender pipeline are working
 drafts. Authenticated Catalog Studio now saves and reopens product drafts with
 private originals and print layouts. Next: automate storefront rendering and
-expand the case-model library through individual reviews. Live checkout and operational
+connect per-model placement in the editor. The landing pages already use 44
+visually approved iPhone/Samsung models. Live checkout and operational
 launch work follow that milestone.
 
 - [Current brief and development constraints](AGENTS.md)
@@ -90,8 +91,11 @@ existing manual workflow also remains available:
 
 The presentation studies have a repeatable workflow in
 [pipeline/artwork/README.md](pipeline/artwork/README.md). They are draft assets,
-not an approved launch catalog. Per-model render overrides exist, but most phone
-options currently share the provisional iPhone 17 Pro Max shell.
+not an approved launch catalog. All 44 approved iPhone/Samsung models now have
+matching previews for the three presentation designs (132 combinations). Selecting
+a phone changes the desktop hero geometry, detail views and collection thumbnails;
+mobile uses matching stills. Desktop choices are grouped by phone family, and the
+mobile picker is searchable. Design switching preserves the selected phone.
 
 Case Studio preserves image aspect ratio, supports direct artwork zoom and
 placement, and saves local projects. Back only includes the camera surround
@@ -108,8 +112,17 @@ records exact supplier blanks, preview reviews and physical sample status. Chang
 geometry or blank identity resets its approval. Sales eligibility enforcement and
 Studio switching among blank records remain planned.
 
-The first review package and [candidate checklist](docs/case-models.md) cover the
-existing iPhone 17 Pro Max shell and verified listing options.
+Jace visually approved all 28 iPhones and 16 Samsung previews on 2026-09-16.
+Physical samples remain unvalidated. The [candidate checklist](docs/case-models.md)
+retains supplier evidence and sourcing gaps. Pixel concepts remain outside the
+landing-page selector.
+
+Public geometry and images are generated from approved review snapshots; the
+storefront requires a live approval matching the export version. Read the
+[approved-model export workflow](pipeline/README.md#approved-model-storefront-previews)
+to rebuild them. These public derivatives contain only the three presentation
+designs. Private originals, supplier references and review galleries stay private.
+New designs still need their matching model assets before being offered.
 
 Follow the [model checklist](ROADMAP.md) to source exact blanks with covered
 camera surrounds and individual openings, build geometry and review each result
@@ -159,10 +172,11 @@ path still needs to be connected and validated.
 | `pnpm renders:import` | Import a manually rendered batch; see pipeline options |
 | `pnpm presentation:prepare` / `pnpm presentation:import` | Prepare/import presentation designs |
 | `pnpm verify:offer` | Verify server cart offer using temporary local data |
+| `pnpm exec tsx pipeline/scripts/verify-storefront-models.ts` | Check 44 current approvals, 132 preview/variant combinations and a disposable mixed-phone cart |
 | `pnpm test:int` / `pnpm test:e2e` | Vitest / Playwright suites |
 | `pnpm lint` | ESLint; legacy FlatCompat configuration needs repair |
 
-Focused pricing, set-builder and grouped-cart tests coexist with template tests.
+Focused pricing, set-builder, grouped-cart and approved-model tests coexist with template tests.
 Run the focused set with:
 
 ```bash

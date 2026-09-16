@@ -4,9 +4,12 @@ import { motion } from 'motion/react'
 import React, { useCallback, useMemo, useRef } from 'react'
 
 import type { ExperienceProps } from './ProductExperience'
-import { familyOf, variantFor } from './catalog'
+import { familyOf, variantFor, groupPhoneModels } from './catalog'
 
-type Props = Pick<ExperienceProps, 'design' | 'phoneModels' | 'family' | 'selectedModel' | 'selectModel'> & {
+type Props = Pick<
+  ExperienceProps,
+  'design' | 'phoneModels' | 'family' | 'selectedModel' | 'selectModel'
+> & {
   className?: string
 }
 
@@ -86,18 +89,28 @@ export const ModelSlider: React.FC<Props> = ({
 
   if (count === 0) return null
 
-  const current = models[index]
-  const available = Boolean(variantFor(design, current))
-
   return (
     <div className={['select-none', className].filter(Boolean).join(' ')}>
-      <div className="mb-3 flex items-baseline justify-between font-mono text-[10px] uppercase tracking-[0.18em]">
-        <span className="text-[var(--store-muted)]">Model</span>
-        <span>
-          {current?.name}
-          {!available && <span className="ml-2 text-[var(--store-muted)]">· soon</span>}
-        </span>
-      </div>
+      <label className="mb-2 block font-body text-xs">
+        <span className="sr-only">Choose your phone model</span>
+        <select
+          aria-label="Choose your phone model"
+          value={selectedModel?.id ?? ''}
+          onChange={(event) => selectModel(event.target.value ? Number(event.target.value) : null)}
+          className="w-full min-w-0 rounded border border-[var(--store-line)] bg-[var(--store-bg)] px-2 py-2 text-[var(--store-fg)]"
+        >
+          <option value="">Choose your phone</option>
+          {groupPhoneModels(models).map(([group, entries]) => (
+            <optgroup key={group} label={group}>
+              {entries.map((model) => (
+                <option key={model.id} value={model.id}>
+                  {model.name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      </label>
 
       <div
         ref={railRef}
@@ -107,7 +120,7 @@ export const ModelSlider: React.FC<Props> = ({
         aria-valuemin={0}
         aria-valuemax={count - 1}
         aria-valuenow={index}
-        aria-valuetext={current?.name}
+        aria-valuetext={models[index]?.name}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onKeyDown={onKeyDown}

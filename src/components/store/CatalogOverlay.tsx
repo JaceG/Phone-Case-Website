@@ -2,18 +2,26 @@
 
 import * as Dialog from '@radix-ui/react-dialog'
 import { ArrowRight, X } from 'lucide-react'
-import type { CatalogDesign } from './catalog'
-import { formatPrice, thumbImage } from './catalog'
+import type { CatalogDesign, CatalogPhoneModel } from './catalog'
+import { formatPrice, thumbImageFor } from './catalog'
 
 type Props = {
   open: boolean
   onClose: () => void
   catalog: CatalogDesign[]
   activeSlug: string
+  selectedModel?: CatalogPhoneModel | null
   onSelect: (slug: string) => void
 }
 
-export function CatalogOverlay({ open, onClose, catalog, activeSlug, onSelect }: Props) {
+export function CatalogOverlay({
+  open,
+  onClose,
+  catalog,
+  activeSlug,
+  selectedModel,
+  onSelect,
+}: Props) {
   return (
     <Dialog.Root
       open={open}
@@ -51,10 +59,10 @@ export function CatalogOverlay({ open, onClose, catalog, activeSlug, onSelect }:
                 onClick={() => onSelect(design.slug)}
               >
                 <div className="relative h-[350px] border border-[#a6afa0] bg-[#e4e8de]">
-                  {thumbImage(design) && (
+                  {thumbImageFor(design, selectedModel) && (
                     <img
                       className="h-full w-full object-contain p-6"
-                      src={thumbImage(design)!}
+                      src={thumbImageFor(design, selectedModel)!}
                       alt={`${design.title} case`}
                       loading="lazy"
                     />

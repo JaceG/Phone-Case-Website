@@ -372,3 +372,50 @@ Case Studio and automatic per-model storefront rendering are still pending.
 Run `python3 pipeline/blender/audit_samsung_coverage.py` for the explicit Samsung
 scope and `python3 pipeline/blender/audit_iphone_coverage.py` for iPhones. These
 check definitions only; finished galleries and owner decisions live in Payload.
+
+
+## Approved-model storefront previews
+
+As of 2026-09-16, all 28 iPhone and 16 Samsung model previews have owner visual
+approval and are connected to the landing pages. The three original presentation
+designs have 132 phone/design combinations. Physical fit and printing validation
+remain pending. The Case/Catalog Studio placement editor still uses its original
+shell; connecting it to this model library is a separate next step.
+
+```bash
+pnpm tsx pipeline/scripts/export-storefront-models.ts
+python3 pipeline/scripts/build-storefront-models.py
+pnpm tsx pipeline/scripts/activate-storefront-models.ts
+```
+
+The first command reads existing approvals and writes an ignored geometry
+snapshot to `pipeline/out/storefront/approved.json`; it never approves models.
+The builder rebuilds each shell from that exact JSON, prepares aspect-preserving
+textures from the three allowlisted `pipeline/artwork/source/` files, and exports
+one GLB plus hero/three-quarter/flat/detail WebP images per design. Supply phone
+slugs as positional arguments to rebuild a subset. Cached outputs are reused only
+when geometry version, source-art hash and expected files match. To change the
+rendering recipe, remove that model's manifest entry before rebuilding.
+
+Public outputs live under `public/store/cases/<phone>/<geometry-and-art-version>/`;
+`src/lib/storefront/model-assets.json` maps them to geometry versions and design
+slugs. Commit the generated assets and manifest together. No private originals,
+supplier reference photographs or review gallery files are copied to public.
+The activation command preflights the assets, activates the matching phone rows,
+and lets normal catalog hooks synchronize design/phone variants while preserving
+prices. It does not alter sample status, publish designs or enable payments.
+
+The storefront reads current approvals and accepts only matching exported
+versions. Changed geometry or withdrawn approval removes that model from the
+selector; existing cart lines are retained. Future launch eligibility still needs
+physical validation and blank availability. A published design without matching
+assets cannot be newly selected for an approved phone through landing-page or
+cart model selectors. This workflow is currently limited to the three presentation
+designs; automatic rendering of owner catalog drafts remains planned.
+
+For selected phones, the desktop hero dynamically loads the geometry and public
+preview texture and uses the existing 288-sample, fixed-axis 3.55-second motion
+curve. Hover pauses, reduced-motion holds the front, and offscreen/hidden pages
+pause rendering. Matching stills remain visible while loading or if WebGL/assets
+fail. Mobile uses model-specific stills. The original frame sequence stays intact
+for the default presentation before a phone is chosen.

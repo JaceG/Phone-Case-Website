@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -36,6 +37,8 @@ import {
  *   right stack     the staggered thumbnails = iPhone / Android / all designs
  *   card            model picker: rotated render, model name, slider
  */
+
+const ModelHero = dynamic(() => import('../ModelHero').then((m) => m.ModelHero), { ssr: false })
 
 const STAGE_W = 1440
 const STAGE_H = 810
@@ -245,17 +248,27 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* The case turns slowly in place (pre-rendered turntable); hover to hold it. */}
-          <SpinningRender
-            frames={idleFrames}
-            framePhases={idleFrames === sequences.tumble ? sequences.tumblePhases : null}
-            still={image}
-            alt={`${design.title} phone case${selectedModel ? ` for ${selectedModel.name}` : ''}`}
-            className="h-[760px] w-[704px]"
-            imgClassName="h-[760px] w-[704px] drop-shadow-[30px_50px_60px_rgba(20,22,30,0.45)]"
-            loopSeconds={3.55}
-            speedProfile={idleSpeed}
-          />
+          {/* Approved geometry and the default frame sequence share the same hero cadence. */}
+          {sequences.geometry && sequences.texture ? (
+            <ModelHero
+              key={`${sequences.geometry}:${sequences.texture}`}
+              geometry={sequences.geometry}
+              texture={sequences.texture}
+              still={image}
+              alt={`${design.title} phone case for ${selectedModel?.name}`}
+            />
+          ) : (
+            <SpinningRender
+              frames={idleFrames}
+              framePhases={idleFrames === sequences.tumble ? sequences.tumblePhases : null}
+              still={image}
+              alt={`${design.title} phone case${selectedModel ? ` for ${selectedModel.name}` : ''}`}
+              className="h-[760px] w-[704px]"
+              imgClassName="h-[760px] w-[704px] drop-shadow-[30px_50px_60px_rgba(20,22,30,0.45)]"
+              loopSeconds={3.55}
+              speedProfile={idleSpeed}
+            />
+          )}
         </motion.figure>
 
         {/* Right-edge stack: iPhone / Android / all designs (Figma: left 1200, top 425, 240×385) */}

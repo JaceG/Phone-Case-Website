@@ -14,6 +14,9 @@ export type CatalogVariant = {
 
 export type RenderSet = {
   hero: string | null
+  detail?: string | null
+  geometry?: string
+  texture?: string
   threeQuarter: string | null
   flat: string | null
   /** Vertical-axis spin, scrubbed on scroll. */
@@ -32,9 +35,9 @@ export type CatalogDesign = {
   story: Product['description'] | null
   palette: string[]
   price: number
-  /** Shared renders (one shell for every model until per-model shells exist). */
+  /** Default design presentation before a phone is selected. */
   renders: RenderSet
-  /** Per-phone-model overrides, keyed by phone model id. Any null slot falls back to `renders`. */
+  /** Per-phone overrides. Approved GLB previews are complete; legacy stills may use shared fallbacks. */
   modelRenders: Record<string, Partial<RenderSet>>
   gallery: string[]
   collections: { id: number; title: string; slug: string }[]
@@ -49,6 +52,7 @@ export type CatalogPhoneModel = {
   status: PhoneModel['status']
   optionId: number | null
   sortOrder: number
+  previewVersion?: string
 }
 
 /** Two families in the UI: iPhone and everything else. */
@@ -62,7 +66,11 @@ export const familyOf = (model: Pick<CatalogPhoneModel, 'brand'>): DeviceFamily 
   model.brand === 'apple' ? 'iphone' : 'android'
 
 const idOf = (v: unknown): number | null =>
-  typeof v === 'number' ? v : v && typeof v === 'object' && 'id' in v ? (v as { id: number }).id : null
+  typeof v === 'number'
+    ? v
+    : v && typeof v === 'object' && 'id' in v
+      ? (v as { id: number }).id
+      : null
 
 const urlOf = (v: unknown): string | null =>
   v && typeof v === 'object' && 'url' in v ? ((v as Media).url ?? null) : null
@@ -101,7 +109,9 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
   }
 
   const collections = (product.collections ?? [])
-    .map((c) => (c && typeof c === 'object' ? { id: c.id, title: c.title, slug: c.slug ?? '' } : null))
+    .map((c) =>
+      c && typeof c === 'object' ? { id: c.id, title: c.title, slug: c.slug ?? '' } : null,
+    )
     .filter((c): c is { id: number; title: string; slug: string } => c !== null)
 
   const modelRenders: Record<string, Partial<RenderSet>> = {}
@@ -128,7 +138,9 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
     price: product.priceInUSD ?? variants[0]?.price ?? 0,
     renders: toRenderSet(product.renders),
     modelRenders,
-    gallery: (product.gallery ?? []).map((g) => urlOf(g.image)).filter((u): u is string => Boolean(u)),
+    gallery: (product.gallery ?? [])
+      .map((g) => urlOf(g.image))
+      .filter((u): u is string => Boolean(u)),
     collections,
     variants,
   }
@@ -144,28 +156,60 @@ export const toCatalogPhoneModel = (model: PhoneModel): CatalogPhoneModel => ({
   sortOrder: model.sortOrder ?? 0,
 })
 
-/** Renders for a design as seen on a given phone model, with fallback to the shared set. */
-export const rendersFor = (d: CatalogDesign, model: CatalogPhoneModel | null | undefined): RenderSet => {
+/** Approved phones use their own assets; only legacy choices use the shared set. */
+export const rendersFor = (
+  d: CatalogDesign,
+  model: CatalogPhoneModel | null | undefined,
+): RenderSet => {
   const override = model ? d.modelRenders[String(model.id)] : undefined
-  if (!override) return d.renders
+  if (!override)
+    return model?.previewVersion
+      ? {
+          hero: null,
+          threeQuarter: null,
+          flat: null,
+          turntable: [],
+          tumble: [],
+          tumblePhases: null,
+        }
+      : d.renders
+  if (override.geometry)
+    return {
+      ...override,
+      hero: override.hero ?? null,
+      threeQuarter: override.threeQuarter ?? null,
+      flat: override.flat ?? null,
+      turntable: [],
+      tumble: [],
+      tumblePhases: null,
+    }
   return {
     hero: override.hero ?? d.renders.hero,
     threeQuarter: override.threeQuarter ?? d.renders.threeQuarter,
     flat: override.flat ?? d.renders.flat,
     turntable: override.turntable?.length ? override.turntable : d.renders.turntable,
     tumble: override.tumble?.length ? override.tumble : d.renders.tumble,
-    tumblePhases: override.tumble?.length ? (override.tumblePhases ?? null) : d.renders.tumblePhases,
+    tumblePhases: override.tumble?.length
+      ? (override.tumblePhases ?? null)
+      : d.renders.tumblePhases,
   }
 }
 
 export const heroImageFor = (d: CatalogDesign, model?: CatalogPhoneModel | null): string | null => {
   const r = rendersFor(d, model)
-  return r.hero ?? r.threeQuarter ?? r.flat ?? d.gallery[0] ?? null
+  return (
+    r.hero ?? r.threeQuarter ?? r.flat ?? (model?.previewVersion ? null : (d.gallery[0] ?? null))
+  )
 }
 
-export const thumbImageFor = (d: CatalogDesign, model?: CatalogPhoneModel | null): string | null => {
+export const thumbImageFor = (
+  d: CatalogDesign,
+  model?: CatalogPhoneModel | null,
+): string | null => {
   const r = rendersFor(d, model)
-  return r.flat ?? r.hero ?? r.threeQuarter ?? d.gallery[0] ?? null
+  return (
+    r.flat ?? r.hero ?? r.threeQuarter ?? (model?.previewVersion ? null : (d.gallery[0] ?? null))
+  )
 }
 
 export const heroImage = (d: CatalogDesign): string | null => heroImageFor(d, null)
@@ -173,7 +217,9 @@ export const heroImage = (d: CatalogDesign): string | null => heroImageFor(d, nu
 export const thumbImage = (d: CatalogDesign): string | null => thumbImageFor(d, null)
 
 export const variantFor = (d: CatalogDesign, model: CatalogPhoneModel | null | undefined) =>
-  model?.optionId != null ? d.variants.find((v) => v.optionId === model.optionId) ?? null : null
+  model?.optionId != null && (!model.previewVersion || d.modelRenders[String(model.id)]?.geometry)
+    ? (d.variants.find((v) => v.optionId === model.optionId) ?? null)
+    : null
 
 export const formatPrice = (cents: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100)
@@ -193,4 +239,24 @@ export const storyText = (d: CatalogDesign, max = 170): string => {
   const first = paragraphs.find((p) => p.type === 'paragraph')
   const text = (first ? walk(first.children ?? []) : '') || d.tagline
   return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text
+}
+
+/** Customer-facing families, independent of internal preparation batches. */
+export function phoneFamilyLabel(model: Pick<CatalogPhoneModel, 'slug' | 'brand'>): string {
+  if (model.slug.startsWith('iphone-se-')) return 'iPhone SE'
+  if (model.slug === 'iphone-air') return 'iPhone Air'
+  const iphone = /^iphone-(\d+)/.exec(model.slug)
+  if (iphone) return `iPhone ${iphone[1]}`
+  const galaxy = /^galaxy-s(\d+)/.exec(model.slug)
+  if (galaxy) return `Galaxy S${galaxy[1]}`
+  return model.brand === 'google' ? 'Google Pixel' : 'Other phones'
+}
+
+export function groupPhoneModels(models: CatalogPhoneModel[]): [string, CatalogPhoneModel[]][] {
+  const groups = new Map<string, CatalogPhoneModel[]>()
+  for (const model of models) {
+    const name = phoneFamilyLabel(model)
+    groups.set(name, [...(groups.get(name) ?? []), model])
+  }
+  return [...groups]
 }

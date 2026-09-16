@@ -161,23 +161,12 @@ export const SpinningRender: React.FC<Props> = ({
       {ready ? (
         <canvas ref={canvasRef} role="img" aria-label={alt} className={imgClassName} />
       ) : (
-        still && <CrossfadeImage src={still} alt={alt} imgClassName={imgClassName} fetchPriority="high" />
+        still && (
+          <CrossfadeImage src={still} alt={alt} imgClassName={imgClassName} fetchPriority="high" />
+        )
       )}
     </div>
   )
 }
 
-/**
- * Slow only while the front faces the viewer. `halfWidth` is how far either
- * side of dead-front (as a fraction of the loop; 0.14 ≈ ±50°) the slow window
- * reaches; outside it the case turns at `boost`× that speed, so edge-on and
- * back views pass quickly. The window is a raised cosine, so speed never jumps.
- */
-export const frontLingers =
-  (boost = 3, halfWidth = 0.14) =>
-  (phase: number) => {
-    const d = Math.min(phase, 1 - phase) // distance to phase 0, wrapped
-    if (d >= halfWidth) return boost
-    const window = 0.5 * (1 + Math.cos((Math.PI * d) / halfWidth)) // 1 at front → 0 at the edge of the window
-    return boost - (boost - 1) * window
-  }
+export { frontLingers } from './heroMotion'

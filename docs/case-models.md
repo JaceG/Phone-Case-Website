@@ -5,7 +5,14 @@ any order at **Catalog Studio → Case model review**. Each decision belongs to 
 model/version; an outstanding review never blocks preparation of other models. A listing option is a sourcing lead, not a
 validated sample, current stock guarantee or approval to sell.
 
-## First review
+## Current approval status
+
+On 2026-09-16 Jace approved all 28 iPhone and 16 Samsung visual previews. They
+now drive landing-page model selection and previews for all three presentation
+designs. Physical sample and printable-blank evidence remain separate and retain
+the limitations below. Pixel concepts are not approved or offered in that selector.
+
+## Original review package
 
 **iPhone 17 Pro Max — Walker fine-hole blank.** Existing provisional geometry
 is packaged with a supplier reference, neutral angle, camera close-up, inside,
@@ -28,32 +35,32 @@ their exact printable blanks are unverified. The supplier's "iPhone17 Air" wordi
 
 | Phone / supplier option | Listing evidence | Geometry / review |
 |---|---|---|
-| iPhone 17 Pro Max | Exact variant present | First review pending |
-| iPhone 17 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 17e | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
-| iPhone 17 | Exact variant present | Visual study prepared; review and sample validation separate |
+| iPhone 17 Pro Max | Exact variant present | Visual preview approved 2026-09-16 |
+| iPhone 17 Pro | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 17e | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
+| iPhone 17 | Exact variant present | Visual preview approved; sample validation pending |
 | "iPhone17 Air" | Exact supplier label | Apple iPhone Air study prepared; supplier identity still unconfirmed |
-| iPhone 16 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 16 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 16 Plus | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 16e | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
-| iPhone 16 | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 15 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 15 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 15 Plus | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 15 | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 14 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 14 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 14 Plus | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
-| iPhone 14 | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 13 Pro Max | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 13 Pro | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 13 mini | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 13 | Exact variant present | Visual study prepared; review and sample validation separate |
-| iPhone 12 Pro Max | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
-| iPhone 12 Pro | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
-| iPhone 12 mini | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
-| iPhone 12 | Finished-case reference; exact blank unverified | Visual study prepared; review and sample validation separate |
+| iPhone 16 Pro Max | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 16 Pro | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 16 Plus | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 16e | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
+| iPhone 16 | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 15 Pro Max | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 15 Pro | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 15 Plus | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 15 | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 14 Pro Max | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 14 Pro | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 14 Plus | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
+| iPhone 14 | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 13 Pro Max | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 13 Pro | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 13 mini | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 13 | Exact variant present | Visual preview approved; sample validation pending |
+| iPhone 12 Pro Max | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
+| iPhone 12 Pro | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
+| iPhone 12 mini | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
+| iPhone 12 | Finished-case reference; exact blank unverified | Visual preview approved; sample validation pending |
 | iPhone SE (2020 / 2nd generation) | SE 2022 case reference + Apple shared dimensions; exact blank unverified | Separate visual study prepared; sample pending |
 | iPhone SE (2022 / 3rd generation) | Finished-case reference (out of stock); exact blank unverified | Separate visual study prepared; sample pending |
 

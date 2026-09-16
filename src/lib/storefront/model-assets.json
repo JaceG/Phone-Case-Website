@@ -1,0 +1,1234 @@
+{
+  "galaxy-s26-ultra": {
+    "version": "5dbeca9459605b742f93002e680cf960065b8466b07d8c7a6bb51a527c406a1d",
+    "geometry": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/shell.glb",
+    "templateAspect": 0.5514165792235047,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s26-ultra/5dbeca945960-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-12-mini": {
+    "version": "96c33acf0edcdf5dd8256e17e686df7fab1fc630e8fa07145217eb1cc99555c1",
+    "geometry": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/shell.glb",
+    "templateAspect": 0.568313021167415,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-12-mini/96c33acf0edc-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s26": {
+    "version": "049d19d84887f5bd0ae5c846712b2634810ca679621bc531d56d6c95aa319a9c",
+    "geometry": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/shell.glb",
+    "templateAspect": 0.555365296803653,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s26/049d19d84887-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s26-plus": {
+    "version": "e3d2087b009286d70491298e065e43f4f9a96a41085a1cb0ed5d4d8715c67a20",
+    "geometry": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/shell.glb",
+    "templateAspect": 0.5515743756786102,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s26-plus/e3d2087b0092-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s25-plus": {
+    "version": "0ef685a0a6d52cd54923dc388a71c44d1bef89c7b768e3ef274f3cf246245e2a",
+    "geometry": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/shell.glb",
+    "templateAspect": 0.5515743756786102,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s25-plus/0ef685a0a6d5-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s25-fe": {
+    "version": "a7f9249913f46f329fdbfd01f4353edbb966cb7d31ec7576a90247736a86b4b5",
+    "geometry": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/shell.glb",
+    "templateAspect": 0.5477843032568073,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s25-fe/a7f9249913f4-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s25-edge": {
+    "version": "86308c2cb9dd630c86b71e2333ddb5ab4370daf304c4821f2d996e5fa9d2cbd8",
+    "geometry": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/shell.glb",
+    "templateAspect": 0.543646408839779,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s25-edge/86308c2cb9dd-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s24": {
+    "version": "a713501d7f6472d3b3e90f25bb7b411cfb969632ed16fefeb72a1ab94afd83e7",
+    "geometry": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/shell.glb",
+    "templateAspect": 0.5594002306805075,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s24/a713501d7f64-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s24-plus": {
+    "version": "f4d267b25d997baf75ce669be6a9178da66ad85b91c7464f3ad503c0a7331f04",
+    "geometry": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/shell.glb",
+    "templateAspect": 0.5537547271745002,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s24-plus/f4d267b25d99-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s24-ultra": {
+    "version": "2ced7ccc552a356b7d3f400d35cc59a5264fa1d12c80c5358c6d0d4c2970650e",
+    "geometry": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/shell.glb",
+    "templateAspect": 0.563188253801783,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s24-ultra/2ced7ccc552a-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s24-fe": {
+    "version": "10319d058896cc29caa74a4cfc5c3b975be708c9e8044974c7946af6a5e6f9dc",
+    "geometry": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/shell.glb",
+    "templateAspect": 0.5523255813953488,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s24-fe/10319d058896-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s23": {
+    "version": "ee6d23868cbc73f310bc6556bec7acb95bb1f9888bc22422aee7b90748449869",
+    "geometry": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/shell.glb",
+    "templateAspect": 0.5634047481181239,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s23/ee6d23868cbc-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s23-plus": {
+    "version": "f80b44221eade86ebfd6d5f203aaadcaff7d15c86ef7700f0485e4bb532e9066",
+    "geometry": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/shell.glb",
+    "templateAspect": 0.5570032573289903,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s23-plus/f80b44221ead-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s23-ultra": {
+    "version": "18bfcd8a9f83f51def2c071d06dae07c5c64fcd21d1c88a1620db5bf95356454",
+    "geometry": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/shell.glb",
+    "templateAspect": 0.5566528066528067,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s23-ultra/18bfcd8a9f83-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s23-fe": {
+    "version": "b35e48a4ae54462edf01ab1ccecf88fc245b763ad5062c5145b90f576991349f",
+    "geometry": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/shell.glb",
+    "templateAspect": 0.5608836206896551,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s23-fe/b35e48a4ae54-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-16e": {
+    "version": "57f4db1a4f7209a71fbb802ee216ea93f8f74da7f2fead8584a04cbedec46342",
+    "geometry": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/shell.glb",
+    "templateAspect": 0.5675675675675675,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-16e/57f4db1a4f72-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-se-2020": {
+    "version": "50a970d37a947785a321a6d4864e03731b0c6224c58ffe0a7988468baf8f3f5a",
+    "geometry": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/shell.glb",
+    "templateAspect": 0.5623847572218807,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-se-2020/50a970d37a94-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-se-2022": {
+    "version": "468044100e791270babb1e92eb2f14e4824f24410e2c35cd24e07f2f4a4e5ff5",
+    "geometry": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/shell.glb",
+    "templateAspect": 0.5623847572218807,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-se-2022/468044100e79-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-12": {
+    "version": "088aeeb7d1efb3926a8af2029e7a3c9b449454303eaafb565a449b635b5b6351",
+    "geometry": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/shell.glb",
+    "templateAspect": 0.5604909409701929,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-12/088aeeb7d1ef-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-12-pro": {
+    "version": "b2f626811ff7ff0f108d62d4be5689e9be4179b9df30b6fb5a97e6a2cc2dfb1d",
+    "geometry": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/shell.glb",
+    "templateAspect": 0.5604909409701929,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-12-pro/b2f626811ff7-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-12-pro-max": {
+    "version": "ad3e912c21e55a94ce59d71aac791bcf69c43dae9a1ec645623f24461f6d4177",
+    "geometry": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/shell.glb",
+    "templateAspect": 0.5529157667386609,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-12-pro-max/ad3e912c21e5-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-17e": {
+    "version": "aaf5b7fa36058ac586e08b3bfc9bd75dac2e83d1fe3ff6932c1ead2bb4dd683c",
+    "geometry": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/shell.glb",
+    "templateAspect": 0.5675675675675675,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-17e/aaf5b7fa3605-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-14-pro-max": {
+    "version": "7fd52bf00ac80ebdb14d3ea7eb950872443ed993aaa633d0546e3da032aab4a5",
+    "geometry": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/shell.glb",
+    "templateAspect": 0.5532258064516129,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-14-pro-max/7fd52bf00ac8-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-14-pro": {
+    "version": "136d97e49005601fccab963c4020f65ebe0cfa4e80fae68428332f9a3d5cf81f",
+    "geometry": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/shell.glb",
+    "templateAspect": 0.574468085106383,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-14-pro/136d97e49005-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-14-plus": {
+    "version": "e89f92e7ebd1a71d451c014c2c5f53273ad27728d1b2ba1c6a2b055e89f3b012",
+    "geometry": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/shell.glb",
+    "templateAspect": 0.5553763440860215,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-14-plus/e89f92e7ebd1-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-14": {
+    "version": "9ec136ba0f83c3fe36c2d2ee847b857853ee03254dfa70cbbd7e1730db85208e",
+    "geometry": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/shell.glb",
+    "templateAspect": 0.5734543391945547,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-14/9ec136ba0f83-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-13-pro-max": {
+    "version": "0c6254d54ae37d8dd3c0fe4604e05608454373b6fc60d7ada16ebf3d0b03d7ec",
+    "geometry": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/shell.glb",
+    "templateAspect": 0.5546580506192784,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-13-pro-max/0c6254d54ae3-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-13-pro": {
+    "version": "4051ce44c9924be2a95cfa8d91503201c14e31337af9f1f968a631fc2a1f15f7",
+    "geometry": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/shell.glb",
+    "templateAspect": 0.5617715617715617,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-13-pro/4051ce44c992-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-13-mini": {
+    "version": "fc521e9c4bb28884083fc3e15cc858cdabc2965641fafcb71ca1c32dd6b379af",
+    "geometry": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/shell.glb",
+    "templateAspect": 0.569693094629156,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-13-mini/fc521e9c4bb2-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-13": {
+    "version": "3781a37a1d341e383b2f3f981ba33c59e4ec4d5a9b9ff1aa1c7c74e3ed929807",
+    "geometry": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/shell.glb",
+    "templateAspect": 0.5617715617715617,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-13/3781a37a1d34-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-16-pro-max": {
+    "version": "27b9c7faef4463fa34696356731d87d58ba20bd52e48e7071dfca3d56fd1ec90",
+    "geometry": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/shell.glb",
+    "templateAspect": 0.5627240143369175,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-16-pro-max/27b9c7faef44-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-16-plus": {
+    "version": "535c5eff4c4ec79016c925663134621d615effc7c06784ac7e480bc7e18b59d0",
+    "geometry": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/shell.glb",
+    "templateAspect": 0.5642370214997378,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-16-plus/535c5eff4c4e-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-16": {
+    "version": "d441cabcc3a675ae42f6b671b4212274fadcd3f6c59937e2e93fbc2ffbb7a3af",
+    "geometry": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/shell.glb",
+    "templateAspect": 0.5712676056338029,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-16/d441cabcc3a6-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-15-pro-max": {
+    "version": "d6a12340ebed439d55b052ba459545eeeb309fbc371ff19567eb3d72bcd01dee",
+    "geometry": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/shell.glb",
+    "templateAspect": 0.5662148070907195,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-15-pro-max/d6a12340ebed-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-15-pro": {
+    "version": "3f4485711e75afccc8091611d6ffa77ae5c0bd47ef96e63ef00f3399017de477",
+    "geometry": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/shell.glb",
+    "templateAspect": 0.5727937043282744,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-15-pro/3f4485711e75-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-15-plus": {
+    "version": "029a82e7537e5f124644a6e9dc0f5140a66cb0eb23298c036cd588aab3d248bc",
+    "geometry": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/shell.glb",
+    "templateAspect": 0.553465878559914,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-15-plus/029a82e7537e-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-15": {
+    "version": "ff461c09a5c388cf3ccb9cc05ce548364f882ced32c85232bfcbe19799883179",
+    "geometry": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/shell.glb",
+    "templateAspect": 0.5712676056338029,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-15/ff461c09a5c3-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-17-pro": {
+    "version": "6680e923faba7fb12dde7ceb17a9572b7ddc786c09a53a0ecae325e55df3ff15",
+    "geometry": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/shell.glb",
+    "templateAspect": 0.5586907449209932,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-17-pro/6680e923faba-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-17": {
+    "version": "65333282c44d27794b35b9b2efc7e636a0f0245f73d408c1e9154e504c8c4e93",
+    "geometry": "/store/cases/iphone-17/65333282c44d-d74d5e133b/shell.glb",
+    "templateAspect": 0.5665188470066519,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-17/65333282c44d-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-17/65333282c44d-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17/65333282c44d-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-17/65333282c44d-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-17/65333282c44d-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-17/65333282c44d-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-17/65333282c44d-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17/65333282c44d-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-17/65333282c44d-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-17/65333282c44d-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-17/65333282c44d-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-17/65333282c44d-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17/65333282c44d-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-17/65333282c44d-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-17/65333282c44d-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-air": {
+    "version": "f1d724d963464866b595944d485701c303723cf2d70e20c36caab914a68a6748",
+    "geometry": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/shell.glb",
+    "templateAspect": 0.5599352051835853,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-air/f1d724d96346-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-16-pro": {
+    "version": "830bedfb34b06529383c3996a684aa56790a2ba487715a53cedc70b24331c845",
+    "geometry": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/shell.glb",
+    "templateAspect": 0.5689084895259096,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-16-pro/830bedfb34b0-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s25-ultra": {
+    "version": "4111f69c4ef7b530715a00a5c452a9e640ab7092b0434a5278001e00791046fc",
+    "geometry": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/shell.glb",
+    "templateAspect": 0.5553235908141962,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s25-ultra/4111f69c4ef7-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "galaxy-s25": {
+    "version": "466d15d0fa769d9b1d58192b850e746a7d2335ab09970079c48f21a6d82a472a",
+    "geometry": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/shell.glb",
+    "templateAspect": 0.5596541786743516,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/galaxy-s25/466d15d0fa76-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  },
+  "iphone-17-pro-max": {
+    "version": "ec2550f69d1807a1ef08ed6071c55fe5d64f4a543519457341d2e7677dbe2136",
+    "geometry": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/shell.glb",
+    "templateAspect": 0.5602094240837696,
+    "designs": {
+      "meridian": {
+        "texture": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/meridian-texture.webp",
+        "hero": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/meridian-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/meridian-three_quarter.webp",
+        "flat": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/meridian-flat.webp",
+        "detail": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/meridian-detail.webp"
+      },
+      "static-bloom": {
+        "texture": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/static-bloom-texture.webp",
+        "hero": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/static-bloom-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/static-bloom-three_quarter.webp",
+        "flat": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/static-bloom-flat.webp",
+        "detail": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/static-bloom-detail.webp"
+      },
+      "low-tide": {
+        "texture": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/low-tide-texture.webp",
+        "hero": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/low-tide-hero.webp",
+        "threeQuarter": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/low-tide-three_quarter.webp",
+        "flat": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/low-tide-flat.webp",
+        "detail": "/store/cases/iphone-17-pro-max/ec2550f69d18-d74d5e133b/low-tide-detail.webp"
+      }
+    }
+  }
+}
