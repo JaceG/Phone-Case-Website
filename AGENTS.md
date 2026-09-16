@@ -169,6 +169,11 @@ reseed an existing working catalog casually.
   administrators in every environment. Originals, layouts and review images
   remain private. Do not expose those assets through public media merely to
   preview an unpublished draft.
+- Product saves fill missing routine metadata via `autofillProduct`: title-based
+  copy defaults, extracted palette, related designs and SEO; the public hero supplies
+  the sharing image. `catalogDefaults` tracks automatic values so custom edits win.
+  Do not infer artwork permissions or publicly expose originals. Studio reopening
+  incorporates saved admin edits, and publishing carries palette/SEO/related designs.
 - Imports match design slugs. Preserve animation phase sidecars and use
   `RENDERS_KEEP_PREVIOUS=1` for review iterations; see the pipeline guide for
   per-model imports and media retention behavior.

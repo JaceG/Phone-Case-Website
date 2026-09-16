@@ -177,6 +177,10 @@ function DesignStory({ design }: ExperienceProps) {
 
 function DesignCollection(props: ExperienceProps) {
   const { catalog, design, selectedModel, switchDesign } = props
+  const related = (design.relatedDesignIDs ?? []).flatMap((id) =>
+    catalog.filter((item) => item.id === id && item.id !== design.id),
+  )
+  const choices = related.length ? related : catalog.filter((item) => item.id !== design.id)
   return (
     <section className="design-collection" id="collection">
       <div className="collection-heading">
@@ -193,7 +197,7 @@ function DesignCollection(props: ExperienceProps) {
         </p>
       </div>
       <div className="collection-cards">
-        {catalog.map((item, index) => (
+        {choices.map((item, index) => (
           <button
             type="button"
             className="collection-card"

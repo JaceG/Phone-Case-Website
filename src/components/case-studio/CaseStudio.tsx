@@ -249,14 +249,23 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       setDetails(doc.details)
       setName(doc.title)
       setCurrentDraft(doc)
-      setDirty(false)
-      setMessage(`Opened revision ${doc.revision}. The original image and placement are restored.`)
+      setDirty(Boolean(doc.detailsChanged))
+      setMessage(
+        doc.detailsChanged
+          ? 'Your latest admin details are loaded with the saved artwork. Save a new draft to include them in the next previews.'
+          : `Opened revision ${doc.revision}. The original image and placement are restored.`,
+      )
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not open draft.')
     } finally {
       if (version === loadVersion.current) setBusy(false)
     }
   }
+  useEffect(() => {
+    if (!catalog || !catalogReady) return
+    const id = new URLSearchParams(window.location.search).get('revision')
+    if (id && /^[1-9]\d*$/.test(id)) void openDraft(Number(id))
+  }, [catalog, catalogReady])
   async function addToCatalog() {
     if (!source || busy) return
     setBusy(true)
@@ -300,7 +309,8 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       const result = await response.json()
       if (!response.ok) throw new Error(result.error || 'Could not save draft.')
       setCurrentDraft(result)
-      setName(details.title)
+      setDetails(result.details)
+      setName(result.title)
       setDirty(false)
       setDrafts((previous) => [result, ...previous.filter((d) => d.product !== result.product)])
       setMessage(
@@ -800,8 +810,8 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
                   : 'Create a catalog draft'}
               </strong>
               <p>
-                Your image, placement and print layout are saved together. Choose phones and generate
-                previews below, then review your product page before publishing.
+                Your image, placement and print layout are saved together. Choose phones and
+                generate previews below, then review your product page before publishing.
               </p>
               <button
                 className="cs-primary"

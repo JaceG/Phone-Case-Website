@@ -1,3 +1,4 @@
+import { seoTitle } from '@/lib/catalog/designDefaults'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { Plugin } from 'payload'
@@ -21,14 +22,22 @@ import { isDocumentOwner } from '@/access/isDocumentOwner'
 
 const siteName = process.env.SITE_NAME || 'Phone Case Store'
 
-const generateTitle: GenerateTitle<Product | Page> = ({ doc }) => {
+const generateTitle: GenerateTitle<Product | Page> = ({
+  doc,
+  collectionSlug,
+  collectionConfig,
+}) => {
+  if ((collectionSlug ?? collectionConfig?.slug) === 'products' && doc?.title)
+    return seoTitle(doc.title, siteName)
   return doc?.title ? `${doc.title} | ${siteName}` : siteName
 }
 
-const generateURL: GenerateURL<Product | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Product | Page> = ({ doc, collectionSlug, collectionConfig }) => {
   const url = getServerSideURL()
 
-  return doc?.slug ? `${url}/${doc.slug}` : url
+  return doc?.slug
+    ? `${url}/${(collectionSlug ?? collectionConfig?.slug) === 'products' ? 'products/' : ''}${doc.slug}`
+    : url
 }
 
 export const plugins: Plugin[] = [

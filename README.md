@@ -78,6 +78,19 @@ Each save preserves the source, placement, print layout, model fingerprint and
 optional 3D snapshot. The product stays a draft; editing a published product through
 Studio leaves its live version intact. Stale saves from another tab are rejected.
 
+Routine details now fill on save: editable title-based tagline/story defaults,
+colors extracted from the artwork, search title/description, related designs, and
+$39 when no price exists. **Suggest missing copy** previews the copy in Studio.
+These are deterministic starting suggestions, not an AI interpretation of the image.
+Custom copy (including formatting), palette, price, URLs and SEO overrides are
+preserved. The public hero becomes the sharing image on publication; private
+originals are never used for that purpose. Permissions are never inferred.
+
+The admin form links directly to the matching Studio revision. Opening it brings
+in the latest saved admin details; save a new Studio revision before generating
+previews if they changed. Advanced imagery controls are collapsed. Saved SEO and
+related-design selections are now used by the landing page.
+
 Continue below the editor in **From artwork to product page**:
 
 1. Select all approved models, just iPhones/Samsung, or individual phones.

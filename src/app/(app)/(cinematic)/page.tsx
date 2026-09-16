@@ -20,8 +20,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const { design } = await withLocalArtworkPreview(await loadStorefront(), artworkPreview)
   const siteName = process.env.SITE_NAME || 'Phone Case Store'
   return {
-    title: design ? `${design.title} | ${siteName}` : siteName,
-    description: design?.tagline,
+    title: design?.meta?.title || (design ? `${design.title} | ${siteName}` : siteName),
+    description: design?.meta?.description || design?.tagline,
     ...(artworkPreview === '1' ? { robots: { index: false, follow: false } } : {}),
   }
 }

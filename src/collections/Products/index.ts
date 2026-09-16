@@ -1,3 +1,4 @@
+import { autofillProduct } from '@/lib/catalog/autofillProduct'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
@@ -45,7 +46,7 @@ const frameSequence = (name: string, label: string, description: string): Field 
   name,
   type: 'array',
   label,
-  admin: { description },
+  admin: { description, initCollapsed: true },
   fields: [
     {
       name: 'frame',
@@ -83,7 +84,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
     group: 'Catalog',
     defaultColumns: ['title', 'collections', 'renderStatus', '_status'],
     description:
-      'One product = one design. Upload the artwork, set a price, publish. Variants for every active phone model are created for you.',
+      'Save to fill missing copy, colors and search details automatically. Your edits are preserved. Use Catalog Studio to place artwork, generate previews and publish.',
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -116,6 +117,12 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
     meta: true,
   },
   fields: [
+    {
+      name: 'catalogHelp',
+      type: 'ui',
+      admin: { components: { Field: '@/components/admin/DesignGuide#DesignGuide' } },
+    },
+    { name: 'catalogDefaults', type: 'json', admin: { hidden: true } },
     { name: 'title', type: 'text', required: true },
     { name: 'studioPresentation', type: 'json', admin: { hidden: true } },
     {
@@ -162,7 +169,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               maxRows: 5,
               admin: {
                 description:
-                  'Dominant colours of the design as hex. Used by the front end to tint the page around the render.',
+                  'Extracted from your artwork when you save. Edit these colors to override the automatic palette.',
               },
               fields: [{ name: 'hex', type: 'text', required: true }],
             },
@@ -171,113 +178,120 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
         {
           label: 'Imagery',
           description:
-            'Filled in by the render pipeline from the artwork. Upload manually until the Blender worker exists.',
+            'Generated in Catalog Studio. Public images appear here after you review and publish. Manual replacements are optional.',
           fields: [
             {
-              name: 'renderStatus',
-              type: 'select',
-              defaultValue: 'pending',
-              admin: { position: 'sidebar' },
-              options: [
-                { label: 'Pending', value: 'pending' },
-                { label: 'Rendering', value: 'rendering' },
-                { label: 'Ready', value: 'ready' },
-                { label: 'Failed', value: 'failed' },
-              ],
-            },
-            {
-              name: 'renders',
-              type: 'group',
-              fields: [
-                renderSlot('hero', 'Hero', 'Cycles. Dramatic light, the landing shot.'),
-                renderSlot(
-                  'threeQuarter',
-                  'Three-quarter',
-                  'Cycles. Shows the wrap around the edge.',
-                ),
-                renderSlot('flat', 'Flat-on', 'EEVEE. Catalog grid thumbnail.'),
-                turntableField(
-                  '36–60 frames in order. Scrubbed on scroll. Leave empty to fall back to the hero.',
-                ),
-                tumbleField(
-                  'Smooth tilted-axis loop played as the idle motion in the hero. Empty = use the turntable.',
-                ),
-                tumblePhasesField,
-              ],
-            },
-            {
-              name: 'modelRenders',
-              type: 'array',
-              label: 'Per-model renders',
-              admin: {
-                description:
-                  'Optional. Renders of this design on a specific phone model (camera bump, cutouts differ). Any slot left empty falls back to the shared renders above. Filled by `pnpm renders:import` with RENDERS_MODEL set.',
-              },
+              type: 'collapsible',
+              label: 'Generated images and optional overrides',
+              admin: { initCollapsed: true },
               fields: [
                 {
-                  name: 'phoneModel',
-                  type: 'relationship',
-                  relationTo: 'phoneModels',
-                  required: true,
-                },
-                {
-                  type: 'row',
-                  fields: [
-                    renderSlot('hero', 'Hero'),
-                    renderSlot('threeQuarter', 'Three-quarter'),
-                    renderSlot('flat', 'Flat-on'),
+                  name: 'renderStatus',
+                  type: 'select',
+                  defaultValue: 'pending',
+                  admin: { position: 'sidebar' },
+                  options: [
+                    { label: 'Pending', value: 'pending' },
+                    { label: 'Rendering', value: 'rendering' },
+                    { label: 'Ready', value: 'ready' },
+                    { label: 'Failed', value: 'failed' },
                   ],
                 },
-                turntableField('Frames for this model. Empty = use the shared turntable.'),
-                tumbleField('Tumble frames for this model. Empty = use the shared tumble.'),
-                tumblePhasesField,
-              ],
-            },
-            {
-              name: 'gallery',
-              type: 'array',
-              label: 'Extra gallery images',
-              admin: {
-                description:
-                  'Lifestyle shots, or per-phone-model renders (camera cutouts differ). Optional.',
-              },
-              fields: [
                 {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                  required: true,
+                  name: 'renders',
+                  type: 'group',
+                  fields: [
+                    renderSlot('hero', 'Hero', 'Cycles. Dramatic light, the landing shot.'),
+                    renderSlot(
+                      'threeQuarter',
+                      'Three-quarter',
+                      'Cycles. Shows the wrap around the edge.',
+                    ),
+                    renderSlot('flat', 'Flat-on', 'EEVEE. Catalog grid thumbnail.'),
+                    turntableField(
+                      '36–60 frames in order. Scrubbed on scroll. Leave empty to fall back to the hero.',
+                    ),
+                    tumbleField(
+                      'Smooth tilted-axis loop played as the idle motion in the hero. Empty = use the turntable.',
+                    ),
+                    tumblePhasesField,
+                  ],
                 },
                 {
-                  name: 'variantOption',
-                  type: 'relationship',
-                  relationTo: 'variantOptions',
-                  label: 'Phone model (optional)',
+                  name: 'modelRenders',
+                  type: 'array',
+                  label: 'Per-model renders',
                   admin: {
-                    description: 'Set when this image is specific to one phone model.',
-                    condition: (data) => data?.enableVariants === true,
+                    description:
+                      'Optional. Renders of this design on a specific phone model (camera bump, cutouts differ). Any slot left empty falls back to the shared renders above. Filled by `pnpm renders:import` with RENDERS_MODEL set.',
                   },
-                  filterOptions: ({ data }) => {
-                    const variantTypeIDs: DefaultDocumentIDType[] = Array.isArray(
-                      data?.variantTypes,
-                    )
-                      ? data.variantTypes.map((item: unknown) =>
-                          typeof item === 'object' && item && 'id' in item
-                            ? (item as { id: DefaultDocumentIDType }).id
-                            : (item as DefaultDocumentIDType),
+                  fields: [
+                    {
+                      name: 'phoneModel',
+                      type: 'relationship',
+                      relationTo: 'phoneModels',
+                      required: true,
+                    },
+                    {
+                      type: 'row',
+                      fields: [
+                        renderSlot('hero', 'Hero'),
+                        renderSlot('threeQuarter', 'Three-quarter'),
+                        renderSlot('flat', 'Flat-on'),
+                      ],
+                    },
+                    turntableField('Frames for this model. Empty = use the shared turntable.'),
+                    tumbleField('Tumble frames for this model. Empty = use the shared tumble.'),
+                    tumblePhasesField,
+                  ],
+                },
+                {
+                  name: 'gallery',
+                  type: 'array',
+                  label: 'Extra gallery images',
+                  admin: {
+                    description:
+                      'Lifestyle shots, or per-phone-model renders (camera cutouts differ). Optional.',
+                  },
+                  fields: [
+                    {
+                      name: 'image',
+                      type: 'upload',
+                      relationTo: 'media',
+                      required: true,
+                    },
+                    {
+                      name: 'variantOption',
+                      type: 'relationship',
+                      relationTo: 'variantOptions',
+                      label: 'Phone model (optional)',
+                      admin: {
+                        description: 'Set when this image is specific to one phone model.',
+                        condition: (data) => data?.enableVariants === true,
+                      },
+                      filterOptions: ({ data }) => {
+                        const variantTypeIDs: DefaultDocumentIDType[] = Array.isArray(
+                          data?.variantTypes,
                         )
-                      : []
+                          ? data.variantTypes.map((item: unknown) =>
+                              typeof item === 'object' && item && 'id' in item
+                                ? (item as { id: DefaultDocumentIDType }).id
+                                : (item as DefaultDocumentIDType),
+                            )
+                          : []
 
-                    const query: Where = { variantType: { in: variantTypeIDs } }
-                    return query
-                  },
+                        const query: Where = { variantType: { in: variantTypeIDs } }
+                        return query
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: 'layout',
+                  type: 'blocks',
+                  blocks: [CallToAction, Content, MediaBlock],
                 },
               ],
-            },
-            {
-              name: 'layout',
-              type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock],
             },
           ],
         },
@@ -292,11 +306,22 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                   admin: {
                     ...field.admin,
                     description:
-                      'Leave on. A variant per active phone model is created automatically when you publish.',
+                      'Managed automatically. Catalog Studio creates variants for the phones you select.',
                   },
                 }
                 return enableVariants
               }
+              if (field.type === 'relationship' && field.name === 'variantTypes')
+                return { ...field, admin: { ...field.admin, hidden: true } } as Field
+              if (field.type === 'number' && field.name === 'priceInUSD')
+                return {
+                  ...field,
+                  admin: {
+                    ...field.admin,
+                    description:
+                      'Default single-case price. New phone variants inherit this price; existing variant price overrides are preserved.',
+                  },
+                }
               return field
             }),
             {
@@ -360,7 +385,8 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
       admin: {
         position: 'sidebar',
         sortOptions: 'title',
-        description: 'Thematic groupings. Drives "other designs in this collection".',
+        description:
+          'Optional. Choose an existing collection. Drives "other designs in this collection".',
       },
       hasMany: true,
       relationTo: 'categories',
@@ -369,6 +395,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
   ],
   hooks: {
     ...defaultCollection.hooks,
+    beforeValidate: [...(defaultCollection.hooks?.beforeValidate ?? []), autofillProduct],
     beforeChange: [
       ...(defaultCollection.hooks?.beforeChange ?? []),
       async ({ data, req }) => {

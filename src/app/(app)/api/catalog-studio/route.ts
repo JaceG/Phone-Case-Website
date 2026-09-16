@@ -1,3 +1,4 @@
+import { plainText, relationID } from '@/lib/catalog/designDefaults'
 import { studioAuth } from '@/lib/studio/auth'
 import { documentOf, geometryVersion, saveStudio, StudioError } from '@/lib/studio/save'
 
@@ -22,7 +23,36 @@ export async function GET(request: Request) {
         depth: 1,
         overrideAccess: false,
       })
-      return json(documentOf(doc, current))
+      const result = documentOf(doc, current)
+      const latest = await payload.find({
+        collection: 'studioRevisions',
+        req,
+        depth: 0,
+        sort: '-revision',
+        limit: 1,
+        where: { lineage: { equals: doc.lineage } },
+      })
+      if (latest.docs[0]?.id === doc.id) {
+        const product = await payload.findByID({
+          collection: 'products',
+          id: result.product,
+          draft: true,
+          depth: 0,
+          req,
+        })
+        result.details = {
+          ...result.details,
+          title: product.title,
+          slug: product.slug ?? result.details.slug,
+          tagline: product.tagline ?? '',
+          description: plainText(product.description),
+          price: (product.priceInUSD ?? Math.round(result.details.price * 100)) / 100,
+          collection: relationID(product.collections?.[0]),
+        }
+        result.title = product.title
+        result.detailsChanged = JSON.stringify(result.details) !== JSON.stringify(doc.details)
+      }
+      return json(result)
     } catch {
       return json({ error: 'Saved revision not found.' }, 404)
     }
@@ -46,6 +76,22 @@ export async function GET(request: Request) {
     }),
   ])
   const seen = new Set<string>()
+  const products = await payload.find({
+    collection: 'products',
+    req,
+    draft: true,
+    depth: 0,
+    pagination: false,
+    where: {
+      id: {
+        in: [
+          ...new Set(
+            revisions.docs.map((d) => (typeof d.product === 'object' ? d.product.id : d.product)),
+          ),
+        ],
+      },
+    },
+  })
   return json({
     geometryVersion: current,
     collections: collections.docs.map((c) => ({ id: c.id, title: c.title })),
@@ -55,7 +101,11 @@ export async function GET(request: Request) {
         seen.add(doc.lineage)
         return true
       })
-      .map((doc) => documentOf(doc, current)),
+      .map((doc) => {
+        const result = documentOf(doc, current)
+        result.title = products.docs.find((p) => p.id === result.product)?.title ?? result.title
+        return result
+      }),
   })
 }
 

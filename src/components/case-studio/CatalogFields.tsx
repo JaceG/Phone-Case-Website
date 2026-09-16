@@ -1,3 +1,4 @@
+import { suggestedCopy } from '@/lib/catalog/designDefaults'
 import type { StudioDetails } from '@/lib/studio/contract'
 
 export function CatalogFields({
@@ -14,6 +15,23 @@ export function CatalogFields({
   return (
     <fieldset className="cs-catalog-fields" disabled={disabled}>
       <legend>Design details</legend>
+      <p style={{ gridColumn: '1 / -1', margin: 0 }}>
+        Start with a title. Missing copy, artwork colors and search details fill when you save. You
+        can edit every suggestion.
+      </p>
+      <button
+        type="button"
+        disabled={!details.title.trim()}
+        onClick={() => {
+          const copy = suggestedCopy(details.title)
+          change({
+            ...(!details.tagline.trim() ? { tagline: copy.tagline } : {}),
+            ...(!details.description.trim() ? { description: copy.description } : {}),
+          })
+        }}
+      >
+        Suggest missing copy
+      </button>
       <label>
         Design title
         <input

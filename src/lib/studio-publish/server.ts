@@ -1,3 +1,5 @@
+import { plainText, relationID } from '@/lib/catalog/designDefaults'
+import type { StudioDetails } from '@/lib/studio/contract'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
@@ -207,6 +209,19 @@ export async function publishJob(job: RenderJob, req: PayloadRequest) {
       depth: 0,
       draft: true,
     })
+    const details = saved.details as StudioDetails
+    if (
+      draft.title !== details.title ||
+      draft.slug !== details.slug ||
+      (draft.tagline ?? '') !== details.tagline ||
+      plainText(draft.description) !== details.description ||
+      draft.priceInUSD !== Math.round(details.price * 100) ||
+      relationID(draft.collections?.[0]) !== details.collection
+    )
+      throw new StudioError(
+        'Design details changed in admin. Reopen this design in Studio, save a draft and generate fresh previews.',
+        409,
+      )
     const snapshot = privatePresentation(job)
     await initTransaction(req)
     const mediaIDs: Record<string, number> = {}
@@ -255,6 +270,10 @@ export async function publishJob(job: RenderJob, req: PayloadRequest) {
         tagline: draft.tagline,
         description: draft.description,
         collections: draft.collections,
+        palette: draft.palette,
+        meta: draft.meta,
+        relatedProducts: draft.relatedProducts,
+        catalogDefaults: draft.catalogDefaults,
         artwork: draft.artwork,
         priceInUSD: draft.priceInUSD,
         priceInUSDEnabled: true,

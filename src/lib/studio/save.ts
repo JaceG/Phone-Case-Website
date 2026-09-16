@@ -1,3 +1,4 @@
+import { suggestedCopy, plainText } from '@/lib/catalog/designDefaults'
 import { createHash, randomUUID } from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
@@ -113,6 +114,9 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
       409,
     )
   const { details } = input
+  const copy = suggestedCopy(details.title)
+  if (!details.tagline.trim()) details.tagline = copy.tagline
+  if (!details.description.trim()) details.description = copy.description
   const originalHash = createHash('sha256').update(original.data).digest('hex')
   const files: string[] = []
   await initTransaction(req)
@@ -245,7 +249,10 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
         _status: 'draft',
         artwork: printMaster.id,
         tagline: details.tagline,
-        description: story(details.description),
+        description:
+          plainText(product.description) === details.description
+            ? product.description
+            : story(details.description),
         collections: details.collection ? [details.collection] : [],
         priceInUSDEnabled: true,
         priceInUSD: Math.round(details.price * 100),

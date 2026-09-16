@@ -30,6 +30,7 @@ export type StudioDocument = {
   details: StudioDetails
   model: string
   geometryVersion: string
+  detailsChanged?: boolean
   currentGeometry: boolean
   createdAt: string
 }

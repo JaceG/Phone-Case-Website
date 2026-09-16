@@ -35,6 +35,7 @@ export type CatalogDesign = {
   slug: string
   title: string
   tagline: string
+  meta?: { title?: string | null; description?: string | null; image?: string | null }
   story: Product['description'] | null
   palette: string[]
   price: number
@@ -43,6 +44,7 @@ export type CatalogDesign = {
   /** Per-phone overrides. Approved GLB previews are complete; legacy stills may use shared fallbacks. */
   modelRenders: Record<string, Partial<RenderSet>>
   gallery: string[]
+  relatedDesignIDs?: number[]
   collections: { id: number; title: string; slug: string }[]
   variants: CatalogVariant[]
 }
@@ -139,6 +141,11 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
     slug: product.slug ?? String(product.id),
     title: product.title,
     tagline: product.tagline ?? '',
+    meta: {
+      title: product.meta?.title,
+      description: product.meta?.description,
+      image: urlOf(product.meta?.image),
+    },
     story: product.description ?? null,
     palette: (product.palette ?? []).map((p) => p.hex).filter(Boolean),
     price: product.priceInUSD ?? variants[0]?.price ?? 0,
@@ -148,6 +155,9 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
       presentation?.gallery ??
       (product.gallery ?? []).map((g) => urlOf(g.image)).filter((u): u is string => Boolean(u)),
     collections,
+    relatedDesignIDs: (product.relatedProducts ?? [])
+      .map(idOf)
+      .filter((id): id is number => id !== null),
     variants,
   }
 }

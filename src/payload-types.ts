@@ -307,13 +307,22 @@ export interface Order {
   createdAt: string;
 }
 /**
- * One product = one design. Upload the artwork, set a price, publish. Variants for every active phone model are created for you.
+ * Save to fill missing copy, colors and search details automatically. Your edits are preserved. Use Catalog Studio to place artwork, generate previews and publish.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
 export interface Product {
   id: number;
+  catalogDefaults?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   title: string;
   studioPresentation?:
     | {
@@ -348,7 +357,7 @@ export interface Product {
     [k: string]: unknown;
   } | null;
   /**
-   * Dominant colours of the design as hex. Used by the front end to tint the page around the render.
+   * Extracted from your artwork when you save. Edit these colors to override the automatic palette.
    */
   palette?:
     | {
@@ -458,7 +467,7 @@ export interface Product {
     | null;
   layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
   /**
-   * Leave on. A variant per active phone model is created automatically when you publish.
+   * Managed automatically. Catalog Studio creates variants for the phones you select.
    */
   enableVariants?: boolean | null;
   variantTypes?: (number | VariantType)[] | null;
@@ -479,7 +488,7 @@ export interface Product {
     description?: string | null;
   };
   /**
-   * Thematic groupings. Drives "other designs in this collection".
+   * Optional. Choose an existing collection. Drives "other designs in this collection".
    */
   collections?: (number | Category)[] | null;
   /**
@@ -2170,6 +2179,7 @@ export interface VariantOptionsSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  catalogDefaults?: T;
   title?: T;
   studioPresentation?: T;
   artwork?: T;

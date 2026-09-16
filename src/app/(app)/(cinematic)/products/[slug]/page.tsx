@@ -19,18 +19,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!design) return {}
 
   const siteName = process.env.SITE_NAME || 'Phone Case Store'
-  const image = heroImage(design)
+  const image = design.meta?.image || heroImage(design)
 
   return {
-    title: `${design.title} | ${siteName}`,
-    description: design.tagline,
+    title: design.meta?.title || `${design.title} | ${siteName}`,
+    description: design.meta?.description || design.tagline,
     openGraph: image ? { images: [{ url: `${getServerSideURL()}${image}` }] } : undefined,
   }
 }
 
 /**
  * One URL, two component trees. The device class is decided on the server
- * so the client never ships both bundles or flashes the wrong one.
+ * while sharing catalog state and presentation components.
  */
 export default async function ProductPage({ params, searchParams }: Props) {
   const [{ slug }, { device: deviceOverride }] = await Promise.all([params, searchParams])
