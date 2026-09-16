@@ -39,7 +39,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-public/media
+# public/media is committed so rendered storefront imagery ships with deploys
 
 
 # private uploads (artwork masters, dielines, blend files) — served via Payload only
