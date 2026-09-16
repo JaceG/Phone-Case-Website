@@ -108,7 +108,7 @@ export const ProductExperience: React.FC<Props> = ({
   const selectFamily = useCallback(
     (next: DeviceFamily) => {
       setFamilyState(next)
-      const inFamily = phoneModels.filter((m) => familyOf(m) === next)
+      const inFamily = phoneModels.filter((m) => familyOf(m) === next && variantFor(design, m))
       const remembered = inFamily.find((m) => m.id === lastInFamily.current[next])
       const firstBuyable = inFamily.find((m) => variantFor(design, m))
       const pick = remembered ?? firstBuyable ?? inFamily[0]
@@ -141,7 +141,7 @@ export const ProductExperience: React.FC<Props> = ({
   const shared: ExperienceProps = {
     design,
     catalog,
-    phoneModels,
+    phoneModels: phoneModels.filter((m) => variantFor(design, m)),
     selectedModel,
     selectModel,
     family,

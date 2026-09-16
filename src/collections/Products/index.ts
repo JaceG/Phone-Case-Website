@@ -110,12 +110,14 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
     gallery: true,
     renders: true,
     modelRenders: true,
+    studioPresentation: true,
     renderStatus: true,
     priceInUSD: true,
     meta: true,
   },
   fields: [
     { name: 'title', type: 'text', required: true },
+    { name: 'studioPresentation', type: 'json', admin: { hidden: true } },
     {
       type: 'tabs',
       tabs: [
@@ -188,7 +190,11 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               type: 'group',
               fields: [
                 renderSlot('hero', 'Hero', 'Cycles. Dramatic light, the landing shot.'),
-                renderSlot('threeQuarter', 'Three-quarter', 'Cycles. Shows the wrap around the edge.'),
+                renderSlot(
+                  'threeQuarter',
+                  'Three-quarter',
+                  'Cycles. Shows the wrap around the edge.',
+                ),
                 renderSlot('flat', 'Flat-on', 'EEVEE. Catalog grid thumbnail.'),
                 turntableField(
                   '36–60 frames in order. Scrubbed on scroll. Leave empty to fall back to the hero.',
@@ -252,7 +258,9 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                     condition: (data) => data?.enableVariants === true,
                   },
                   filterOptions: ({ data }) => {
-                    const variantTypeIDs: DefaultDocumentIDType[] = Array.isArray(data?.variantTypes)
+                    const variantTypeIDs: DefaultDocumentIDType[] = Array.isArray(
+                      data?.variantTypes,
+                    )
                       ? data.variantTypes.map((item: unknown) =>
                           typeof item === 'object' && item && 'id' in item
                             ? (item as { id: DefaultDocumentIDType }).id

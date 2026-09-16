@@ -1,6 +1,6 @@
 'use client'
 
-import { useCart } from '@payloadcms/plugin-ecommerce/client/react'
+import { useCart } from '@/components/store/PreviewCart'
 import { useEffect, useState } from 'react'
 import { ArrowRight, Check, Plus, X } from 'lucide-react'
 import { toast } from 'sonner'

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { useCart } from '@payloadcms/plugin-ecommerce/client/react'
+import { useCart } from '@/components/store/PreviewCart'
 
 type StoreUI = {
   catalogOpen: boolean

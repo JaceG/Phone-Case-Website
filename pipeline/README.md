@@ -1,11 +1,13 @@
 # Imagery pipeline
 
 Goal: adding a design is **one artwork upload**; every product image renders
-itself. Runs are manual for now; the folder layout is shaped so a Payload
-hook can later hand work to a headless Blender worker without reorganising.
+itself. Catalog Studio now starts local background Blender jobs from saved
+revisions. Manual scripts remain available for model preparation and presentation
+asset batches.
 
 For project scope and planned automation, see [the current brief](../AGENTS.md)
-and [roadmap](../ROADMAP.md). This guide documents the current manual tools.
+and [roadmap](../ROADMAP.md). This guide covers manual tools and the owner
+generation/publishing workflow.
 The existing shell is provisional; equipment selection and manufacturing costs
 are outside this repository. A preview mode does not establish that a blank
 supports that print coverage.
@@ -366,8 +368,8 @@ pills (default 3.2 mm preserves older decks). `holes[].deck_height_mm` can overr
 a lens lip's base elevation when it sits beside the raised island, as on S26
 Ultra. Hole coordinates remain relative to the island origin, even when a hole
 is outside its footprint. Both the back and island retain the same UV space.
-These geometry options currently serve offline review builds; model selection in
-Case Studio and automatic per-model storefront rendering are still pending.
+These geometry options serve review builds, approved storefront models and
+Catalog Studio’s per-phone placement previews and automatic renders.
 
 Run `python3 pipeline/blender/audit_samsung_coverage.py` for the explicit Samsung
 scope and `python3 pipeline/blender/audit_iphone_coverage.py` for iPhones. These
@@ -379,8 +381,8 @@ check definitions only; finished galleries and owner decisions live in Payload.
 As of 2026-09-16, all 28 iPhone and 16 Samsung model previews have owner visual
 approval and are connected to the landing pages. The three original presentation
 designs have 132 phone/design combinations. Physical fit and printing validation
-remain pending. The Case/Catalog Studio placement editor still uses its original
-shell; connecting it to this model library is a separate next step.
+remain pending. The main artwork editor uses its reference shell; Catalog Studio
+then offers approved-model placement inspection and independent adjustments.
 
 ```bash
 pnpm tsx pipeline/scripts/export-storefront-models.ts
@@ -410,8 +412,8 @@ versions. Changed geometry or withdrawn approval removes that model from the
 selector; existing cart lines are retained. Future launch eligibility still needs
 physical validation and blank availability. A published design without matching
 assets cannot be newly selected for an approved phone through landing-page or
-cart model selectors. This workflow is currently limited to the three presentation
-designs; automatic rendering of owner catalog drafts remains planned.
+cart model selectors. These batch scripts prepare the three presentation designs;
+Catalog Studio generates additional owner designs through the workflow below.
 
 For selected phones, the desktop hero dynamically loads the geometry and public
 preview texture and uses the existing 288-sample, fixed-axis 3.55-second motion
@@ -419,3 +421,28 @@ curve. Hover pauses, reduced-motion holds the front, and offscreen/hidden pages
 pause rendering. Matching stills remain visible while loading or if WebGL/assets
 fail. Mobile uses model-specific stills. The original frame sequence stays intact
 for the default presentation before a phone is chosen.
+
+## Catalog Studio generation and publishing
+
+The owner flow at `/catalog-studio` now calls an authenticated render API rather
+than requiring manual commands for each new design. Save the base artwork and
+details, select approved phones, optionally adjust each phone, then Generate previews.
+`render-studio-job.ts` creates private full-template textures and masked print PNGs,
+reuses a shell only when its geometry params match, and runs `render_studio.py` for
+hero, three-quarter, flat and detail stills. It retains the source unchanged and
+applies EXIF orientation only to working derivatives. No gradients are applied.
+
+Jobs are stored in `uploads/studio-renders/<uuid>/job.json` beside private outputs
+and logs. Each records the Studio revision, geometry versions and phone placements.
+The detached local worker survives closing the browser, but requires a running
+computer and Blender (`BLENDER_PATH` overrides the macOS default). A stopped worker
+is detected and can be retried through Regenerate previews. This is not a hosted
+offline scheduler.
+
+Private product previews authenticate administrators and disable shopping. Explicit
+Publish uploads display derivatives to public media and records `studioPresentation`
+on the product. Current revision, render set and geometry approvals are checked
+before publication. New drafts leave the published version intact. Generated
+textures feed the approved public GLBs for live hero motion; this workflow does
+not generate a new 288-frame animation per phone. Base print templates and
+per-model print files remain provisional pending physical sample validation.

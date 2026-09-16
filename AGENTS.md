@@ -29,8 +29,9 @@ areas, artwork files, compatibility, availability or truthful previews. Supplier
 research remains in scope to identify purchasable blanks for the model library;
 do not expand it into equipment or manufacturing-cost planning.
 
-The review-stage storefront/editor draft exists. Next: owner catalog creation,
-a reviewed case-model library and automatic rendering. Test-mode checkout,
+The review-stage storefront/editor and owner publishing flow exist. Next:
+representative catalog trials using the reviewed model library and local automatic
+rendering. Test-mode checkout,
 operational fulfillment and launch readiness follow that milestone. Do not
 activate live payments as part of the immediate milestone.
 
@@ -83,11 +84,11 @@ activate live payments as part of the immediate milestone.
 
 | Area | Built | Limits / remaining work |
 |---|---|---|
-| Catalog/admin | Payload catalog plus authenticated Catalog Studio → product drafts, private originals/print layouts and append-only saved revisions | Automatic storefront rendering and integrated publishing remain pending |
-| Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | 44 visually approved iPhone/Samsung shells with model-specific imagery for the three presentation designs; new-design rendering remains manual |
+| Catalog/admin | Payload catalog plus authenticated Catalog Studio → product drafts, private originals/print layouts and append-only saved revisions | Per-phone local Blender jobs, private product previews and explicit publishing built; durable worker hosting remains pending |
+| Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | 44 visually approved iPhone/Samsung shells with model-specific imagery for the three presentation designs; new designs generate per-model assets in Catalog Studio |
 | Cart | Persistent cart, repeating set offer, server subtotal validation, grouped designs, add-for-another-phone and order review | Payment/order/refund reconciliation is unfinished |
-| Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | One provisional iPhone shell; per-model switching and geometry migration remain pending |
-| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Forty-five additional model studies built; forty-three reference-backed fine-hole previews (iPhone 12–17 variants, Air, SE 2020/2022 and Samsung S23–S26 including FE/Edge) and two Pixel concepts awaiting matching blanks. Together with the original iPhone 17 Pro Max, there are 28 iPhone and 16 Samsung reviews. All 44 iPhone/Samsung previews approved by Jace on 2026-09-16 and integrated into landing pages. Editor model switching and physical validation remain pending |
+| Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | Primary editor uses reference iPhone shell; Catalog Studio adds approved per-model geometry/placement overrides. Physical geometry migration remains pending |
+| Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Forty-five additional model studies built; forty-three reference-backed fine-hole previews (iPhone 12–17 variants, Air, SE 2020/2022 and Samsung S23–S26 including FE/Edge) and two Pixel concepts awaiting matching blanks. Together with the original iPhone 17 Pro Max, there are 28 iPhone and 16 Samsung reviews. All 44 iPhone/Samsung previews approved by Jace on 2026-09-16 and integrated into landing pages. Approved-model placement inspection is integrated in Catalog Studio; physical validation remains pending |
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
@@ -135,7 +136,7 @@ reseed an existing working catalog casually.
 - Keep source artwork, per-model placement, geometry/template versions, generated
   renders and real photos separable. `studioRevisions` preserves the source file,
   placement, print layout, metadata and a params/GLB version fingerprint for each
-  catalog save. Background render revision tracking remains planned.
+  catalog save. Private render jobs snapshot saved revision, selected model versions and per-model placement; publication rejects obsolete revisions/jobs.
 - Development trial assets without catalog clearance stay in ignored
   `placeholder/` directories and out of deployed assets. Properly licensed
   catalog artwork is not automatically a placeholder. Originals stay private.

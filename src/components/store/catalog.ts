@@ -1,4 +1,5 @@
 import type { Media, PhoneModel, Product } from '@/payload-types'
+import type { StudioPresentation } from '@/lib/studio-publish/types'
 
 /**
  * Plain, serialisable view of the catalog for the storefront client tree.
@@ -17,6 +18,8 @@ export type RenderSet = {
   detail?: string | null
   geometry?: string
   texture?: string
+  silicone?: string
+  version?: string
   threeQuarter: string | null
   flat: string | null
   /** Vertical-axis spin, scrubbed on scroll. */
@@ -128,6 +131,9 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
     }
   }
 
+  const presentation = product.studioPresentation as unknown as StudioPresentation | null
+  if (presentation?.models) Object.assign(modelRenders, presentation.models)
+  const primary = presentation?.models ? Object.values(presentation.models)[0] : null
   return {
     id: product.id,
     slug: product.slug ?? String(product.id),
@@ -136,11 +142,11 @@ export const toCatalogDesign = (product: Product): CatalogDesign => {
     story: product.description ?? null,
     palette: (product.palette ?? []).map((p) => p.hex).filter(Boolean),
     price: product.priceInUSD ?? variants[0]?.price ?? 0,
-    renders: toRenderSet(product.renders),
+    renders: primary ? { ...toRenderSet(null), ...primary } : toRenderSet(product.renders),
     modelRenders,
-    gallery: (product.gallery ?? [])
-      .map((g) => urlOf(g.image))
-      .filter((u): u is string => Boolean(u)),
+    gallery:
+      presentation?.gallery ??
+      (product.gallery ?? []).map((g) => urlOf(g.image)).filter((u): u is string => Boolean(u)),
     collections,
     variants,
   }

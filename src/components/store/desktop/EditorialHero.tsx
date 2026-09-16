@@ -158,6 +158,7 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
         {/* Headline */}
         <motion.h1
           className="font-display absolute left-[101px] top-[184px] whitespace-nowrap text-[65px] leading-none tracking-[7px] text-[var(--store-fg)]"
+          style={{ fontSize: Math.min(65, 1000 / Math.max(design.title.length, 1)) }}
           {...enter(0.05)}
         >
           {design.title}
@@ -254,8 +255,9 @@ export const EditorialHero: React.FC<ExperienceProps> = (props) => {
               key={`${sequences.geometry}:${sequences.texture}`}
               geometry={sequences.geometry}
               texture={sequences.texture}
+              silicone={sequences.silicone}
               still={image}
-              alt={`${design.title} phone case for ${selectedModel?.name}`}
+              alt={`${design.title} phone case${selectedModel ? ` for ${selectedModel.name}` : ''}`}
             />
           ) : (
             <SpinningRender

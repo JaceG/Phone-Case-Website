@@ -7,10 +7,10 @@ run in one TypeScript app backed by Postgres.
 
 The storefront, local Case Studio and manual Blender pipeline are working
 drafts. Authenticated Catalog Studio now saves and reopens product drafts with
-private originals and print layouts. Next: automate storefront rendering and
-connect per-model placement in the editor. The landing pages already use 44
-visually approved iPhone/Samsung models. Live checkout and operational
-launch work follow that milestone.
+private originals and print layouts, per-model placement, automatic local renders,
+private product-page previews and explicit publishing. The landing pages use 44
+visually approved iPhone/Samsung models. Next: representative catalog trials,
+then hosted operations and test-mode checkout before launch.
 
 - [Current brief and development constraints](AGENTS.md)
 - [Roadmap and case-model checklist](ROADMAP.md)
@@ -78,8 +78,29 @@ Each save preserves the source, placement, print layout, model fingerprint and
 optional 3D snapshot. The product stays a draft; editing a published product through
 Studio leaves its live version intact. Stale saves from another tab are rejected.
 
-Automatic storefront renders and integrated publishing remain planned. The
-existing manual workflow also remains available:
+Continue below the editor in **From artwork to product page**:
+
+1. Select all approved models, just iPhones/Samsung, or individual phones.
+2. Choose a phone under **Check a phone’s placement** to inspect its actual
+   approved geometry. Drag or resize its artwork independently, or restore
+   shared placement.
+3. **Generate previews** saves those model placements and starts local Blender
+   rendering. Progress survives closing the page; reopen the same draft to resume
+   reviewing. A failed job can be regenerated.
+4. Review the generated cards, private print layouts, and complete desktop/mobile
+   product-page previews. Shopping is disabled in private previews.
+5. **Publish to catalog** attaches public derivatives and creates selected phone
+   variants. The design appears in the shared catalog, landing page and set builder.
+   Originals and print layouts stay private. New revisions leave the live product
+   intact until published; outdated revisions/render sets cannot overwrite newer ones.
+
+In local `/case-studio`, **Add to catalog** transfers the current original and
+placement into Catalog Studio, including across sign-in. It does not publish.
+The worker requires this computer and Blender to remain running. Jobs and exact
+geometry/placement snapshots live under ignored `uploads/studio-renders/`; durable
+hosting, offline scheduling and worker deployment remain later work.
+
+The existing manual workflow also remains available:
 
 1. Upload a prepared master under **Artwork**, with licensing information. Keep
    original images separate from fitted print masters.
@@ -99,8 +120,9 @@ mobile picker is searchable. Design switching preserves the selected phone.
 
 Case Studio preserves image aspect ratio, supports direct artwork zoom and
 placement, and saves local projects. Back only includes the camera surround
-with solid sides; Wraparound also covers sides. It supports one shell and does
-not create catalog records at `/case-studio`, whose routes remain development-only.
+with solid sides; Wraparound also covers sides. Its primary editor uses the reference
+iPhone shell, with approved-model placement adjustments in Catalog Studio. The local
+`/case-studio` routes remain development-only.
 The authenticated `/catalog-studio` mode creates catalog drafts in every environment.
 
 Local Case Studio's **Saved files** supports individual **Delete** and **Clear all**.

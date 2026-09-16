@@ -5,6 +5,7 @@ import {
   modelAssets,
   hasCurrentApproval,
 } from '@/lib/storefront/approvedModels'
+import type { StudioPresentation } from '@/lib/studio-publish/types'
 import type { CasePhoneOption } from '@/lib/commerce/groupCartDesigns'
 
 export async function GET(request: Request) {
@@ -19,7 +20,7 @@ export async function GET(request: Request) {
     depth: 0,
     limit: 1,
     where: { and: [{ id: { equals: productId } }, { _status: { equals: 'published' } }] },
-    select: { priceInUSD: true, slug: true },
+    select: { priceInUSD: true, slug: true, studioPresentation: true },
   })
   if (!products.docs[0]) return Response.json({ error: 'Design not available.' }, { status: 404 })
   const [variants, models, approvals] = await Promise.all([
@@ -45,7 +46,13 @@ export async function GET(request: Request) {
   const options: CasePhoneOption[] = models.docs.flatMap((model) => {
     const asset = modelAssets[model.slug ?? '']
     if (!hasCurrentApproval(asset, approvals.get(model.id))) return []
-    if (!asset.designs[products.docs[0].slug]) return []
+    const presentation = products.docs[0].studioPresentation as unknown as StudioPresentation | null
+    if (
+      presentation
+        ? presentation.models[String(model.id)]?.version !== asset.version
+        : !asset.designs[products.docs[0].slug]
+    )
+      return []
     const optionId =
       typeof model.variantOption === 'object' ? model.variantOption?.id : model.variantOption
     const variant = variants.docs.find((v) =>

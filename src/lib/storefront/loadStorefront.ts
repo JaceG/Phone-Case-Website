@@ -56,11 +56,36 @@ export const loadStorefront = async ({ slug }: { slug?: string } = {}): Promise<
     const asset = modelAssets[model.slug ?? '']
     if (!hasCurrentApproval(asset, approvals.get(model.id))) return []
     for (const design of catalog) {
+      const product = products.docs.find((p) => p.id === design.id)
+      if (product?.studioPresentation) {
+        if (design.modelRenders[String(model.id)]?.version !== asset.version)
+          delete design.modelRenders[String(model.id)]
+        continue
+      }
       const images = asset.designs[design.slug]
       if (images) design.modelRenders[String(model.id)] = { ...images, geometry: asset.geometry }
     }
     return [{ ...toCatalogPhoneModel(model), previewVersion: asset.version }]
   })
+
+  for (const design of catalog) {
+    if (!products.docs.find((p) => p.id === design.id)?.studioPresentation) continue
+    for (const id of Object.keys(design.modelRenders)) {
+      const model = phoneModels.find((m) => String(m.id) === id)
+      if (!model || design.modelRenders[id].version !== model.previewVersion)
+        delete design.modelRenders[id]
+    }
+    const first = Object.values(design.modelRenders)[0]
+    design.renders = {
+      hero: null,
+      threeQuarter: null,
+      flat: null,
+      turntable: [],
+      tumble: [],
+      tumblePhases: null,
+      ...first,
+    }
+  }
 
   const design = slug ? (catalog.find((d) => d.slug === slug) ?? null) : (catalog[0] ?? null)
 

@@ -16,8 +16,9 @@ const CaseViewer = forwardRef<
     revision: number
     silicone: string
     view: View
+    geometry?: string
   }
->(({ canvas, revision, silicone, view }, ref) => {
+>(({ canvas, revision, silicone, view, geometry = '/models/iphone-17-pro-max.glb' }, ref) => {
   const host = useRef<HTMLDivElement>(null)
   const render = useRef<(() => void) | null>(null)
   const renderer = useRef<THREE.WebGLRenderer | null>(null)
@@ -125,7 +126,7 @@ const CaseViewer = forwardRef<
       materials.forEach((m) => m.dispose())
     }
     new GLTFLoader().load(
-      '/models/iphone-17-pro-max.glb',
+      geometry,
       (gltf) => {
         if (disposed) {
           releaseModel(gltf.scene)
@@ -186,11 +187,15 @@ const CaseViewer = forwardRef<
       texture.current = null
       inner.current = []
     }
-  }, [canvas])
+  }, [canvas, geometry])
 
   useEffect(() => {
     if (texture.current && canvas) {
       const surface = texture.current.image as HTMLCanvasElement
+      if (surface.width !== canvas.width || surface.height !== canvas.height) {
+        surface.width = canvas.width
+        surface.height = canvas.height
+      }
       const ctx = surface.getContext('2d')!
       ctx.fillStyle = silicone
       ctx.fillRect(0, 0, surface.width, surface.height)

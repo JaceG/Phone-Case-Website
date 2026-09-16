@@ -41,6 +41,8 @@ import {
   type StudioDocument,
 } from '@/lib/studio/contract'
 import './studio.css'
+import { CatalogWorkflow } from '@/components/catalog-studio/CatalogWorkflow'
+import { receiveArtwork, transferArtwork } from '@/lib/studio-publish/handoff'
 
 type SavedFile = { file: string; name: string; url: string; project: boolean }
 
@@ -173,6 +175,37 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     }
   }, [catalog])
   useEffect(() => {
+    if (!catalog || !catalogReady || sessionStorage.getItem('case-studio:pending-import') !== '1')
+      return
+    sessionStorage.removeItem('case-studio:pending-import')
+    void receiveArtwork()
+      .then(async (transfer) => {
+        if (!transfer) return
+        const img = await loadImage(transfer.image)
+        ++loadVersion.current
+        setSource(transfer.image)
+        setImage(img)
+        setPlacement(transfer.placement)
+        setName(transfer.name)
+        setDetails({
+          ...emptyDetails,
+          title: transfer.name,
+          slug: transfer.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '')
+            .slice(0, 100),
+        })
+        setDirty(true)
+        setMessage(
+          'Your artwork and placement are here. Add design details and save a draft below.',
+        )
+      })
+      .catch(() =>
+        setError('Could not transfer this artwork. Open your saved project here to continue.'),
+      )
+  }, [catalog, catalogReady])
+  useEffect(() => {
     if (!catalog || !dirty) return
     const warn = (event: BeforeUnloadEvent) => {
       event.preventDefault()
@@ -222,6 +255,18 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       setError(e instanceof Error ? e.message : 'Could not open draft.')
     } finally {
       if (version === loadVersion.current) setBusy(false)
+    }
+  }
+  async function addToCatalog() {
+    if (!source || busy) return
+    setBusy(true)
+    try {
+      await transferArtwork({ image: source, name, placement })
+      sessionStorage.setItem('case-studio:pending-import', '1')
+      window.location.assign('/catalog-studio')
+    } catch {
+      setError('Could not transfer the artwork. Save your project and open it in Catalog Studio.')
+      setBusy(false)
     }
   }
   async function saveDraft() {
@@ -474,6 +519,15 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
         >
           <FolderOpen size={16} /> Open project
         </button>
+        {!catalog && (
+          <button
+            className="cs-primary"
+            disabled={!image || busy}
+            onClick={() => void addToCatalog()}
+          >
+            Add to catalog <ArrowUpRight size={16} />
+          </button>
+        )}
       </header>
       <section className="cs-heading">
         <div>
@@ -746,8 +800,8 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
                   : 'Create a catalog draft'}
               </strong>
               <p>
-                Your image, placement and print layout are saved together. Publishing and storefront
-                render generation follow after review.
+                Your image, placement and print layout are saved together. Choose phones and generate
+                previews below, then review your product page before publishing.
               </p>
               <button
                 className="cs-primary"
@@ -811,6 +865,14 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
             Save catalog draft
           </button>
         </section>
+      )}
+      {catalog && (
+        <CatalogWorkflow
+          draft={currentDraft}
+          dirty={dirty}
+          source={source}
+          aspect={image ? image.naturalWidth / image.naturalHeight : 1}
+        />
       )}
       {!catalog && (saved.length > 0 || deleted.length > 0) && (
         <section className="cs-saved" aria-label="Saved files">

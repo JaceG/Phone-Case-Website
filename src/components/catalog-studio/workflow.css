@@ -1,0 +1,176 @@
+.cw-workflow {
+  margin: 24px 0;
+  padding: 28px;
+  border: 1px solid var(--cs-line);
+  display: grid;
+  gap: 26px;
+}
+.cw-workflow h2 {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.cw-workflow h3,
+.cw-workflow legend {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.cw-workflow p {
+  color: var(--cs-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 8px 0 16px;
+}
+.cw-kicker {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6a765c;
+}
+.cw-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.cw-step > button,
+.cw-actions button,
+.cw-button,
+.cw-placement button {
+  padding: 11px 16px;
+  border: 1px solid var(--cs-line);
+  border-radius: 4px;
+  font-size: 13px;
+}
+.cw-workflow button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.cw-workflow fieldset {
+  min-width: 0;
+}
+.cw-workflow fieldset:disabled {
+  opacity: 0.6;
+}
+.cw-phones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 10px;
+  max-height: 230px;
+  overflow: auto;
+  margin: 18px 0;
+  padding: 14px;
+  background: #f0f1e9;
+}
+.cw-phones label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+}
+.cw-phones input {
+  accent-color: #65794c;
+}
+.cw-edit-label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+}
+.cw-edit-label select {
+  padding: 12px;
+  border: 1px solid var(--cs-line);
+  background: #fff8;
+  border-radius: 4px;
+}
+.cw-placement {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  margin-top: 20px;
+}
+.cw-model-view {
+  min-height: 500px;
+  position: relative;
+  background: #e5e5e1;
+}
+.cw-model-view .cs-viewer {
+  height: 500px;
+  min-height: 500px;
+}
+.cw-flat {
+  max-height: 340px;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  touch-action: none;
+  cursor: move;
+  background: repeating-conic-gradient(#ddd 0% 25%, #fff 0% 50%) 50% / 16px 16px;
+}
+.cw-placement label {
+  display: grid;
+  gap: 5px;
+  margin: 12px 0;
+  font-size: 12px;
+}
+.cw-placement input {
+  width: 100%;
+  accent-color: #65794c;
+}
+.cw-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  max-height: 600px;
+  overflow: auto;
+}
+.cw-gallery figure {
+  margin: 0;
+  padding: 12px;
+  background: #e9ebe3;
+  text-align: center;
+}
+.cw-gallery img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+}
+.cw-gallery figcaption {
+  font-size: 13px;
+  margin: 8px 0;
+}
+.cw-gallery button,
+.cw-gallery a {
+  display: block;
+  margin: 8px auto;
+  font-size: 12px;
+  color: #52673d;
+}
+.cw-workflow progress {
+  width: 100%;
+  accent-color: #65794c;
+}
+.cw-error {
+  color: #a33 !important;
+}
+.cw-notice {
+  padding: 12px;
+  background: #eef1de;
+}
+.cw-step {
+  border-top: 1px solid var(--cs-line);
+  padding-top: 20px;
+}
+@media (max-width: 780px) {
+  .cw-workflow {
+    padding: 18px;
+  }
+  .cw-placement {
+    grid-template-columns: 1fr;
+  }
+  .cw-model-view,
+  .cw-model-view .cs-viewer {
+    min-height: 380px;
+    height: 380px;
+  }
+}

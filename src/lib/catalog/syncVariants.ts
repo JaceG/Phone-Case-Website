@@ -1,6 +1,7 @@
 import type { DefaultDocumentIDType, PayloadRequest } from 'payload'
 
 import type { PhoneModel, Product } from '@/payload-types'
+import type { StudioPresentation } from '@/lib/studio-publish/types'
 
 /**
  * Keeps the commerce plugin's variant graph in step with the catalog.
@@ -161,6 +162,8 @@ export const syncVariantsForProduct = async ({
   let created = 0
 
   for (const model of activeModels.docs) {
+    const presentation = product.studioPresentation as unknown as StudioPresentation | null
+    if (presentation && !presentation.models[String(model.id)]) continue
     const optionID = idOf(model.variantOption)
     if (optionID === undefined || coveredOptionIDs.has(String(optionID))) continue
 

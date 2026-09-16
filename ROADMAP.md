@@ -28,10 +28,10 @@ finished model with Jace before considering its preview approved.
   background, and print mode separately; do not stretch or fade the original.
 - [x] Add design title, collection, description, price, source and applicable
   permission reference to the draft workflow.
-- [ ] Choose supported case models; preview and override placement per model.
+- [x] Choose supported case models; preview and override placement per model.
 - [x] Show image-resolution feedback, camera openings and printable boundaries.
 - [x] Save/reopen product drafts with private originals, placed print layouts and optional 3D snapshots.
-- [ ] Generate storefront renders, inspect the complete product page, and publish through Studio.
+- [x] Generate storefront renders, inspect the complete product page, and publish through Studio.
 
 Public customer-upload ordering is outside this milestone; the studio is for
 Jace's catalog creation first.
@@ -125,13 +125,16 @@ an iPhone shell for an Android model once it is presented as model-specific.
 - [ ] Separate design, blank/model, per-model placement, generated images and
   real photography; keep stable product identities and URLs.
 - [x] Preserve originals, placement and the current geometry/template fingerprint in each Studio save.
-- [ ] Extend revision tracking to background render jobs and replacement assets.
-- [ ] Add background render jobs with waiting/rendering/ready/failed states,
+- [x] Extend revision tracking to background render jobs and replacement assets.
+- [x] Add background render jobs with waiting/rendering/ready/failed states,
   visible errors, retry and regeneration.
-- [ ] Generate reviewable stills first; create full motion assets afterward.
+- [x] Generate reviewable per-phone stills and textures; reuse approved GLBs for live hero motion.
+- [ ] Generate full per-design pre-rendered motion assets when needed.
 - [ ] Support an initial local Blender worker and jobs that wait safely while
-  it is offline, without coupling the data model to that machine.
-- [ ] Protect against obsolete jobs replacing outputs from a newer revision.
+  it is offline, without coupling the data model to that machine. Local jobs now run
+  independently of the page and report failures for retry; offline queue scheduling
+  and hosted workers remain unfinished.
+- [x] Protect against obsolete jobs replacing outputs from a newer revision.
 - [ ] Make replacement by measured shells or real photos possible without
   rebuilding catalog entries.
 
@@ -173,8 +176,10 @@ milestone. They are not part of the immediate implementation scope.
 ## Sequence and ownership
 
 The owner studio saves product drafts and all 44 iPhone/Samsung visual previews
-are approved and available on landing pages. Next, connect reviewed models to
-Studio placement, then automate revision-aware rendering and draft publication.
+are approved and available on landing pages. Catalog Studio now supports per-model
+placement, revision-aware local rendering, private product-page review and publication.
+Next, run representative owner-supplied designs through this flow and address crop,
+quality and usability feedback before hosted workers and launch services.
 Continue resolving exact blank and physical-sample gaps in parallel. Modeling and software work can continue
 while any model awaits review; Jace chooses review order and approval remains
 per model. Use finished-case references for shaping when the blank listing lacks

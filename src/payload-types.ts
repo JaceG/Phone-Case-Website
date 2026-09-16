@@ -315,6 +315,15 @@ export interface Order {
 export interface Product {
   id: number;
   title: string;
+  studioPresentation?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   /**
    * The print master. This single file drives every render and the print job. Never shown to customers directly.
    */
@@ -2162,6 +2171,7 @@ export interface VariantOptionsSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  studioPresentation?: T;
   artwork?: T;
   tagline?: T;
   description?: T;

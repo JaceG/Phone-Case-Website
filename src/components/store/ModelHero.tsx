@@ -6,10 +6,16 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { HERO_LEAN, HERO_TILT, heroPhaseAt } from './heroMotion'
 
-type Props = { geometry: string; texture: string; still: string | null; alt: string }
+type Props = {
+  geometry: string
+  texture: string
+  still: string | null
+  alt: string
+  silicone?: string
+}
 
 /** One approved geometry + one public preview texture; no private artwork downloads. */
-export function ModelHero({ geometry, texture, still, alt }: Props) {
+export function ModelHero({ geometry, texture, still, alt, silicone }: Props) {
   const host = useRef<HTMLDivElement>(null)
   const paused = useRef(false)
   const [ready, setReady] = useState(false)
@@ -122,6 +128,7 @@ export function ModelHero({ geometry, texture, still, alt }: Props) {
                   material.map = map
                   material.color.set('#ffffff')
                 }
+                if (material.name !== 'case_print' && silicone) material.color.set(silicone)
                 material.needsUpdate = true
               }
             })
@@ -157,7 +164,7 @@ export function ModelHero({ geometry, texture, still, alt }: Props) {
       renderer.forceContextLoss()
       renderer.domElement.remove()
     }
-  }, [geometry, texture])
+  }, [geometry, texture, silicone])
   return (
     <div
       className="relative h-[760px] w-[704px] drop-shadow-[30px_50px_60px_rgba(20,22,30,0.45)]"

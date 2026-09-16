@@ -1,6 +1,6 @@
 'use client'
 
-import { useCart } from '@payloadcms/plugin-ecommerce/client/react'
+import { useCart, PreviewContext } from '@/components/store/PreviewCart'
 import React, { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -25,6 +25,7 @@ export const AddToCartButton: React.FC<Props> = ({
   label: actionLabel,
   reviewAfterAdd,
 }) => {
+  const preview = React.useContext(PreviewContext)
   const { addItem, isLoading, cart } = useCart()
   const { nextSetFrom, setNextSetFrom } = useStoreUI()
   const count = cart?.items?.reduce((sum, item) => sum + item.quantity, 0) ?? 0
@@ -88,7 +89,7 @@ export const AddToCartButton: React.FC<Props> = ({
     <button
       type="button"
       onClick={onClick}
-      disabled={isLoading || (!startAnotherSet && Boolean(model) && !variant)}
+      disabled={preview || isLoading || (!startAnotherSet && Boolean(model) && !variant)}
       className={className ?? 'store-cta'}
       aria-label={label}
     >

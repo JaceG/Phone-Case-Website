@@ -60,7 +60,7 @@ async function imageFile(value: FormDataEntryValue | null, limit: number) {
     mime: `image/${metadata.format}`,
   }
 }
-function story(text: string): Product['description'] {
+export function story(text: string): Product['description'] {
   return {
     root: {
       type: 'root',
@@ -68,26 +68,24 @@ function story(text: string): Product['description'] {
       direction: null,
       format: '',
       indent: 0,
-      children: text
-        .split('\n')
-        .map((line) => ({
-          type: 'paragraph',
-          version: 1,
-          direction: null,
-          format: '',
-          indent: 0,
-          children: [
-            {
-              type: 'text',
-              version: 1,
-              text: line,
-              format: 0,
-              detail: 0,
-              mode: 'normal',
-              style: '',
-            },
-          ],
-        })),
+      children: text.split('\n').map((line) => ({
+        type: 'paragraph',
+        version: 1,
+        direction: null,
+        format: '',
+        indent: 0,
+        children: [
+          {
+            type: 'text',
+            version: 1,
+            text: line,
+            format: 0,
+            detail: 0,
+            mode: 'normal',
+            style: '',
+          },
+        ],
+      })),
     },
   }
 }
@@ -252,6 +250,7 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
         priceInUSDEnabled: true,
         priceInUSD: Math.round(details.price * 100),
         renderStatus: 'pending',
+        studioPresentation: null,
         // Old renders must not masquerade as a preview of revised artwork.
         renders: {
           hero: null,
