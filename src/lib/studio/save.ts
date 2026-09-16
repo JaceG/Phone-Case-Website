@@ -8,6 +8,8 @@ import { commitTransaction, initTransaction, killTransaction, type PayloadReques
 import type { StudioRevision, Product } from '@/payload-types'
 import { MODEL, exportBounds } from '@/components/case-studio/artwork'
 import { validateSave, type StudioDetails, type StudioDocument } from './contract'
+import { savedModelSettings, validateModelSettings } from './modelSettings'
+import { approvedPhones } from '@/lib/studio-publish/phones'
 
 export class StudioError extends Error {
   constructor(
@@ -27,6 +29,9 @@ export async function geometryVersion() {
   return createHash('sha256').update(JSON.stringify(MODEL)).update(glb).digest('hex')
 }
 export function documentOf(doc: StudioRevision, current: string): StudioDocument {
+  const { modelSettings, ...placement } = doc.placement as StudioDocument['placement'] & {
+    modelSettings?: StudioDocument['modelSettings']
+  }
   return {
     id: doc.id,
     title: doc.title,
@@ -35,7 +40,8 @@ export function documentOf(doc: StudioRevision, current: string): StudioDocument
     originalURL: privateURL(doc.original, 'artwork'),
     printURL: privateURL(doc.printMaster, 'artwork'),
     previewURL: doc.preview ? privateURL(doc.preview, 'productionAssets') : null,
-    placement: doc.placement as StudioDocument['placement'],
+    placement,
+    modelSettings,
     details: doc.details as StudioDetails,
     model: doc.modelSlug,
     geometryVersion: doc.geometryVersion,
@@ -125,6 +131,13 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
     const previous = input.previous
       ? await payload.findByID({ collection: 'studioRevisions', id: input.previous, depth: 0, req })
       : null
+    const settings = input.modelSettings ?? savedModelSettings(previous?.placement)
+    const placement = settings
+      ? {
+          ...input.placement,
+          modelSettings: validateModelSettings(settings, await approvedPhones(req)),
+        }
+      : input.placement
     if (previous) {
       const latest = await payload.find({
         collection: 'studioRevisions',
@@ -142,7 +155,7 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
         saved.originalHash === originalHash &&
         saved.geometryVersion === currentGeometry &&
         saved.modelSlug === input.model &&
-        isDeepStrictEqual(saved.placement, input.placement) &&
+        isDeepStrictEqual(saved.placement, placement) &&
         isDeepStrictEqual(saved.details, details)
       ) {
         const populated = await payload.findByID({
@@ -253,7 +266,7 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
         modelSlug: MODEL.slug,
         geometryVersion: currentGeometry,
         geometrySnapshot: MODEL,
-        placement: input.placement,
+        placement,
         details,
         savedBy: req.user!.id,
       },

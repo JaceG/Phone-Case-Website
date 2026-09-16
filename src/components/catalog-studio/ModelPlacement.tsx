@@ -1,9 +1,11 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
-import CaseViewer from '@/components/case-studio/CaseViewer'
+import { useEffect, useState, type Ref } from 'react'
+import CaseViewer, { type View, type ViewerHandle } from '@/components/case-studio/CaseViewer'
+import FlatLayoutEditor from '@/components/case-studio/FlatLayoutEditor'
 import type { Placement } from '@/components/case-studio/artwork'
 import { artworkSVG, template } from '@/lib/studio-publish/placement'
 import type { StudioPhone } from '@/lib/studio-publish/types'
+
 export function ModelPlacement({
   phone,
   source,
@@ -11,6 +13,7 @@ export function ModelPlacement({
   placement,
   onChange,
   onReset,
+  viewerRef,
 }: {
   phone: StudioPhone
   source: string
@@ -18,11 +21,14 @@ export function ModelPlacement({
   placement: Placement
   onChange: (p: Placement) => void
   onReset: () => void
+  viewerRef?: Ref<ViewerHandle>
 }) {
-  const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null),
-    [revision, setRevision] = useState(0)
-  const drag = useRef<{ x: number; y: number; p: Placement } | null>(null)
+  const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null)
+  const [revision, setRevision] = useState(0)
+  const [view, setView] = useState<View>('artwork')
+  const [error, setError] = useState('')
   const t = template(phone.params)
+  const change = (patch: Partial<Placement>) => onChange({ ...placement, ...patch })
   useEffect(() => {
     if (!canvas || !source) return
     let cancelled = false
@@ -33,6 +39,10 @@ export function ModelPlacement({
       canvas.height = t.height
       canvas.getContext('2d')!.drawImage(image, 0, 0)
       setRevision((n) => n + 1)
+      setError('')
+    }
+    image.onerror = () => {
+      if (!cancelled) setError('Could not load the artwork preview. Try opening the design again.')
     }
     image.src =
       'data:image/svg+xml;charset=utf-8,' +
@@ -41,95 +51,94 @@ export function ModelPlacement({
       cancelled = true
     }
   }, [canvas, source, aspect, phone, placement, t.width, t.height])
-  useEffect(() => {
-    if (!canvas) return
-    const zoom = (event: WheelEvent) => {
-      event.preventDefault()
-      onChange({
-        ...placement,
-        width: Math.max(
-          20,
-          Math.min(t.width * 4, placement.width * Math.exp(-event.deltaY * 0.002)),
-        ),
-      })
-    }
-    canvas.addEventListener('wheel', zoom, { passive: false })
-    return () => canvas.removeEventListener('wheel', zoom)
-  }, [canvas, placement, onChange, t.width])
   return (
     <div className="cw-placement">
-      <div className="cw-model-view">
-        <CaseViewer
-          canvas={canvas}
-          revision={revision}
-          silicone={placement.silicone}
-          geometry={phone.geometryURL}
-          view="angle"
-        />
+      <div className="cw-model-preview">
+        <div className="cw-model-view">
+          <CaseViewer
+            ref={viewerRef}
+            canvas={canvas}
+            revision={revision}
+            silicone={placement.silicone}
+            geometry={phone.geometryURL}
+            view={view}
+          />
+        </div>
+        <div className="cs-view-controls" aria-label="Phone preview angle">
+          {(['artwork', 'angle', 'inside'] as const).map((v) => (
+            <button key={v} aria-pressed={v === view} onClick={() => setView(v)}>
+              {v === 'artwork' ? 'Artwork' : v === 'angle' ? 'Angle' : 'Inside'}
+            </button>
+          ))}
+        </div>
+        <p>Drag the 3D case to rotate. Its scroll zoom only changes your view.</p>
       </div>
-      <div>
+      <div className="cw-fit-controls">
+        <h3>Fit on {phone.name}</h3>
         <p>
-          Drag to move; scroll or pinch to resize the artwork. Changes here apply only to{' '}
-          {phone.name}.
+          Drag the flat artwork to move it. Use + / −, scroll or pinch to resize the image on this
+          case.
         </p>
-        <canvas
-          ref={setCanvas}
-          aria-label={`Artwork placement for ${phone.name}`}
-          className="cw-flat"
-          width={t.width}
-          height={t.height}
-          onPointerDown={(e) => {
-            e.currentTarget.setPointerCapture(e.pointerId)
-            drag.current = { x: e.clientX, y: e.clientY, p: placement }
-          }}
-          onPointerMove={(e) => {
-            if (!drag.current) return
-            const r = e.currentTarget.getBoundingClientRect()
-            const d = drag.current
-            onChange({
-              ...d.p,
-              x: Math.max(
-                -t.width,
-                Math.min(t.width * 2, d.p.x + ((e.clientX - d.x) * t.width) / r.width),
-              ),
-              y: Math.max(
-                -t.height,
-                Math.min(t.height * 2, d.p.y + ((e.clientY - d.y) * t.height) / r.height),
-              ),
-            })
-          }}
-          onPointerUp={() => {
-            drag.current = null
-          }}
-          onPointerCancel={() => {
-            drag.current = null
-          }}
+        <FlatLayoutEditor
+          geometry={phone.params}
+          canvasRef={setCanvas}
+          placement={placement}
+          hasImage={!!source}
+          onChange={change}
         />
         <label>
-          Artwork size
-          <input
-            aria-label="Model artwork size"
-            type="range"
-            min={20}
-            max={t.width * 4}
-            value={placement.width}
-            onChange={(e) => onChange({ ...placement, width: Number(e.target.value) })}
-          />
+          Print area
+          <select
+            value={placement.printMode}
+            onChange={(e) => change({ printMode: e.target.value as Placement['printMode'] })}
+          >
+            <option value="back">Back & camera surround · solid sides</option>
+            <option value="wrap">Wraparound · back, sides & camera surround</option>
+          </select>
         </label>
         <label>
-          Rotation
+          Rotation · {Math.round(placement.rotation)}°
           <input
             aria-label="Model artwork rotation"
             type="range"
             min={-180}
             max={180}
             value={placement.rotation}
-            onChange={(e) => onChange({ ...placement, rotation: Number(e.target.value) })}
+            onChange={(e) => change({ rotation: Number(e.target.value) })}
           />
         </label>
+        <div className="cs-colors">
+          <label>
+            Background
+            <input
+              aria-label="Model background color"
+              type="color"
+              value={placement.background}
+              onChange={(e) => change({ background: e.target.value })}
+            />
+          </label>
+          <label>
+            Case & rim
+            <input
+              aria-label="Model case color"
+              type="color"
+              value={placement.silicone}
+              onChange={(e) => change({ silicone: e.target.value })}
+            />
+          </label>
+        </div>
         <button type="button" onClick={onReset}>
-          Use shared placement
+          Reset this phone to shared fit
         </button>
+        <p>
+          Only this phone’s fit changes. Use Save changes above to keep every phone’s adjustments in
+          this draft.
+        </p>
+        {error && (
+          <p role="alert" className="cw-error">
+            {error}
+          </p>
+        )}
       </div>
     </div>
   )

@@ -335,13 +335,14 @@ the physical blank and actual print process are tested.
 session, including outside development. Its save API stores the unchanged source,
 placed print master and optional viewport snapshot privately, writes a product
 draft, and creates an append-only `studioRevisions` record. Reopen restores the
-source and placement. Saves from stale revisions are rejected; edits to a published
+source, shared placement, selected phones and individual custom fits. Saves from stale revisions are rejected; edits to a published
 product remain draft-only. Draft saves do not automatically run Blender or publish.
 
 The original params and GLB are fingerprinted together. A revision made with a
 different geometry version cannot silently reopen on a changed shell; explicit
-migration/review remains to implement. The editor still supports only this one
-provisional shell. Back-only exports preserve the same 770 × 1610 bounds.
+migration/review remains to implement. **Shared artwork** uses the reference shell
+and its 770 × 1610 back-only bounds; **Fit by phone** uses each approved model's
+own geometry, printable back bounds and individual camera opening guides.
 
 `/catalog-studio/models` shows private review packages. The first can be imported
 with `pnpm exec tsx pipeline/scripts/import-model-review.ts`; it requires the local
@@ -426,7 +427,13 @@ for the default presentation before a phone is chosen.
 
 The owner flow at `/catalog-studio` now calls an authenticated render API rather
 than requiring manual commands for each new design. Save the base artwork and
-details, select approved phones, optionally adjust each phone, then Generate previews.
+details, select approved phones, adjust them in **Fit by phone**, then Save changes
+before Generate previews. Each phone starts from normalized shared placement;
+adjusting it creates a custom fit with its geometry version. These sparse overrides
+and selected phone IDs live in `studioRevisions.placement.modelSettings`, and save
+without running Blender. Render jobs use the saved snapshot rather than unsaved
+client overrides. Legacy drafts and render-job fits remain readable. Resetting a
+phone removes only its override; deselection retains the fit for future reuse.
 `render-studio-job.ts` creates private full-template textures and masked print PNGs,
 reuses a shell only when its geometry params match, and runs `render_studio.py` for
 hero, three-quarter, flat and detail stills. It retains the source unchanged and

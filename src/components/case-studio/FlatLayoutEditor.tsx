@@ -3,22 +3,24 @@
 import { useEffect, useRef } from 'react'
 import type { PointerEvent, Ref } from 'react'
 import { Minus, Plus } from 'lucide-react'
-import {
-  BACK,
-  CAMERA,
-  FLAT_BACK,
-  HEIGHT,
-  MODEL,
-  PX,
-  WIDTH,
-  type Placement,
-  type PrintMode,
-} from './artwork'
+import { MODEL, type Placement, type PrintMode } from './artwork'
+import { template } from '@/lib/studio-publish/placement'
+import type { Geometry } from '@/lib/studio-publish/types'
 
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value))
 
-function TemplateGuides({ mode }: { mode: PrintMode }) {
-  const back = mode === 'back' ? FLAT_BACK : { ...BACK, radius: MODEL.corner_radius_mm * PX }
+function TemplateGuides({ mode, geometry }: { mode: PrintMode; geometry: Geometry }) {
+  const { width: WIDTH, height: HEIGHT, back: BACK, flat: FLAT_BACK, holes } = template(geometry)
+  const PX = geometry.template_px_per_mm
+  const c = geometry.camera_island
+  const CAMERA = {
+    x: BACK.x + c.x_mm * PX,
+    y: BACK.y + c.y_mm * PX,
+    width: c.w_mm * PX,
+    height: c.h_mm * PX,
+    radius: c.corner_radius_mm * PX,
+  }
+  const back = mode === 'back' ? FLAT_BACK : { ...BACK, radius: geometry.corner_radius_mm * PX }
   return (
     <svg className="cs-guides" viewBox={`0 0 ${WIDTH} ${HEIGHT}`} aria-hidden="true">
       <rect x={back.x} y={back.y} width={back.width} height={back.height} rx={back.radius} />
@@ -30,13 +32,8 @@ function TemplateGuides({ mode }: { mode: PrintMode }) {
         rx={CAMERA.radius}
         className="cs-camera-guide"
       />
-      {MODEL.holes.map((h) => (
-        <circle
-          key={h.name}
-          cx={CAMERA.x + h.x_mm * PX}
-          cy={CAMERA.y + h.y_mm * PX}
-          r={(h.d_mm * PX) / 2}
-        />
+      {holes.map((h, index) => (
+        <circle key={index} cx={h.x} cy={h.y} r={h.radius} />
       ))}
     </svg>
   )
@@ -44,15 +41,18 @@ function TemplateGuides({ mode }: { mode: PrintMode }) {
 
 export default function FlatLayoutEditor({
   canvasRef,
+  geometry = MODEL,
   placement,
   hasImage,
   onChange,
 }: {
+  geometry?: Geometry
   canvasRef: Ref<HTMLCanvasElement>
   placement: Placement
   hasImage: boolean
   onChange: (patch: Partial<Placement>) => void
 }) {
+  const { width: WIDTH, height: HEIGHT, back: BACK } = template(geometry)
   const host = useRef<HTMLDivElement>(null)
   const latest = useRef({ placement, hasImage, onChange })
   const pointers = useRef(new Map<number, { x: number; y: number }>())
@@ -97,7 +97,7 @@ export default function FlatLayoutEditor({
     }
     node.addEventListener('wheel', wheel, { passive: false })
     return () => node.removeEventListener('wheel', wheel)
-  }, [])
+  }, [WIDTH, HEIGHT])
 
   function startDrag(event: PointerEvent<HTMLDivElement>) {
     if (event.button !== 0 || !hasImage) return
@@ -190,6 +190,7 @@ export default function FlatLayoutEditor({
       <div
         ref={host}
         className="cs-template"
+        style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}
         tabIndex={0}
         role="group"
         aria-label="Artwork placement. Drag to move. Scroll, pinch, or use plus and minus to resize the image on the case. Arrow keys move the image; hold Shift for larger steps."
@@ -231,7 +232,7 @@ export default function FlatLayoutEditor({
                 : 'Wraparound artwork with edge bleed'
             }
           />
-          <TemplateGuides mode={placement.printMode} />
+          <TemplateGuides mode={placement.printMode} geometry={geometry} />
         </div>
       </div>
       <p className="cs-zoom-help">

@@ -87,7 +87,7 @@ activate live payments as part of the immediate milestone.
 | Catalog/admin | Payload catalog plus authenticated Catalog Studio → product drafts, private originals/print layouts and append-only saved revisions | Per-phone local Blender jobs, private product previews and explicit publishing built; durable worker hosting remains pending |
 | Storefront | Editorial desktop and separate mobile layouts, complete landing-page sections, design/family/model switching and catalog overlay | 44 visually approved iPhone/Samsung shells with model-specific imagery for the three presentation designs; new designs generate per-model assets in Catalog Studio |
 | Cart | Persistent cart, repeating set offer, server subtotal validation, grouped designs, add-for-another-phone and order review | Payment/order/refund reconciliation is unfinished |
-| Case Studio | Shared placement editor; `/case-studio` remains local and `/catalog-studio` saves/reopens private catalog drafts with details and resolution feedback | Primary editor uses reference iPhone shell; Catalog Studio adds approved per-model geometry/placement overrides. Physical geometry migration remains pending |
+| Case Studio | Local shared editor plus Catalog Studio's searchable Fit by phone workspace; independent crops, zoom, print area and colors save together on one draft | Shared artwork uses the reference iPhone shell; Fit by phone uses approved model geometry. Physical geometry migration remains pending |
 | Blender/model library | Existing pipeline plus batch preparation queue, searchable review dashboard, comparison, feedback/history and private model packages | Forty-five additional model studies built; forty-three reference-backed fine-hole previews (iPhone 12–17 variants, Air, SE 2020/2022 and Samsung S23–S26 including FE/Edge) and two Pixel concepts awaiting matching blanks. Together with the original iPhone 17 Pro Max, there are 28 iPhone and 16 Samsung reviews. All 44 iPhone/Samsung previews approved by Jace on 2026-09-16 and integrated into landing pages. Approved-model placement inspection is integrated in Catalog Studio; physical validation remains pending |
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
@@ -147,7 +147,12 @@ reseed an existing working catalog casually.
 - Keep source artwork, per-model placement, geometry/template versions, generated
   renders and real photos separable. `studioRevisions` preserves the source file,
   placement, print layout, metadata and a params/GLB version fingerprint for each
-  catalog save. Private render jobs snapshot saved revision, selected model versions and per-model placement; publication rejects obsolete revisions/jobs.
+  catalog save. The existing placement JSON also stores `modelSettings` with
+  selected phone IDs and sparse per-phone placement/version overrides. These save
+  independently of rendering and are included in unchanged-save comparisons.
+  Private render jobs use the saved fits and snapshot selected geometry versions;
+  publication rejects obsolete revisions/jobs. Shared-placement edits preserve
+  custom fits, and excluding a phone retains its crop for later reuse.
 - Development trial assets without catalog clearance stay in ignored
   `placeholder/` directories and out of deployed assets. Properly licensed
   catalog artwork is not automatically a placeholder. Originals stay private.

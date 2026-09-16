@@ -5,44 +5,15 @@ import path from 'node:path'
 import { randomUUID } from 'node:crypto'
 import { spawn } from 'node:child_process'
 import { commitTransaction, initTransaction, killTransaction, type PayloadRequest } from 'payload'
-import { modelAssets } from '@/lib/storefront/approvedModels'
+import { approvedPhones } from './phones'
+export { approvedPhones } from './phones'
+import { savedModelSettings, renderPlacements } from '@/lib/studio/modelSettings'
 import { idOf, StudioError } from '@/lib/studio/save'
 import { adaptPlacement, validatePlacement } from './placement'
 import { jobDirectory, latestJob, writeJob, imageURL } from './jobs'
-import type { StudioPhone, RenderJob, Geometry, StudioPresentation } from './types'
+import type { RenderJob, StudioPresentation } from './types'
 import type { Placement } from '@/components/case-studio/artwork'
 
-export async function approvedPhones(req: PayloadRequest): Promise<StudioPhone[]> {
-  const reviews = await req.payload.find({
-    collection: 'caseBlanks',
-    req,
-    depth: 1,
-    pagination: false,
-    overrideAccess: false,
-    where: {
-      and: [{ previewStatus: { equals: 'approved' } }, { cameraCoverage: { equals: 'fineHoles' } }],
-    },
-  })
-  return reviews.docs
-    .flatMap((r) => {
-      const phone = r.phoneModel
-      if (typeof phone !== 'object' || phone.status !== 'active' || !phone.slug) return []
-      const asset = modelAssets[phone.slug]
-      if (!asset || asset.version !== r.geometryVersion) return []
-      return [
-        {
-          id: phone.id,
-          name: phone.name,
-          slug: phone.slug,
-          brand: phone.brand,
-          version: r.geometryVersion,
-          geometryURL: asset.geometry,
-          params: r.geometry as unknown as Geometry,
-        },
-      ]
-    })
-    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
-}
 export async function requireLatest(revision: number, req: PayloadRequest) {
   const saved = await req.payload.findByID({
     collection: 'studioRevisions',
@@ -79,12 +50,18 @@ export async function createRenderJob(
   const previous = await latestJob(saved.id)
   if (previous && ['queued', 'rendering'].includes(previous.status)) return previous
   const available = await approvedPhones(req)
-  const phones = [...new Set(input.phones)].map((id) => {
+  const settings = savedModelSettings(saved.placement)
+  // Once fits are saved with the draft, renders must use that exact snapshot.
+  const placements = settings
+    ? renderPlacements(saved.placement as Placement, settings, available)
+    : input.placements
+  const phones = [...new Set(settings?.phones ?? input.phones)].map((id) => {
     const phone = available.find((p) => p.id === id)
     if (!phone)
       throw new StudioError('A chosen phone is no longer approved. Refresh the model list.')
     return phone
   })
+  if (!phones.length) throw new StudioError('Choose at least one phone and save the design.')
   const original = saved.original
   if (
     typeof original !== 'object' ||
@@ -108,7 +85,7 @@ export async function createRenderJob(
     models: phones.map((phone) => ({
       ...phone,
       placement: validatePlacement(
-        input.placements?.[String(phone.id)] ??
+        placements?.[String(phone.id)] ??
           adaptPlacement(saved.placement as Placement, phone.params),
         phone.params,
       ),

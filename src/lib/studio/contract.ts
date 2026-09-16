@@ -1,4 +1,5 @@
 import { MODEL, parseProject, type Placement } from '@/components/case-studio/artwork'
+import type { ModelSettings } from './modelSettings'
 
 export type StudioDetails = {
   title: string
@@ -13,12 +14,14 @@ export type StudioDetails = {
   permission: string
 }
 export type StudioSave = {
+  modelSettings?: ModelSettings
   previous: number | null
   details: StudioDetails
   placement: Placement
   model: string
 }
 export type StudioDocument = {
+  modelSettings?: ModelSettings
   id: number
   revision: number
   title: string
@@ -90,6 +93,7 @@ export function validateSave(input: unknown): StudioSave {
     placement: v.placement,
   })
   return {
+    ...(v.modelSettings !== undefined ? { modelSettings: v.modelSettings } : {}),
     previous: v.previous!,
     model: v.model,
     placement,

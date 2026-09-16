@@ -32,7 +32,12 @@ const print = await sharp(source)
 await fs.writeFile(path.join(artifactRoot, 'test-art.png'), source)
 let cookie = ''
 const headers = () => ({ Cookie: cookie, Origin: base })
-async function post(previous: number | null, extra = {}, placement = DEFAULT) {
+async function post(
+  previous: number | null,
+  extra = {},
+  placement = DEFAULT,
+  modelSettings?: unknown,
+) {
   const form = new FormData()
   form.append(
     'settings',
@@ -40,6 +45,7 @@ async function post(previous: number | null, extra = {}, placement = DEFAULT) {
       previous,
       model: MODEL.slug,
       placement,
+      modelSettings,
       details: {
         ...emptyDetails,
         title: `Studio check ${run}`,
@@ -206,8 +212,67 @@ try {
       .renderStatus,
     'pending',
   )
+  const phoneList = await (
+    await fetch(`${base}/api/catalog-studio/render`, { headers: headers() })
+  ).json()
+  const apple = phoneList.models.find((m: { brand: string }) => m.brand === 'apple')
+  const samsung = phoneList.models.find((m: { brand: string }) => m.brand === 'samsung')
+  assert(apple && samsung, 'Need approved iPhone and Samsung examples')
+  const { adaptPlacement } = await import('../../src/lib/studio-publish/placement')
+  const fits = {
+    phones: [apple.id, samsung.id],
+    placements: {
+      [apple.id]: {
+        version: apple.version,
+        placement: { ...adaptPlacement(adjusted, apple.params), rotation: 12 },
+      },
+      [samsung.id]: {
+        version: samsung.version,
+        placement: { ...adaptPlacement(adjusted, samsung.params), rotation: -8, printMode: 'back' },
+      },
+    },
+  }
+  const fitsResponse = await post(placed.id, latest.details as object, adjusted, fits)
+  const fitted = await fitsResponse.json()
+  assert.equal(fitsResponse.status, 201, JSON.stringify(fitted))
+  assert.equal(fitted.product, first.product)
+  assert.deepEqual(fitted.placement, adjusted)
+  assert.deepEqual(fitted.modelSettings.placements, fits.placements)
+  const reopened = await (
+    await fetch(`${base}/api/catalog-studio?product=${first.product}`, { headers: headers() })
+  ).json()
+  assert.deepEqual(
+    reopened.modelSettings,
+    fitted.modelSettings,
+    'Both custom fits survive reopening',
+  )
+  const noOpFits = await post(fitted.id, latest.details as object, adjusted, fitted.modelSettings)
+  assert.equal(
+    (await noOpFits.json()).id,
+    fitted.id,
+    'Unchanged model fits reuse the saved revision',
+  )
+  const obsolete = structuredClone(fits)
+  obsolete.placements[apple.id].version = 'obsolete-version'
+  assert.equal((await post(fitted.id, latest.details as object, adjusted, obsolete)).status, 400)
+  const withoutApple = { ...fitted.modelSettings, phones: [samsung.id] }
+  const selectionResponse = await post(fitted.id, latest.details as object, adjusted, withoutApple)
+  const selectionSaved = await selectionResponse.json()
+  assert.equal(selectionResponse.status, 201, JSON.stringify(selectionSaved))
+  assert.deepEqual(selectionSaved.modelSettings.phones, [samsung.id])
+  assert.deepEqual(
+    selectionSaved.modelSettings.placements,
+    fits.placements,
+    'Excluding a phone does not discard its crop',
+  )
+  const legacySave = await post(selectionSaved.id, latest.details as object, adjusted)
+  assert.equal(
+    (await legacySave.json()).id,
+    selectionSaved.id,
+    'An older client cannot erase existing model fits',
+  )
   console.log(
-    'PASS: authenticated design access, unchanged saves create no records/files, retries return the same save, edits keep one product, legacy links open latest, one library entry, and competing edits cannot overwrite each other.',
+    'PASS: authenticated design access, unchanged saves create no records/files, retries return the same save, edits keep one product, legacy links open latest, one library entry, competing edits cannot overwrite each other, and per-phone fits persist, deduplicate, preserve excluded crops and reject stale geometry.',
   )
 } finally {
   const revisions = await payload.find({

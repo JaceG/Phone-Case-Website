@@ -117,18 +117,24 @@ in the latest saved admin details; use Save changes before generating
 previews if they changed. Advanced imagery controls are collapsed. Saved SEO and
 related-design selections are now used by the landing page.
 
-Continue below the editor in **From artwork to product page**:
+Open a saved design to start in **Fit by phone**, directly below the save toolbar:
 
-1. Select all approved models, just iPhones/Samsung, or individual phones.
-2. Choose a phone under **Check a phone’s placement** to inspect its actual
-   approved geometry. Drag or resize its artwork independently, or restore
-   shared placement.
-3. **Generate previews** saves those model placements and starts local Blender
+1. Search the case list or filter by iPhone/Samsung, then choose any phone to
+   inspect its approved geometry. Drag the flat artwork, use its zoom buttons,
+   scroll/pinch, adjust rotation, print area or colors. Each custom fit is independent.
+2. **Shared artwork** edits the starting placement for unadjusted phones. Custom
+   fits stay as they are; **Reset this phone to shared fit** removes only that
+   phone's override. **Include in this design** controls whether a phone is rendered.
+   Bulk phone selection remains below in **From artwork to product page**.
+3. **Save changes** keeps the shared placement, selected phones and all custom
+   fits together in the same draft, without needing to render. The save toolbar
+   stays available while scrolling. Reopening restores all fits.
+4. **Generate previews** uses those saved placements and starts local Blender
    rendering. Progress survives closing the page; reopen the same draft to resume
    reviewing. A failed job can be regenerated.
-4. Review the generated cards, private print layouts, and complete desktop/mobile
+5. Review the generated cards, private print layouts, and complete desktop/mobile
    product-page previews. Shopping is disabled in private previews.
-5. **Publish to catalog** attaches public derivatives and creates selected phone
+6. **Publish to catalog** attaches public derivatives and creates selected phone
    variants. The design appears in the shared catalog, landing page and set builder.
    Originals and print layouts stay private. New revisions leave the live product
    intact until published; outdated revisions/render sets cannot overwrite newer ones.
@@ -176,8 +182,9 @@ Create models under **Phone Models**. Setting one to **Active** generates varian
 for published designs; it does not build geometry or validate a blank. Current
 statuses are Active, Coming soon and Retired. The separate **Case model library**
 records exact supplier blanks, preview reviews and physical sample status. Changing
-geometry or blank identity resets its approval. Sales eligibility enforcement and
-Studio switching among blank records remain planned.
+geometry or blank identity resets its approval. Studio supports switching among
+approved phone models; choosing multiple supplier blanks for the same phone and
+sales eligibility enforcement remain planned.
 
 Jace visually approved all 28 iPhones and 16 Samsung previews on 2026-09-16.
 Physical samples remain unvalidated. The [candidate checklist](docs/case-models.md)
@@ -252,7 +259,8 @@ pnpm test:int tests/int/bundlePricing.int.spec.ts tests/int/setBuilder.int.spec.
 
 With the local server running, `pnpm exec tsx tests/scripts/verifyStudioUpdates.ts`
 checks unchanged saves, retry deduplication, stable design links, private access,
-concurrent edits and cleanup with disposable records.
+concurrent edits, per-phone fit persistence, excluded-phone crop retention,
+obsolete geometry rejection and cleanup with disposable records.
 
 `pnpm exec tsx tests/scripts/verifyDesignDeletion.ts` checks permanent and bulk
 deletion, trash/restore, hidden trashed drafts, shared-asset retention and rollback

@@ -1,6 +1,9 @@
 import { plainText, relationID } from '@/lib/catalog/designDefaults'
 import { studioAuth } from '@/lib/studio/auth'
 import { documentOf, geometryVersion, saveStudio, StudioError } from '@/lib/studio/save'
+import { latestJob } from '@/lib/studio-publish/jobs'
+import { adaptPlacement } from '@/lib/studio-publish/placement'
+import { isDeepStrictEqual } from 'node:util'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -43,6 +46,21 @@ export async function GET(request: Request) {
       const doc = latest.docs[0]
       if (!doc) return json({ error: 'Saved design not found.' }, 404)
       const result = documentOf(doc, current)
+      if (!result.modelSettings) {
+        const job = await latestJob(doc.id)
+        if (job)
+          result.modelSettings = {
+            phones: job.models.map((m) => m.id),
+            placements: Object.fromEntries(
+              job.models
+                .filter(
+                  (m) =>
+                    !isDeepStrictEqual(m.placement, adaptPlacement(result.placement, m.params)),
+                )
+                .map((m) => [String(m.id), { version: m.version, placement: m.placement }]),
+            ),
+          }
+      }
       const product = await payload.findByID({
         collection: 'products',
         id: result.product,

@@ -1,58 +1,44 @@
 'use client'
 import { useEffect, useState } from 'react'
-import type { Placement } from '@/components/case-studio/artwork'
 import type { StudioDocument } from '@/lib/studio/contract'
-import { adaptPlacement } from '@/lib/studio-publish/placement'
 import { imageURL } from '@/lib/studio-publish/urls'
 import type { RenderJob, StudioPhone } from '@/lib/studio-publish/types'
-import { ModelPlacement } from './ModelPlacement'
+import type { ModelSettings } from '@/lib/studio/modelSettings'
 import './workflow.css'
 export function CatalogWorkflow({
   draft,
   dirty,
-  source,
-  aspect,
+  saving,
+  models,
+  settings,
+  onSettings,
+  onEditPhone,
 }: {
   draft: StudioDocument | null
   dirty: boolean
-  source: string
-  aspect: number
+  saving: boolean
+  models: StudioPhone[]
+  settings: ModelSettings
+  onSettings: (settings: ModelSettings) => void
+  onEditPhone: (id?: number) => void
 }) {
-  const [models, setModels] = useState<StudioPhone[]>([]),
-    [selected, setSelected] = useState<number[]>([]),
-    [placements, setPlacements] = useState<Record<string, Placement>>({})
-  const [edit, setEdit] = useState<number | null>(null),
-    [job, setJob] = useState<RenderJob | null>(null),
-    [changed, setChanged] = useState(false)
+  const selected = settings.phones
+  const [job, setJob] = useState<RenderJob | null>(null)
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(''),
     [published, setPublished] = useState('')
   useEffect(() => {
     let cancelled = false
     setJob(null)
-    setChanged(false)
     setPublished('')
     setError('')
-    setPlacements({})
     fetch(`/api/catalog-studio/render${draft ? `?revision=${draft.id}` : ''}`)
       .then(async (r) => {
         const data = await r.json()
         if (!r.ok) throw Error(data.error)
         if (cancelled) return
-        setModels(data.models)
-        setSelected(
-          data.job
-            ? data.job.models.map((m: StudioPhone) => m.id)
-            : data.models.map((m: StudioPhone) => m.id),
-        )
-        setEdit(null)
         if (data.job) {
           setJob(data.job)
-          setPlacements(
-            Object.fromEntries(
-              data.job.models.map((m: RenderJob['models'][0]) => [String(m.id), m.placement]),
-            ),
-          )
           setPublished(data.job.publishedURL ?? '')
         }
       })
@@ -79,15 +65,6 @@ export function CatalogWorkflow({
       clearInterval(timer)
     }
   }, [job?.id, job?.status])
-  useEffect(() => {
-    if (!changed) return
-    const warn = (event: BeforeUnloadEvent) => {
-      event.preventDefault()
-      event.returnValue = ''
-    }
-    window.addEventListener('beforeunload', warn)
-    return () => window.removeEventListener('beforeunload', warn)
-  }, [changed])
   const running = Boolean(job && ['queued', 'rendering'].includes(job.status))
   async function action(publish = false) {
     if (!draft) return
@@ -100,7 +77,13 @@ export function CatalogWorkflow({
         body: JSON.stringify(
           publish
             ? { action: 'publish', job: job!.id }
-            : { revision: draft.id, phones: selected, placements },
+            : {
+                revision: draft.id,
+                phones: selected,
+                placements: Object.fromEntries(
+                  Object.entries(settings.placements).map(([id, fit]) => [id, fit.placement]),
+                ),
+              },
         ),
       })
       const data = await response.json()
@@ -110,7 +93,6 @@ export function CatalogWorkflow({
         setJob((j) => (j ? { ...j, status: 'published', publishedURL: data.url } : j))
       } else {
         setJob(data)
-        setChanged(false)
         setPublished('')
       }
     } catch (e) {
@@ -119,8 +101,8 @@ export function CatalogWorkflow({
       setBusy(false)
     }
   }
-  const ready = job && ['ready', 'published'].includes(job.status) && !changed && !dirty
-  const editing = models.find((m) => m.id === edit)
+  const ready =
+    job && job.revision === draft?.id && ['ready', 'published'].includes(job.status) && !dirty
   return (
     <section className="cw-workflow" aria-label="Prepare and publish design">
       <div>
@@ -140,7 +122,7 @@ export function CatalogWorkflow({
           Save your latest artwork and design details before generating or publishing.
         </p>
       )}
-      <fieldset disabled={!draft || dirty || running || busy}>
+      <fieldset disabled={running || busy || saving}>
         <legend>1 / Supported phones · {selected.length} selected</legend>
         <div className="cw-actions">
           {[
@@ -153,10 +135,12 @@ export function CatalogWorkflow({
               type="button"
               key={brand}
               onClick={() => {
-                setSelected(
-                  models.filter((m) => brand === 'all' || m.brand === brand).map((m) => m.id),
-                )
-                setChanged(true)
+                onSettings({
+                  ...settings,
+                  phones: models
+                    .filter((m) => brand === 'all' || m.brand === brand)
+                    .map((m) => m.id),
+                })
               }}
             >
               {label}
@@ -170,65 +154,31 @@ export function CatalogWorkflow({
                 type="checkbox"
                 checked={selected.includes(phone.id)}
                 onChange={(e) => {
-                  setSelected((ids) =>
-                    e.target.checked ? [...ids, phone.id] : ids.filter((id) => id !== phone.id),
-                  )
-                  setChanged(true)
+                  onSettings({
+                    ...settings,
+                    phones: e.target.checked
+                      ? [...selected, phone.id]
+                      : selected.filter((id) => id !== phone.id),
+                  })
                 }}
               />
               {phone.name}
             </label>
           ))}
         </div>
-        <label className="cw-edit-label">
-          Check a phone’s placement
-          <select
-            value={edit ?? ''}
-            onChange={(e) => setEdit(e.target.value ? Number(e.target.value) : null)}
-          >
-            <option value="">Choose a model to inspect or adjust…</option>
-            {models
-              .filter((m) => selected.includes(m.id))
-              .map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.name}
-                  {placements[String(m.id)] ? ' · adjusted' : ''}
-                </option>
-              ))}
-          </select>
-        </label>
-        {draft && editing && (
-          <ModelPlacement
-            phone={editing}
-            source={source}
-            aspect={aspect}
-            placement={
-              placements[String(editing.id)] ?? adaptPlacement(draft.placement, editing.params)
-            }
-            onChange={(p) => {
-              setPlacements((old) => ({ ...old, [String(editing.id)]: p }))
-              setChanged(true)
-            }}
-            onReset={() => {
-              setPlacements((old) => {
-                const next = { ...old }
-                delete next[String(editing.id)]
-                return next
-              })
-              setChanged(true)
-            }}
-          />
-        )}
+        <button type="button" className="cw-button" onClick={() => onEditPhone()}>
+          Edit phone fits ↑
+        </button>
       </fieldset>
       <div className="cw-step">
         <h3>2 / Generate previews</h3>
         <p>
-          Your saved placement is applied to every selected phone. Originals and print layouts stay
-          private.
+          Each phone uses its saved custom fit, or the shared placement if you haven’t adjusted it.
+          Originals and print layouts stay private.
         </p>
         <button
           className="cs-primary"
-          disabled={!draft || dirty || running || busy || !selected.length}
+          disabled={!draft || dirty || running || busy || saving || !selected.length}
           onClick={() => void action()}
         >
           {running ? 'Generating…' : job ? 'Regenerate previews' : 'Generate previews'}
@@ -240,7 +190,7 @@ export function CatalogWorkflow({
                 ? `${job.completed} of ${job.models.length} phones ready`
                 : job.status === 'failed'
                   ? job.error
-                  : changed
+                  : dirty
                     ? 'Placement or phone selection changed. Generate fresh previews.'
                     : `${job.models.length} phone previews ready`}
             </p>
@@ -258,7 +208,7 @@ export function CatalogWorkflow({
                 loading="lazy"
               />
               <figcaption>{m.name}</figcaption>
-              <button disabled={running || dirty || busy} onClick={() => setEdit(m.id)}>
+              <button disabled={running || busy || saving} onClick={() => onEditPhone(m.id)}>
                 Adjust placement
               </button>
               <a href={imageURL(job.id, m.slug, 'print')} target="_blank" rel="noreferrer">
@@ -297,7 +247,7 @@ export function CatalogWorkflow({
           )}
           <button
             className="cs-primary"
-            disabled={!ready || busy || job?.status === 'published'}
+            disabled={!ready || busy || saving || job?.status === 'published'}
             onClick={() => void action(true)}
           >
             {busy ? 'Working…' : job?.status === 'published' ? 'Published' : 'Publish to catalog'}

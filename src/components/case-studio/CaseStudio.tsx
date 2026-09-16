@@ -41,6 +41,9 @@ import {
 } from '@/lib/studio/contract'
 import './studio.css'
 import { CatalogWorkflow } from '@/components/catalog-studio/CatalogWorkflow'
+import { PhoneFits } from '@/components/catalog-studio/PhoneFits'
+import type { ModelSettings } from '@/lib/studio/modelSettings'
+import type { StudioPhone } from '@/lib/studio-publish/types'
 import { receiveArtwork, transferArtwork } from '@/lib/studio-publish/handoff'
 
 type SavedFile = { file: string; name: string; url: string; project: boolean }
@@ -90,6 +93,24 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
   const [collections, setCollections] = useState<{ id: number; title: string }[]>([])
   const [currentDraft, setCurrentDraft] = useState<StudioDocument | null>(null)
   const [geometryVersion, setGeometryVersion] = useState('')
+  const [models, setModels] = useState<StudioPhone[]>([])
+  const [modelsReady, setModelsReady] = useState(false)
+  const [modelError, setModelError] = useState('')
+  const [modelSettings, setModelSettings] = useState<ModelSettings | null>(null)
+  const [editorMode, setEditorMode] = useState<'shared' | 'phones'>('shared')
+  const [activePhone, setActivePhone] = useState<number | null>(null)
+  const fitViewer = useRef<ViewerHandle>(null)
+  const editorTabs = useRef<HTMLDivElement>(null)
+  const settings = modelSettings ?? { phones: models.map((m) => m.id), placements: {} }
+  const changeModelSettings = (next: ModelSettings) => {
+    setModelSettings(next)
+    setDirty(true)
+  }
+  const editPhone = (id?: number) => {
+    if (id) setActivePhone(id)
+    setEditorMode('phones')
+    editorTabs.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
   const [dirty, setDirty] = useState(false)
   const [catalogReady, setCatalogReady] = useState(!catalog)
   const [placement, setPlacement] = useState<Placement>(DEFAULT)
@@ -111,6 +132,25 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
   const viewer = useRef<ViewerHandle>(null)
   const loadVersion = useRef(0)
   const saving = useRef(false)
+  useEffect(() => {
+    if (!catalog) return
+    let cancelled = false
+    fetch('/api/catalog-studio/render')
+      .then(async (r) => {
+        const data = await r.json()
+        if (!r.ok) throw new Error(data.error || 'Could not load case models.')
+        if (!cancelled) {
+          setModels(data.models)
+          setModelsReady(true)
+        }
+      })
+      .catch((e) => {
+        if (!cancelled) setModelError(e.message)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [catalog])
   function designURL(product?: number) {
     const url = new URL(window.location.href)
     url.searchParams.delete('revision')
@@ -221,15 +261,6 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
         setError('Could not transfer this artwork. Open your saved project here to continue.'),
       )
   }, [catalog, catalogReady])
-  useEffect(() => {
-    if (!catalog || !dirty) return
-    const warn = (event: BeforeUnloadEvent) => {
-      event.preventDefault()
-      event.returnValue = ''
-    }
-    window.addEventListener('beforeunload', warn)
-    return () => window.removeEventListener('beforeunload', warn)
-  }, [catalog, dirty])
 
   const change = (patch: Partial<Placement>) => {
     setPlacement((p) => ({ ...p, ...patch }))
@@ -265,6 +296,9 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       setDetails(doc.details)
       setName(doc.title)
       setCurrentDraft(doc)
+      setModelSettings(doc.modelSettings ?? null)
+      setEditorMode('phones')
+      setActivePhone(null)
       designURL(doc.product)
       setDirty(Boolean(doc.detailsChanged))
       setMessage(
@@ -298,20 +332,25 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     }
   }
   async function saveDraft() {
-    if (!canvas || !image || !source || busy || saving.current || (currentDraft && !dirty)) return
+    if (!image || !source || !modelsReady || busy || saving.current || (currentDraft && !dirty))
+      return
     saving.current = true
     setBusy(true)
     setError('')
     setMessage('')
     try {
-      const settings = validateSave({
+      const saveSettings = validateSave({
         previous: currentDraft?.id ?? null,
         model: MODEL.slug,
         details,
         placement,
+        modelSettings: settings,
       })
-      drawArtwork(canvas, image, placement)
-      const exported = createPrintExport(canvas, placement.printMode)
+      const sharedCanvas = document.createElement('canvas')
+      sharedCanvas.width = WIDTH
+      sharedCanvas.height = HEIGHT
+      drawArtwork(sharedCanvas, image, placement)
+      const exported = createPrintExport(sharedCanvas, placement.printMode)
       const print = await new Promise<Blob>((resolve, reject) =>
         exported.toBlob(
           (blob) => (blob ? resolve(blob) : reject(new Error('Could not prepare the layout.'))),
@@ -319,16 +358,17 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
         ),
       )
       const form = new FormData()
-      form.append('settings', JSON.stringify(settings))
+      form.append('settings', JSON.stringify(saveSettings))
       form.append('geometryVersion', geometryVersion)
       form.append('original', await (await fetch(source)).blob(), 'original')
       form.append('print', print, 'layout.png')
-      const preview = await viewer.current?.snapshot()
+      const preview = await (editorMode === 'phones' ? fitViewer : viewer).current?.snapshot()
       if (preview) form.append('preview', preview, 'preview.png')
       const response = await fetch('/api/catalog-studio', { method: 'POST', body: form })
       const result = await response.json()
       if (!response.ok) throw new Error(result.error || 'Could not save draft.')
       setCurrentDraft(result)
+      setModelSettings(result.modelSettings ?? null)
       designURL(result.product)
       setDetails(result.details)
       setName(result.title)
@@ -357,6 +397,9 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     setSource('')
     setImage(null)
     setPlacement(DEFAULT)
+    setModelSettings(null)
+    setActivePhone(null)
+    setEditorMode('shared')
     setName('Your artwork')
     setDirty(false)
     setError('')
@@ -612,7 +655,9 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
             </select>
             <button
               className="cs-primary"
-              disabled={!image || busy || !catalogReady || (!!currentDraft && !dirty)}
+              disabled={
+                !image || busy || !catalogReady || !modelsReady || (!!currentDraft && !dirty)
+              }
               onClick={() => void saveDraft()}
             >
               {busy
@@ -626,272 +671,325 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
           </div>
         </section>
       )}
-      <div className="cs-workspace" inert={busy || (catalog && !catalogReady)}>
-        <aside className="cs-controls">
-          <section className="cs-section">
-            <div className="cs-section-title">
-              <span>01 / Artwork</span>
-              <span>JPG · PNG · WebP</span>
-            </div>
+      {catalog && (
+        <div className="cw-editor-tabs" ref={editorTabs} aria-label="Design editing mode">
+          <div role="group" aria-label="Choose editing workspace">
             <button
-              className="cs-upload"
+              aria-pressed={editorMode === 'shared'}
+              onClick={() => setEditorMode('shared')}
               disabled={busy}
-              onClick={() => imageInput.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                e.preventDefault()
-                const file = e.dataTransfer.files[0]
-                if (file) void openFile(file)
-              }}
             >
-              <ImagePlus size={25} strokeWidth={1.4} />
-              <strong>{busy ? 'Opening…' : image ? 'Replace image' : 'Upload an image'}</strong>
-              <span>Choose a file or drop it here</span>
+              Shared artwork
             </button>
-            <p className="cs-file-name" title={name}>
-              {image ? name : 'A blank canvas, ready for you.'}
-            </p>
-            <p className="cs-note">
-              {catalog
-                ? 'Saved originals and print layouts are private to your admin account.'
-                : 'Your artwork stays on this computer.'}
-            </p>
-            {image && (
+            <button
+              aria-pressed={editorMode === 'phones'}
+              onClick={() => setEditorMode('phones')}
+              disabled={busy || !image}
+            >
+              Fit by phone · {models.length}
+            </button>
+          </div>
+          <p>
+            {editorMode === 'shared'
+              ? 'Set the starting artwork for every case. Phones with custom fits keep their own placement.'
+              : 'Edit any phone without changing the others. Save changes keeps all fits in this design.'}
+          </p>
+        </div>
+      )}
+      {catalog && modelError && (
+        <p role="alert" className="cw-error">
+          {modelError} Reload the page to retry.
+        </p>
+      )}
+      {catalog && editorMode === 'phones' && (
+        <div inert={busy}>
+          {!modelsReady ? (
+            <p role="status">Loading approved case models…</p>
+          ) : (
+            <PhoneFits
+              models={models}
+              settings={settings}
+              shared={placement}
+              source={source}
+              aspect={image ? image.naturalWidth / image.naturalHeight : 1}
+              active={activePhone}
+              onActive={setActivePhone}
+              onChange={changeModelSettings}
+              viewerRef={fitViewer}
+            />
+          )}
+        </div>
+      )}
+      {(!catalog || editorMode === 'shared') && (
+        <div className="cs-workspace" inert={busy || (catalog && !catalogReady)}>
+          <aside className="cs-controls">
+            <section className="cs-section">
+              <div className="cs-section-title">
+                <span>01 / Artwork</span>
+                <span>JPG · PNG · WebP</span>
+              </div>
+              <button
+                className="cs-upload"
+                disabled={busy}
+                onClick={() => imageInput.current?.click()}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault()
+                  const file = e.dataTransfer.files[0]
+                  if (file) void openFile(file)
+                }}
+              >
+                <ImagePlus size={25} strokeWidth={1.4} />
+                <strong>{busy ? 'Opening…' : image ? 'Replace image' : 'Upload an image'}</strong>
+                <span>Choose a file or drop it here</span>
+              </button>
+              <p className="cs-file-name" title={name}>
+                {image ? name : 'A blank canvas, ready for you.'}
+              </p>
               <p className="cs-note">
-                {image.naturalWidth} × {image.naturalHeight} px · about{' '}
-                {effectiveDPI(image.naturalWidth, placement.width, PX)} DPI at this placement.
-                {effectiveDPI(image.naturalWidth, placement.width, PX) < 150
-                  ? ' Enlarge less or use a higher-resolution image for finer detail.'
-                  : ' Check fine detail on a physical sample.'}
+                {catalog
+                  ? 'Saved originals and print layouts are private to your admin account.'
+                  : 'Your artwork stays on this computer.'}
+              </p>
+              {image && (
+                <p className="cs-note">
+                  {image.naturalWidth} × {image.naturalHeight} px · about{' '}
+                  {effectiveDPI(image.naturalWidth, placement.width, PX)} DPI at this placement.
+                  {effectiveDPI(image.naturalWidth, placement.width, PX) < 150
+                    ? ' Enlarge less or use a higher-resolution image for finer detail.'
+                    : ' Check fine detail on a physical sample.'}
+                </p>
+              )}
+            </section>
+            <section className="cs-section">
+              <div className="cs-section-title">
+                <span>02 / Print area</span>
+              </div>
+              <div className="cs-print-options" role="group" aria-label="Print area">
+                <button
+                  aria-pressed={placement.printMode === 'wrap'}
+                  onClick={() => change({ printMode: 'wrap' })}
+                >
+                  <strong>Wraparound</strong>
+                  <span>Back, sides & camera surround</span>
+                </button>
+                <button
+                  aria-pressed={placement.printMode === 'back'}
+                  onClick={() => change({ printMode: 'back' })}
+                >
+                  <strong>Back only</strong>
+                  <span>Back & camera surround · solid sides</span>
+                </button>
+              </div>
+            </section>
+            <section className="cs-section">
+              <div className="cs-section-title">
+                <span>03 / Placement</span>
+                <button
+                  aria-label="Reset placement"
+                  title="Reset placement"
+                  onClick={() => {
+                    fit('portrait')
+                  }}
+                  disabled={!image}
+                >
+                  <RotateCcw size={14} />
+                </button>
+              </div>
+              <div className="cs-preset-row">
+                <button disabled={!image} onClick={() => fit('portrait')}>
+                  Portrait fit
+                </button>
+                <button disabled={!image} onClick={() => fit('fill')}>
+                  Fill case <ArrowUpRight size={13} />
+                </button>
+              </div>
+              <Slider
+                label="Image width"
+                value={placement.width / PX}
+                min={2}
+                max={(WIDTH * 4) / PX}
+                step={0.1}
+                suffix=" mm"
+                onChange={(width) => change({ width: width * PX })}
+              />
+              <Slider
+                label="Horizontal"
+                value={placement.x / PX}
+                min={-WIDTH / PX}
+                max={(WIDTH * 2) / PX}
+                step={0.1}
+                suffix=" mm"
+                onChange={(x) => change({ x: x * PX })}
+              />
+              <Slider
+                label="Vertical"
+                value={placement.y / PX}
+                min={-HEIGHT / PX}
+                max={(HEIGHT * 2) / PX}
+                step={0.1}
+                suffix=" mm"
+                onChange={(y) => change({ y: y * PX })}
+              />
+              <Slider
+                label="Rotation"
+                value={placement.rotation}
+                min={-180}
+                max={180}
+                suffix="°"
+                onChange={(rotation) => change({ rotation })}
+              />
+            </section>
+            <section className="cs-section cs-finish">
+              <div className="cs-section-title">
+                <span>04 / Finish</span>
+              </div>
+              <div className="cs-colors">
+                <label>
+                  Background
+                  <input
+                    aria-label="Artwork background color"
+                    type="color"
+                    value={placement.background}
+                    onChange={(e) => change({ background: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Case & rim
+                  <input
+                    aria-label="Case and rim color"
+                    type="color"
+                    value={placement.silicone}
+                    onChange={(e) => change({ silicone: e.target.value })}
+                  />
+                </label>
+              </div>
+            </section>
+          </aside>
+          <section className="cs-stage" aria-label="3D case preview">
+            <div className="cs-stage-heading">
+              <span>iPhone 17 Pro Max</span>
+              <span className="cs-live">
+                <i /> Live 3D
+              </span>
+            </div>
+            {catalog && (
+              <p className="cs-model-note">
+                Shared placement reference ·{' '}
+                <a href="/catalog-studio/models" target="_blank" rel="noreferrer">
+                  Review case model library
+                </a>
               </p>
             )}
+            <CaseViewer
+              ref={viewer}
+              canvas={canvas}
+              revision={revision}
+              silicone={placement.silicone}
+              view={view}
+            />
+            <div className="cs-view-controls" aria-label="Preview angle">
+              {(['artwork', 'angle', 'inside'] as const).map((v) => (
+                <button key={v} aria-pressed={view === v} onClick={() => setView(v)}>
+                  {v === 'artwork' ? 'Artwork' : v === 'angle' ? 'Angle' : 'Inside'}
+                </button>
+              ))}
+            </div>
+            <p className="cs-orbit-help">Drag to rotate · Scroll or pinch to zoom</p>
           </section>
-          <section className="cs-section">
+          <aside className="cs-layout-panel">
             <div className="cs-section-title">
-              <span>02 / Print area</span>
+              <span>Flat layout</span>
+              <Move size={14} />
             </div>
-            <div className="cs-print-options" role="group" aria-label="Print area">
-              <button
-                aria-pressed={placement.printMode === 'wrap'}
-                onClick={() => change({ printMode: 'wrap' })}
-              >
-                <strong>Wraparound</strong>
-                <span>Back, sides & camera surround</span>
-              </button>
-              <button
-                aria-pressed={placement.printMode === 'back'}
-                onClick={() => change({ printMode: 'back' })}
-              >
-                <strong>Back only</strong>
-                <span>Back & camera surround · solid sides</span>
-              </button>
-            </div>
-          </section>
-          <section className="cs-section">
-            <div className="cs-section-title">
-              <span>03 / Placement</span>
-              <button
-                aria-label="Reset placement"
-                title="Reset placement"
-                onClick={() => {
-                  fit('portrait')
-                }}
-                disabled={!image}
-              >
-                <RotateCcw size={14} />
-              </button>
-            </div>
-            <div className="cs-preset-row">
-              <button disabled={!image} onClick={() => fit('portrait')}>
-                Portrait fit
-              </button>
-              <button disabled={!image} onClick={() => fit('fill')}>
-                Fill case <ArrowUpRight size={13} />
-              </button>
-            </div>
-            <Slider
-              label="Image width"
-              value={placement.width / PX}
-              min={2}
-              max={(WIDTH * 4) / PX}
-              step={0.1}
-              suffix=" mm"
-              onChange={(width) => change({ width: width * PX })}
-            />
-            <Slider
-              label="Horizontal"
-              value={placement.x / PX}
-              min={-WIDTH / PX}
-              max={(WIDTH * 2) / PX}
-              step={0.1}
-              suffix=" mm"
-              onChange={(x) => change({ x: x * PX })}
-            />
-            <Slider
-              label="Vertical"
-              value={placement.y / PX}
-              min={-HEIGHT / PX}
-              max={(HEIGHT * 2) / PX}
-              step={0.1}
-              suffix=" mm"
-              onChange={(y) => change({ y: y * PX })}
-            />
-            <Slider
-              label="Rotation"
-              value={placement.rotation}
-              min={-180}
-              max={180}
-              suffix="°"
-              onChange={(rotation) => change({ rotation })}
-            />
-          </section>
-          <section className="cs-section cs-finish">
-            <div className="cs-section-title">
-              <span>04 / Finish</span>
-            </div>
-            <div className="cs-colors">
-              <label>
-                Background
-                <input
-                  aria-label="Artwork background color"
-                  type="color"
-                  value={placement.background}
-                  onChange={(e) => change({ background: e.target.value })}
-                />
-              </label>
-              <label>
-                Case & rim
-                <input
-                  aria-label="Case and rim color"
-                  type="color"
-                  value={placement.silicone}
-                  onChange={(e) => change({ silicone: e.target.value })}
-                />
-              </label>
-            </div>
-          </section>
-        </aside>
-        <section className="cs-stage" aria-label="3D case preview">
-          <div className="cs-stage-heading">
-            <span>iPhone 17 Pro Max</span>
-            <span className="cs-live">
-              <i /> Live 3D
-            </span>
-          </div>
-          {catalog && (
-            <p className="cs-model-note">
-              Provisional model ·{' '}
-              <a href="/catalog-studio/models" target="_blank" rel="noreferrer">
-                Review case model library
-              </a>
+            <p className="cs-layout-intro">
+              Drag the artwork here.
+              <br />
+              The case updates as you move.
             </p>
-          )}
-          <CaseViewer
-            ref={viewer}
-            canvas={canvas}
-            revision={revision}
-            silicone={placement.silicone}
-            view={view}
-          />
-          <div className="cs-view-controls" aria-label="Preview angle">
-            {(['artwork', 'angle', 'inside'] as const).map((v) => (
-              <button key={v} aria-pressed={view === v} onClick={() => setView(v)}>
-                {v === 'artwork' ? 'Artwork' : v === 'angle' ? 'Angle' : 'Inside'}
-              </button>
-            ))}
-          </div>
-          <p className="cs-orbit-help">Drag to rotate · Scroll or pinch to zoom</p>
-        </section>
-        <aside className="cs-layout-panel">
-          <div className="cs-section-title">
-            <span>Flat layout</span>
-            <Move size={14} />
-          </div>
-          <p className="cs-layout-intro">
-            Drag the artwork here.
-            <br />
-            The case updates as you move.
-          </p>
-          <FlatLayoutEditor
-            canvasRef={setCanvas}
-            placement={placement}
-            hasImage={!!image}
-            onChange={change}
-          />
-          <div className="cs-legend">
-            <span>
-              <i /> {placement.printMode === 'back' ? 'Printable back' : 'Case back'}
-            </span>
-            <span>
-              {placement.printMode === 'back' ? 'Checks = no print' : 'Outside = edge wrap'}
-            </span>
-          </div>
-          <p className="cs-note">
-            {placement.printMode === 'back'
-              ? 'Artwork covers the back and camera surround. Sides stay solid; lens and sensor openings are transparent in the export.'
-              : 'Artwork continues over the sides and camera surround. Camera guides won’t appear in the export.'}
-          </p>
-          {catalog && (
-            <div className="cs-draft-summary">
-              <strong>
-                {currentDraft
-                  ? dirty
-                    ? 'Changes to save'
-                    : 'All changes saved'
-                  : 'Create a catalog draft'}
-              </strong>
-              <p>
-                Your image, placement and print layout are saved together. Choose phones and
-                generate previews below, then review your product page before publishing.
-              </p>
-              <button
-                className="cs-primary"
-                disabled={!image || busy || !catalogReady || (!!currentDraft && !dirty)}
-                onClick={() => void saveDraft()}
-              >
-                {currentDraft ? (dirty ? 'Save changes' : 'Saved') : 'Create design'}
-              </button>
-              {currentDraft && (
-                <>
-                  <a
-                    href={`/admin/collections/products/${currentDraft.product}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open product draft ↗
-                  </a>
-                  <a href={currentDraft.printURL} target="_blank" rel="noreferrer">
-                    View saved print layout ↗
-                  </a>
-                  {currentDraft.previewURL && (
-                    <a href={currentDraft.previewURL} target="_blank" rel="noreferrer">
-                      View saved 3D preview ↗
-                    </a>
-                  )}
-                </>
-              )}
+            <FlatLayoutEditor
+              canvasRef={setCanvas}
+              placement={placement}
+              hasImage={!!image}
+              onChange={change}
+            />
+            <div className="cs-legend">
+              <span>
+                <i /> {placement.printMode === 'back' ? 'Printable back' : 'Case back'}
+              </span>
+              <span>
+                {placement.printMode === 'back' ? 'Checks = no print' : 'Outside = edge wrap'}
+              </span>
             </div>
-          )}
-          <div className="cs-export-buttons">
-            <button className="cs-primary" disabled={!image || busy} onClick={saveLayout}>
-              <Download size={16} /> Export layout
-            </button>
-            <button disabled={!image || busy} onClick={() => void savePreview()}>
-              <Download size={15} /> Save 3D view
-            </button>
-            <button disabled={!image || busy} onClick={saveProject}>
-              <Save size={15} /> {catalog ? 'Download project' : 'Save project'}
-            </button>
-          </div>
-          <p className="cs-note">
-            {catalog
-              ? 'Use the catalog save button to keep editing here. Downloads are optional copies.'
-              : 'Save a project to keep editing later.'}
-            <br />
-            Layout: {printBounds.width} × {printBounds.height} px.
-          </p>
-        </aside>
-      </div>
+            <p className="cs-note">
+              {placement.printMode === 'back'
+                ? 'Artwork covers the back and camera surround. Sides stay solid; lens and sensor openings are transparent in the export.'
+                : 'Artwork continues over the sides and camera surround. Camera guides won’t appear in the export.'}
+            </p>
+            {catalog && (
+              <div className="cs-draft-summary">
+                <strong>
+                  {currentDraft
+                    ? dirty
+                      ? 'Changes to save'
+                      : 'All changes saved'
+                    : 'Create a catalog draft'}
+                </strong>
+                <p>
+                  Your image, placement and print layout are saved together. Choose phones and
+                  generate previews below, then review your product page before publishing.
+                </p>
+                <button
+                  className="cs-primary"
+                  disabled={
+                    !image || busy || !catalogReady || !modelsReady || (!!currentDraft && !dirty)
+                  }
+                  onClick={() => void saveDraft()}
+                >
+                  {currentDraft ? (dirty ? 'Save changes' : 'Saved') : 'Create design'}
+                </button>
+                {currentDraft && (
+                  <>
+                    <a
+                      href={`/admin/collections/products/${currentDraft.product}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open product draft ↗
+                    </a>
+                    <a href={currentDraft.printURL} target="_blank" rel="noreferrer">
+                      View saved print layout ↗
+                    </a>
+                    {currentDraft.previewURL && (
+                      <a href={currentDraft.previewURL} target="_blank" rel="noreferrer">
+                        View saved 3D preview ↗
+                      </a>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+            <div className="cs-export-buttons">
+              <button className="cs-primary" disabled={!image || busy} onClick={saveLayout}>
+                <Download size={16} /> Export layout
+              </button>
+              <button disabled={!image || busy} onClick={() => void savePreview()}>
+                <Download size={15} /> Save 3D view
+              </button>
+              <button disabled={!image || busy} onClick={saveProject}>
+                <Save size={15} /> {catalog ? 'Download project' : 'Save project'}
+              </button>
+            </div>
+            <p className="cs-note">
+              {catalog
+                ? 'Use the catalog save button to keep editing here. Downloads are optional copies.'
+                : 'Save a project to keep editing later.'}
+              <br />
+              Layout: {printBounds.width} × {printBounds.height} px.
+            </p>
+          </aside>
+        </div>
+      )}
       {catalog && (
         <section className="cs-details-panel" aria-label="Catalog design details">
           <CatalogFields
@@ -902,7 +1000,7 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
           />
           <button
             className="cs-primary"
-            disabled={!image || busy || !catalogReady || (!!currentDraft && !dirty)}
+            disabled={!image || busy || !catalogReady || !modelsReady || (!!currentDraft && !dirty)}
             onClick={() => void saveDraft()}
           >
             {currentDraft ? (dirty ? 'Save changes' : 'Saved') : 'Create design'}
@@ -913,8 +1011,11 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
         <CatalogWorkflow
           draft={currentDraft}
           dirty={dirty}
-          source={source}
-          aspect={image ? image.naturalWidth / image.naturalHeight : 1}
+          saving={busy}
+          models={models}
+          settings={settings}
+          onSettings={changeModelSettings}
+          onEditPhone={editPhone}
         />
       )}
       {!catalog && (saved.length > 0 || deleted.length > 0) && (
