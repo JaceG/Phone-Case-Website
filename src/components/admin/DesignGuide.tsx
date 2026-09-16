@@ -43,7 +43,7 @@ export async function DesignGuide({ data, req }: UIFieldServerProps) {
           : 'Use Studio to choose phones and generate images. The sharing image and phone variants are filled when you publish there.'}
       </p>
       <a
-        href={revision ? `/catalog-studio?revision=${revision.id}` : '/catalog-studio'}
+        href={revision ? `/catalog-studio?product=${data.id}` : '/catalog-studio'}
         style={{ fontWeight: 600 }}
       >
         {' '}

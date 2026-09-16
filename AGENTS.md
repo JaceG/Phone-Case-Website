@@ -92,6 +92,15 @@ activate live payments as part of the immediate milestone.
 | Fulfillment | Order statuses, basic print-job rows and `/admin/print-queue` | Manual status editing; no immutable complete artwork/template snapshot or automated shipping flow |
 | Launch services | Payment adapter and account/order-page foundations | Payments default off; email unconfigured; durable hosting/storage/backup/release flow still to establish |
 
+Operator navigation starts at `/admin` (workspace overview) or
+`/catalog-studio/designs` (one searchable card per product). Shared shortcuts connect
+the editor, case-model review, orders, print queue and storefront. Technical records
+remain under Advanced records; Studio history is hidden from normal navigation.
+Studio uses **Create design** / **Save changes** and stable `?product=…` links;
+legacy revision links resolve to the latest save. Unchanged saves and completed-save
+retries reuse their snapshot/files. Meaningful edits keep immutable history internally
+for render consistency, without presenting those snapshots as separate designs.
+
 The three presentation designs are Meridian, Static Bloom and Low Tide, with
 original AI-assisted artwork in `pipeline/artwork/`. They replace checker imagery
 when the presentation import runs; they are not the approved launch catalog.

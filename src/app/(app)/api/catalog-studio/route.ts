@@ -12,49 +12,58 @@ export async function GET(request: Request) {
   if (!auth) return json({ error: 'Sign in as an administrator to use Catalog Studio.' }, 403)
   const { payload, req } = auth
   const current = await geometryVersion()
-  const id = new URL(request.url).searchParams.get('revision')
+  const params = new URL(request.url).searchParams
+  const productID = params.get('product')
+  const revisionID = params.get('revision')
+  const id = productID ?? revisionID
   if (id !== null) {
-    if (!/^[1-9]\d*$/.test(id)) return json({ error: 'Invalid revision.' }, 400)
+    if (!/^[1-9]\d*$/.test(id)) return json({ error: 'Invalid design.' }, 400)
     try {
-      const doc = await payload.findByID({
-        collection: 'studioRevisions',
-        id: Number(id),
-        req,
-        depth: 1,
-        overrideAccess: false,
-      })
-      const result = documentOf(doc, current)
+      // Old bookmarks resolve to the current design, never an obsolete checkpoint.
+      const previous = !productID
+        ? await payload.findByID({
+            collection: 'studioRevisions',
+            id: Number(id),
+            req,
+            depth: 0,
+            overrideAccess: false,
+          })
+        : null
       const latest = await payload.find({
         collection: 'studioRevisions',
         req,
-        depth: 0,
+        overrideAccess: false,
+        depth: 1,
         sort: '-revision',
         limit: 1,
-        where: { lineage: { equals: doc.lineage } },
+        where: productID
+          ? { product: { equals: Number(productID) } }
+          : { lineage: { equals: previous!.lineage } },
       })
-      if (latest.docs[0]?.id === doc.id) {
-        const product = await payload.findByID({
-          collection: 'products',
-          id: result.product,
-          draft: true,
-          depth: 0,
-          req,
-        })
-        result.details = {
-          ...result.details,
-          title: product.title,
-          slug: product.slug ?? result.details.slug,
-          tagline: product.tagline ?? '',
-          description: plainText(product.description),
-          price: (product.priceInUSD ?? Math.round(result.details.price * 100)) / 100,
-          collection: relationID(product.collections?.[0]),
-        }
-        result.title = product.title
-        result.detailsChanged = JSON.stringify(result.details) !== JSON.stringify(doc.details)
+      const doc = latest.docs[0]
+      if (!doc) return json({ error: 'Saved design not found.' }, 404)
+      const result = documentOf(doc, current)
+      const product = await payload.findByID({
+        collection: 'products',
+        id: result.product,
+        draft: true,
+        depth: 0,
+        req,
+      })
+      result.details = {
+        ...result.details,
+        title: product.title,
+        slug: product.slug ?? result.details.slug,
+        tagline: product.tagline ?? '',
+        description: plainText(product.description),
+        price: (product.priceInUSD ?? Math.round(result.details.price * 100)) / 100,
+        collection: relationID(product.collections?.[0]),
       }
+      result.title = product.title
+      result.detailsChanged = JSON.stringify(result.details) !== JSON.stringify(doc.details)
       return json(result)
     } catch {
-      return json({ error: 'Saved revision not found.' }, 404)
+      return json({ error: 'Saved design not found.' }, 404)
     }
   }
   const [revisions, collections] = await Promise.all([

@@ -31,6 +31,7 @@ export type StudioDocument = {
   model: string
   geometryVersion: string
   detailsChanged?: boolean
+  unchanged?: boolean
   currentGeometry: boolean
   createdAt: string
 }

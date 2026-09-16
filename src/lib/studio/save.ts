@@ -1,5 +1,6 @@
 import { suggestedCopy, plainText } from '@/lib/catalog/designDefaults'
 import { createHash, randomUUID } from 'node:crypto'
+import { isDeepStrictEqual } from 'node:util'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
@@ -133,9 +134,29 @@ export async function saveStudio(form: FormData, req: PayloadRequest) {
         where: { lineage: { equals: previous.lineage } },
         sort: '-revision',
       })
+      const saved = latest.docs[0]
+      // Repeated saves (including a retry whose response was lost) are reads.
+      // Preserve existing previews and avoid uploading identical print files.
+      if (
+        saved &&
+        saved.originalHash === originalHash &&
+        saved.geometryVersion === currentGeometry &&
+        saved.modelSlug === input.model &&
+        isDeepStrictEqual(saved.placement, input.placement) &&
+        isDeepStrictEqual(saved.details, details)
+      ) {
+        const populated = await payload.findByID({
+          collection: 'studioRevisions',
+          id: saved.id,
+          req,
+          depth: 1,
+        })
+        await commitTransaction(req)
+        return { ...documentOf(populated, currentGeometry), unchanged: true }
+      }
       if (latest.docs[0]?.id !== previous.id)
         throw new StudioError(
-          'A newer revision exists. Open the latest saved draft before editing.',
+          'This design was updated in another window. Reopen the design to load its latest changes.',
           409,
         )
     }

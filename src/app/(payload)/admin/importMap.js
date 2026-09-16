@@ -23,10 +23,9 @@ import { PriceCell as PriceCell_e27bf7b8cc50640dcdd584767b8eac3c } from '@payloa
 import { PriceInput as PriceInput_b91672ccd6e8b071c11142ab941fedfb } from '@payloadcms/plugin-ecommerce/rsc'
 import { DesignGuide as DesignGuide_7655850c025dc92258138a99af2a609e } from '@/components/admin/DesignGuide'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { PrintQueueNavLink as PrintQueueNavLink_f6cd13dd3850ed3f041aff3bebd57456 } from '@/components/admin/PrintQueue/NavLink'
-import { CatalogStudioLink as CatalogStudioLink_0d004fe88cd6c477ab9fd943d0fc3c38 } from '@/components/admin/CatalogStudioLink'
 import { BeforeDashboard as BeforeDashboard_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { BeforeLogin as BeforeLogin_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
+import { WorkspaceSidebar as WorkspaceSidebar_e19c8cf28935680315ea53a129ad89ba } from '@/components/workspace/WorkspaceNav'
 import { PrintQueue as PrintQueue_3e2e486a005af430adcc1efafa0fa6af } from '@/components/admin/PrintQueue'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -57,10 +56,9 @@ export const importMap = {
   "@payloadcms/plugin-ecommerce/rsc#PriceInput": PriceInput_b91672ccd6e8b071c11142ab941fedfb,
   "@/components/admin/DesignGuide#DesignGuide": DesignGuide_7655850c025dc92258138a99af2a609e,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@/components/admin/PrintQueue/NavLink#PrintQueueNavLink": PrintQueueNavLink_f6cd13dd3850ed3f041aff3bebd57456,
-  "@/components/admin/CatalogStudioLink#CatalogStudioLink": CatalogStudioLink_0d004fe88cd6c477ab9fd943d0fc3c38,
   "@/components/BeforeDashboard#BeforeDashboard": BeforeDashboard_1a7510af427896d367a49dbf838d2de6,
   "@/components/BeforeLogin#BeforeLogin": BeforeLogin_8a7ab0eb7ab5c511aba12e68480bfe5e,
+  "@/components/workspace/WorkspaceNav#WorkspaceSidebar": WorkspaceSidebar_e19c8cf28935680315ea53a129ad89ba,
   "@/components/admin/PrintQueue#PrintQueue": PrintQueue_3e2e486a005af430adcc1efafa0fa6af,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -7,6 +7,7 @@ export const StudioRevisions: CollectionConfig = {
   labels: { singular: 'Studio revision', plural: 'Studio revisions' },
   access: { read: adminOnly, create: () => false, update: () => false, delete: () => false },
   admin: {
+    hidden: true,
     group: 'Catalog',
     useAsTitle: 'title',
     defaultColumns: ['title', 'revision', 'createdAt'],

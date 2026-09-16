@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import {
@@ -111,6 +110,23 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
   const projectInput = useRef<HTMLInputElement>(null)
   const viewer = useRef<ViewerHandle>(null)
   const loadVersion = useRef(0)
+  const saving = useRef(false)
+  function designURL(product?: number) {
+    const url = new URL(window.location.href)
+    url.searchParams.delete('revision')
+    if (product) url.searchParams.set('product', String(product))
+    else url.searchParams.delete('product')
+    window.history.replaceState(null, '', url)
+  }
+  useEffect(() => {
+    if (!catalog || !dirty) return
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [catalog, dirty])
 
   useEffect(() => {
     if (catalog) return
@@ -223,14 +239,14 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     setDetails((d) => ({ ...d, ...patch }))
     setDirty(true)
   }
-  async function openDraft(id: number) {
+  async function openDraft(id: number, by: 'product' | 'revision' = 'product') {
     if (dirty && !window.confirm('Discard unsaved changes and open this draft?')) return
     const version = ++loadVersion.current
     setBusy(true)
     setError('')
     setMessage('')
     try {
-      const response = await fetch(`/api/catalog-studio?revision=${id}`)
+      const response = await fetch(`/api/catalog-studio?${by}=${id}`)
       const doc: StudioDocument & { error?: string } = await response.json()
       if (!response.ok) throw new Error(doc.error)
       if (!doc.currentGeometry)
@@ -249,11 +265,12 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       setDetails(doc.details)
       setName(doc.title)
       setCurrentDraft(doc)
+      designURL(doc.product)
       setDirty(Boolean(doc.detailsChanged))
       setMessage(
         doc.detailsChanged
-          ? 'Your latest admin details are loaded with the saved artwork. Save a new draft to include them in the next previews.'
-          : `Opened revision ${doc.revision}. The original image and placement are restored.`,
+          ? 'Your latest admin details are loaded with the saved artwork. Save changes to include them in the next previews.'
+          : 'Your latest saved design is open.',
       )
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not open draft.')
@@ -263,8 +280,10 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
   }
   useEffect(() => {
     if (!catalog || !catalogReady) return
-    const id = new URLSearchParams(window.location.search).get('revision')
-    if (id && /^[1-9]\d*$/.test(id)) void openDraft(Number(id))
+    const params = new URLSearchParams(window.location.search)
+    const by = params.has('product') ? 'product' : 'revision'
+    const id = params.get(by)
+    if (id && /^[1-9]\d*$/.test(id)) void openDraft(Number(id), by)
   }, [catalog, catalogReady])
   async function addToCatalog() {
     if (!source || busy) return
@@ -279,7 +298,8 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     }
   }
   async function saveDraft() {
-    if (!canvas || !image || !source || busy) return
+    if (!canvas || !image || !source || busy || saving.current || (currentDraft && !dirty)) return
+    saving.current = true
     setBusy(true)
     setError('')
     setMessage('')
@@ -309,16 +329,22 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       const result = await response.json()
       if (!response.ok) throw new Error(result.error || 'Could not save draft.')
       setCurrentDraft(result)
+      designURL(result.product)
       setDetails(result.details)
       setName(result.title)
       setDirty(false)
       setDrafts((previous) => [result, ...previous.filter((d) => d.product !== result.product)])
       setMessage(
-        `Draft saved · revision ${result.revision}. Original image, placement and print layout are private. Storefront renders are still pending.`,
+        result.unchanged
+          ? 'Everything is already saved.'
+          : currentDraft
+            ? 'Changes saved to this design. Generate updated previews below when you’re ready.'
+            : 'Design created. Choose phones and generate previews below.',
       )
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not save draft.')
     } finally {
+      saving.current = false
       setBusy(false)
     }
   }
@@ -326,6 +352,7 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     if (dirty && !window.confirm('Discard unsaved changes and start a new design?')) return
     ++loadVersion.current
     setCurrentDraft(null)
+    designURL()
     setDetails(emptyDetails)
     setSource('')
     setImage(null)
@@ -516,9 +543,9 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
   return (
     <main className={`case-studio${catalog ? ' cs-catalog' : ''}`}>
       <header className="cs-header">
-        <Link href={catalog ? '/admin' : '/?device=desktop'} className="cs-brand">
+        <a href={catalog ? '/catalog-studio/designs' : '/?device=desktop'} className="cs-brand">
           <ArrowLeft size={16} /> CASE / STUDIO
-        </Link>
+        </a>
         <span className="cs-local">
           <i /> {catalog ? 'Private catalog workspace' : 'Local workspace'}
         </span>
@@ -555,16 +582,12 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       {catalog && (
         <section className="cs-catalog-toolbar" aria-label="Catalog drafts">
           <div>
-            <strong>
-              {currentDraft
-                ? `Editing ${currentDraft.title} · revision ${currentDraft.revision}`
-                : 'New design'}
-            </strong>
+            <strong>{currentDraft ? `Editing ${currentDraft.title}` : 'New design'}</strong>
             <span>
               {dirty
                 ? 'Unsaved changes'
                 : currentDraft
-                  ? 'Saved as a draft'
+                  ? 'All changes saved'
                   : 'Upload artwork to begin'}
             </span>
           </div>
@@ -582,17 +605,23 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
             >
               <option value="">Open a saved draft…</option>
               {drafts.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.title} · revision {d.revision}
+                <option key={d.product} value={d.product}>
+                  {d.title}
                 </option>
               ))}
             </select>
             <button
               className="cs-primary"
-              disabled={!image || busy || !catalogReady}
+              disabled={!image || busy || !catalogReady || (!!currentDraft && !dirty)}
               onClick={() => void saveDraft()}
             >
-              {busy ? 'Working…' : 'Save catalog draft'}
+              {busy
+                ? 'Saving…'
+                : currentDraft
+                  ? dirty
+                    ? 'Save changes'
+                    : 'Saved'
+                  : 'Create design'}
             </button>
           </div>
         </section>
@@ -806,7 +835,9 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
             <div className="cs-draft-summary">
               <strong>
                 {currentDraft
-                  ? `Saved revision ${currentDraft.revision}`
+                  ? dirty
+                    ? 'Changes to save'
+                    : 'All changes saved'
                   : 'Create a catalog draft'}
               </strong>
               <p>
@@ -815,10 +846,10 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
               </p>
               <button
                 className="cs-primary"
-                disabled={!image || busy || !catalogReady}
+                disabled={!image || busy || !catalogReady || (!!currentDraft && !dirty)}
                 onClick={() => void saveDraft()}
               >
-                Save catalog draft
+                {currentDraft ? (dirty ? 'Save changes' : 'Saved') : 'Create design'}
               </button>
               {currentDraft && (
                 <>
@@ -849,11 +880,13 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
               <Download size={15} /> Save 3D view
             </button>
             <button disabled={!image || busy} onClick={saveProject}>
-              <Save size={15} /> Save project
+              <Save size={15} /> {catalog ? 'Download project' : 'Save project'}
             </button>
           </div>
           <p className="cs-note">
-            Save a project to keep editing later.
+            {catalog
+              ? 'Use the catalog save button to keep editing here. Downloads are optional copies.'
+              : 'Save a project to keep editing later.'}
             <br />
             Layout: {printBounds.width} × {printBounds.height} px.
           </p>
@@ -869,10 +902,10 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
           />
           <button
             className="cs-primary"
-            disabled={!image || busy || !catalogReady}
+            disabled={!image || busy || !catalogReady || (!!currentDraft && !dirty)}
             onClick={() => void saveDraft()}
           >
-            Save catalog draft
+            {currentDraft ? (dirty ? 'Save changes' : 'Saved') : 'Create design'}
           </button>
         </section>
       )}

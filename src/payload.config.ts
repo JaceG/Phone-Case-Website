@@ -35,17 +35,9 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     components: {
-      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: ['@/components/BeforeLogin#BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: ['@/components/BeforeDashboard#BeforeDashboard'],
-      // Operator work list for in-house printing. Sidebar link + root view.
-      afterNavLinks: [
-        '@/components/admin/PrintQueue/NavLink#PrintQueueNavLink',
-        '@/components/admin/CatalogStudioLink#CatalogStudioLink',
-      ],
+      beforeNavLinks: ['@/components/workspace/WorkspaceNav#WorkspaceSidebar'],
       views: {
         printQueue: {
           Component: '@/components/admin/PrintQueue#PrintQueue',

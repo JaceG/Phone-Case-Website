@@ -62,7 +62,9 @@ need the configured database and `pnpm dev`.
 | `/admin` | Payload catalog and commerce admin |
 | `/admin/print-queue` | Basic queue with artwork/order links; edit statuses on the order |
 | `/case-studio` | Development-only placement tool, live 3D preview and local saves |
-| `/catalog-studio` | Admin-only editor with design details, revision saves and product drafts |
+| `/admin` | Store workspace overview and shortcuts; advanced records below |
+| `/catalog-studio/designs` | Searchable design library, one card per product, live/draft status |
+| `/catalog-studio` | Admin-only artwork editor; Create design / Save changes |
 | `/catalog-studio/models` | Admin-only batch queue, searchable model grid, comparison, feedback and review decisions |
 
 Landing pages select desktop/mobile layouts through server-side device detection.
@@ -71,12 +73,23 @@ currently imports both layouts; separate code delivery remains planned.
 
 ## Current catalog workflow
 
-Use **Catalog Studio** in the admin sidebar, or open `/catalog-studio` and sign in
-as an administrator. Upload an image, adjust placement, fill Design details below
-the editor, then save a catalog draft. Reopen it from the saved-draft selector.
-Each save preserves the source, placement, print layout, model fingerprint and
-optional 3D snapshot. The product stays a draft; editing a published product through
-Studio leaves its live version intact. Stale saves from another tab are rejected.
+Start at **Overview** (`/admin`) or **My designs** (`/catalog-studio/designs`).
+The workspace navigation connects designs, the artwork editor, case models, orders,
+the print queue and the storefront. Advanced Payload records remain available below
+the shortcuts; internal Studio history is hidden from the main navigation.
+
+Choose **Create a design**, upload artwork, adjust placement and fill Design details.
+**Create design** makes the product; **Save changes** updates that same design.
+My designs shows one card per product, including whether saved changes are still a
+draft while an earlier version is live. Reopening uses a stable `?product=…` URL;
+old revision bookmarks also load the latest saved state. New design clears that URL.
+
+Unchanged saves are no-ops and do not create files, history or invalidate previews.
+Meaningful edits keep private history snapshots of the source, placement, print
+layout, model fingerprint and optional 3D image for render consistency. These are
+not separate catalog designs. Competing edits from another tab are rejected;
+retrying an already-saved change returns the existing save. Published artwork
+stays live until updated previews are generated, reviewed and published.
 
 Routine details now fill on save: editable title-based tagline/story defaults,
 colors extracted from the artwork, search title/description, related designs, and
@@ -90,8 +103,8 @@ Studio designs cannot be published from admin before their generated presentatio
 is ready. Save a draft and use Studio’s review/publish flow; this prevents empty
 product pages with no selectable phones.
 
-The admin form links directly to the matching Studio revision. Opening it brings
-in the latest saved admin details; save a new Studio revision before generating
+The admin form links directly to the design in Studio. Opening it brings
+in the latest saved admin details; use Save changes before generating
 previews if they changed. Advanced imagery controls are collapsed. Saved SEO and
 related-design selections are now used by the landing page.
 
@@ -228,7 +241,11 @@ Run the focused set with:
 pnpm test:int tests/int/bundlePricing.int.spec.ts tests/int/setBuilder.int.spec.ts tests/int/groupCartDesigns.int.spec.ts tests/int/studioContract.int.spec.ts tests/int/caseBlankReview.int.spec.ts
 ```
 
-With the local server running, `pnpm exec tsx tests/scripts/verifyStudio.ts` tests
+With the local server running, `pnpm exec tsx tests/scripts/verifyStudioUpdates.ts`
+checks unchanged saves, retry deduplication, stable design links, private access,
+concurrent edits and cleanup with disposable records.
+
+The older `pnpm exec tsx tests/scripts/verifyStudio.ts` tests
 authentication, original preservation, draft/revision saves, racing saves, published
 version isolation and browser save/reopen. It uses installed Chrome in headless
 mode, creates its own temporary admin/catalog data and cleans it up. Screenshots
