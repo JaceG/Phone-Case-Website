@@ -103,6 +103,12 @@ with solid sides; Wraparound also covers sides. It supports one shell and does
 not create catalog records at `/case-studio`, whose routes remain development-only.
 The authenticated `/catalog-studio` mode creates catalog drafts in every environment.
 
+Local Case Studio's **Saved files** supports individual **Delete** and **Clear all**.
+Both move files into a recoverable local folder. **Undo** restores the last batch;
+the **Deleted files** section offers individual Restore buttons after refreshing.
+These controls affect saved Studio copies, not the current artwork or downloaded
+copies elsewhere on the computer.
+
 ## Phone models
 
 Create models under **Phone Models**. Setting one to **Active** generates variants

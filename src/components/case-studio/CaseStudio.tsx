@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -11,6 +12,7 @@ import {
   Move,
   RotateCcw,
   Save,
+  Trash2,
 } from 'lucide-react'
 import FlatLayoutEditor from './FlatLayoutEditor'
 import CaseViewer, { type View, type ViewerHandle } from './CaseViewer'
@@ -97,6 +99,9 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [saved, setSaved] = useState<SavedFile[]>([])
+  const [deleted, setDeleted] = useState<SavedFile[]>([])
+  const [movingFile, setMovingFile] = useState<string | null>(null)
+  const fileMutation = useRef(false)
   const [view, setView] = useState<View>('artwork')
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null)
   const [revision, setRevision] = useState(0)
@@ -110,6 +115,10 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
     void fetch('/case-studio/files')
       .then((r) => (r.ok ? r.json() : []))
       .then(setSaved)
+      .catch(() => {})
+    void fetch('/case-studio/files?deleted=1')
+      .then((r) => (r.ok ? r.json() : []))
+      .then(setDeleted)
       .catch(() => {})
   }, [catalog])
   useEffect(() => {
@@ -347,13 +356,56 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
       const response = await fetch('/case-studio/files', { method: 'POST', body: form })
       if (!response.ok) throw new Error(await response.text())
       const result: SavedFile = await response.json()
-      setSaved((previous) => [result, ...previous].slice(0, 20))
+      setSaved((previous) => [result, ...previous])
       download(blob, filename)
       setMessage(message + ' Available in Saved files below.')
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not save. Please try again.')
     } finally {
       setBusy(false)
+    }
+  }
+  async function moveSavedFile(file: SavedFile, restore = false) {
+    return moveSavedFiles([file], restore)
+  }
+  async function moveSavedFiles(files: SavedFile[], restore = false) {
+    if (fileMutation.current || !files.length) return
+    fileMutation.current = true
+    setMovingFile(files.length === 1 ? files[0].file : 'all')
+    const moved: SavedFile[] = []
+    const errors: string[] = []
+    try {
+      for (const file of files) {
+        try {
+          const response = await fetch(file.url, { method: restore ? 'PATCH' : 'DELETE' })
+          if (!response.ok) throw new Error(await response.text())
+          moved.push(file)
+        } catch (e) {
+          errors.push(e instanceof Error ? e.message : 'Could not update this saved file.')
+        }
+      }
+      const ids = new Set(moved.map((file) => file.file))
+      if (restore) {
+        setDeleted((current) => current.filter((entry) => !ids.has(entry.file)))
+        setSaved((current) => [...moved, ...current.filter((entry) => !ids.has(entry.file))])
+        if (moved.length)
+          toast.success(moved.length === 1 ? 'File restored.' : `${moved.length} files restored.`)
+      } else {
+        setSaved((current) => current.filter((entry) => !ids.has(entry.file)))
+        setDeleted((current) => [...moved, ...current.filter((entry) => !ids.has(entry.file))])
+        if (moved.length)
+          toast(moved.length === 1 ? 'File deleted.' : `${moved.length} files cleared.`, {
+            duration: 10000,
+            action: { label: 'Undo', onClick: () => void moveSavedFiles(moved, true) },
+          })
+      }
+      if (errors.length)
+        toast.error(
+          `${errors.length} ${errors.length === 1 ? 'file could' : 'files could'} not be moved. ${errors[0]}`,
+        )
+    } finally {
+      fileMutation.current = false
+      setMovingFile(null)
     }
   }
   async function reopen(file: SavedFile) {
@@ -760,28 +812,69 @@ export default function CaseStudio({ catalog = false }: { catalog?: boolean }) {
           </button>
         </section>
       )}
-      {saved.length > 0 && (
+      {!catalog && (saved.length > 0 || deleted.length > 0) && (
         <section className="cs-saved" aria-label="Saved files">
           <div>
             <h2>Saved files</h2>
-            <p>Local copies of your projects and exports.</p>
+            <p>Local copies of your projects and exports. Deleted files can be restored below.</p>
+            {saved.length > 0 && (
+              <button
+                className="cs-clear-files"
+                disabled={busy || movingFile !== null}
+                onClick={() => void moveSavedFiles(saved)}
+              >
+                <Trash2 size={14} /> {movingFile === 'all' ? 'Clearing…' : 'Clear all'}
+              </button>
+            )}
           </div>
-          <div className="cs-saved-list">
-            {saved.map((file) => (
-              <div className="cs-saved-file" key={file.file}>
-                <span title={file.name}>{file.name}</span>
-                {file.project ? (
-                  <button disabled={busy} onClick={() => void reopen(file)}>
-                    Reopen project <ArrowUpRight size={13} />
-                  </button>
-                ) : (
-                  <a href={file.url} target="_blank" rel="noreferrer">
-                    View image <ArrowUpRight size={13} />
-                  </a>
-                )}
+          {saved.length > 0 && (
+            <div className="cs-saved-list">
+              {saved.map((file) => (
+                <div className="cs-saved-file" key={file.file}>
+                  <span title={file.name}>{file.name}</span>
+                  <div className="cs-saved-actions">
+                    {file.project ? (
+                      <button disabled={busy} onClick={() => void reopen(file)}>
+                        Reopen project <ArrowUpRight size={13} />
+                      </button>
+                    ) : (
+                      <a href={file.url} target="_blank" rel="noreferrer">
+                        View image <ArrowUpRight size={13} />
+                      </a>
+                    )}
+                    <button
+                      className="cs-delete-file"
+                      aria-label={`Delete ${file.name}`}
+                      disabled={busy || movingFile !== null}
+                      onClick={() => void moveSavedFile(file)}
+                    >
+                      <Trash2 size={13} /> {movingFile === file.file ? 'Deleting…' : 'Delete'}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {saved.length === 0 && <p>No saved files. Your current artwork is still open above.</p>}
+          {deleted.length > 0 && (
+            <details className="cs-deleted">
+              <summary>Deleted files ({deleted.length})</summary>
+              <div className="cs-saved-list">
+                {deleted.map((file) => (
+                  <div className="cs-saved-file" key={file.file}>
+                    <span title={file.name}>{file.name}</span>
+                    <button
+                      disabled={movingFile !== null}
+                      aria-label={`Restore ${file.name}`}
+                      onClick={() => void moveSavedFile(file, true)}
+                    >
+                      <RotateCcw size={13} /> {movingFile === file.file ? 'Restoring…' : 'Restore'}
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </details>
+          )}
         </section>
       )}
       <footer className="cs-footer">
