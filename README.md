@@ -86,6 +86,10 @@ Custom copy (including formatting), palette, price, URLs and SEO overrides are
 preserved. The public hero becomes the sharing image on publication; private
 originals are never used for that purpose. Permissions are never inferred.
 
+Studio designs cannot be published from admin before their generated presentation
+is ready. Save a draft and use Studio’s review/publish flow; this prevents empty
+product pages with no selectable phones.
+
 The admin form links directly to the matching Studio revision. Opening it brings
 in the latest saved admin details; save a new Studio revision before generating
 previews if they changed. Advanced imagery controls are collapsed. Saved SEO and

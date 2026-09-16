@@ -1,3 +1,4 @@
+import { requireStudioPreviews } from '@/lib/catalog/requireStudioPreviews'
 import { autofillProduct } from '@/lib/catalog/autofillProduct'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
@@ -397,6 +398,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
     ...defaultCollection.hooks,
     beforeValidate: [...(defaultCollection.hooks?.beforeValidate ?? []), autofillProduct],
     beforeChange: [
+      requireStudioPreviews,
       ...(defaultCollection.hooks?.beforeChange ?? []),
       async ({ data, req }) => {
         // Every design sells on the phone-model axis. Default the variant type

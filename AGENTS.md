@@ -174,6 +174,8 @@ reseed an existing working catalog casually.
   the sharing image. `catalogDefaults` tracks automatic values so custom edits win.
   Do not infer artwork permissions or publicly expose originals. Studio reopening
   incorporates saved admin edits, and publishing carries palette/SEO/related designs.
+  `requireStudioPreviews` prevents admin publication of Studio artwork without a
+  ready presentation; keep the separate manual presentation import workflow working.
 - Imports match design slugs. Preserve animation phase sidecars and use
   `RENDERS_KEEP_PREVIOUS=1` for review iterations; see the pipeline guide for
   per-model imports and media retention behavior.
